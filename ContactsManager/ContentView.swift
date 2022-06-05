@@ -10,7 +10,18 @@ import CoreData
 
 struct ContentView: View {
     var body: some View {
-        Contacts()
+        TabView {
+            ContactsView()
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Contacts")
+                }
+            SettingsView()
+                .tabItem {
+                    Image(systemName: "gear.circle")
+                    Text("Settings")
+                }
+        }
     }
 }
 

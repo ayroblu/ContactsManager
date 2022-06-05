@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
 		3090EA27284A559B00D4DF4B /* ContactsManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */; };
 		3090EA29284A559B00D4DF4B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA28284A559B00D4DF4B /* ContentView.swift */; };
 		3090EA2B284A559C00D4DF4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3090EA2A284A559C00D4DF4B /* Assets.xcassets */; };
@@ -17,8 +18,8 @@
 		3090EA47284A559C00D4DF4B /* ContactsManagerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA46284A559C00D4DF4B /* ContactsManagerUITests.swift */; };
 		3090EA49284A559C00D4DF4B /* ContactsManagerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA48284A559C00D4DF4B /* ContactsManagerUITestsLaunchTests.swift */; };
 		3090EA58284B869D00D4DF4B /* GoogleSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA57284B869D00D4DF4B /* GoogleSync.swift */; };
-		3090EA5D284B88E300D4DF4B /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA5C284B88E300D4DF4B /* Contacts.swift */; };
-		3090EA5F284B929B00D4DF4B /* ContactsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA5E284B929B00D4DF4B /* ContactsDetail.swift */; };
+		3090EA5D284B88E300D4DF4B /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA5C284B88E300D4DF4B /* ContactsView.swift */; };
+		3090EA5F284B929B00D4DF4B /* ContactsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA5E284B929B00D4DF4B /* ContactsDetailView.swift */; };
 		3090EA61284B932100D4DF4B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA60284B932100D4DF4B /* Utils.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3090EA23284A559B00D4DF4B /* ContactsManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactsManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManagerApp.swift; sourceTree = "<group>"; };
 		3090EA28284A559B00D4DF4B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,8 +55,8 @@
 		3090EA46284A559C00D4DF4B /* ContactsManagerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManagerUITests.swift; sourceTree = "<group>"; };
 		3090EA48284A559C00D4DF4B /* ContactsManagerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManagerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3090EA57284B869D00D4DF4B /* GoogleSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSync.swift; sourceTree = "<group>"; };
-		3090EA5C284B88E300D4DF4B /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
-		3090EA5E284B929B00D4DF4B /* ContactsDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsDetail.swift; sourceTree = "<group>"; };
+		3090EA5C284B88E300D4DF4B /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		3090EA5E284B929B00D4DF4B /* ContactsDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsDetailView.swift; sourceTree = "<group>"; };
 		3090EA60284B932100D4DF4B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -163,8 +165,8 @@
 		3090EA59284B86CA00D4DF4B /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				3090EA5C284B88E300D4DF4B /* Contacts.swift */,
-				3090EA5E284B929B00D4DF4B /* ContactsDetail.swift */,
+				3090EA5C284B88E300D4DF4B /* ContactsView.swift */,
+				3090EA5E284B929B00D4DF4B /* ContactsDetailView.swift */,
 				3090EA60284B932100D4DF4B /* Utils.swift */,
 			);
 			path = Contacts;
@@ -173,6 +175,7 @@
 		3090EA5B284B888F00D4DF4B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				3065A10B284D4C1100DF370F /* SettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -309,11 +312,12 @@
 			files = (
 				3090EA58284B869D00D4DF4B /* GoogleSync.swift in Sources */,
 				3090EA30284A559C00D4DF4B /* Persistence.swift in Sources */,
-				3090EA5D284B88E300D4DF4B /* Contacts.swift in Sources */,
+				3090EA5D284B88E300D4DF4B /* ContactsView.swift in Sources */,
+				3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */,
 				3090EA29284A559B00D4DF4B /* ContentView.swift in Sources */,
 				3090EA33284A559C00D4DF4B /* ContactsManager.xcdatamodeld in Sources */,
 				3090EA27284A559B00D4DF4B /* ContactsManagerApp.swift in Sources */,
-				3090EA5F284B929B00D4DF4B /* ContactsDetail.swift in Sources */,
+				3090EA5F284B929B00D4DF4B /* ContactsDetailView.swift in Sources */,
 				3090EA61284B932100D4DF4B /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

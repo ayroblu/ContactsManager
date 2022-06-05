@@ -1,5 +1,5 @@
 //
-//  Contacts.swift
+//  ContactsView.swift
 //  ContactsManager
 //
 //  Created by Ben Lu on 04/06/2022.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct Contacts: View {
+struct ContactsView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
@@ -21,7 +21,7 @@ struct Contacts: View {
             List {
                 ForEach(items) { item in
                     NavigationLink {
-                        ContactsDetail(item: item)
+                        ContactsDetailView(item: item)
                     } label: {
                         Text(item.timestamp!, formatter: itemFormatter)
                     }
@@ -76,6 +76,6 @@ struct Contacts: View {
 
 struct Contacts_Previews: PreviewProvider {
     static var previews: some View {
-        Contacts().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContactsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
