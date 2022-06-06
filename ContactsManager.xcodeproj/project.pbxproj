@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
+		3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10E284D607400DF370F /* DeleteConfirmationView.swift */; };
 		3090EA27284A559B00D4DF4B /* ContactsManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */; };
 		3090EA29284A559B00D4DF4B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA28284A559B00D4DF4B /* ContentView.swift */; };
 		3090EA2B284A559C00D4DF4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3090EA2A284A559C00D4DF4B /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3065A10E284D607400DF370F /* DeleteConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationView.swift; sourceTree = "<group>"; };
 		3090EA23284A559B00D4DF4B /* ContactsManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactsManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManagerApp.swift; sourceTree = "<group>"; };
 		3090EA28284A559B00D4DF4B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -85,6 +87,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3065A10D284D602000DF370F /* SharedComponents */ = {
+			isa = PBXGroup;
+			children = (
+				3065A10E284D607400DF370F /* DeleteConfirmationView.swift */,
+			);
+			path = SharedComponents;
+			sourceTree = "<group>";
+		};
 		3090EA1A284A559B00D4DF4B = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +165,7 @@
 		3090EA56284B866200D4DF4B /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				3065A10D284D602000DF370F /* SharedComponents */,
 				3090EA5B284B888F00D4DF4B /* Settings */,
 				3090EA59284B86CA00D4DF4B /* Contacts */,
 				3090EA55284B85F200D4DF4B /* DataSync */,
@@ -315,6 +326,7 @@
 				3090EA5D284B88E300D4DF4B /* ContactsView.swift in Sources */,
 				3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */,
 				3090EA29284A559B00D4DF4B /* ContentView.swift in Sources */,
+				3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */,
 				3090EA33284A559C00D4DF4B /* ContactsManager.xcdatamodeld in Sources */,
 				3090EA27284A559B00D4DF4B /* ContactsManagerApp.swift in Sources */,
 				3090EA5F284B929B00D4DF4B /* ContactsDetailView.swift in Sources */,
