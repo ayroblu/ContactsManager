@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
 		3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10E284D607400DF370F /* DeleteConfirmationView.swift */; };
+		3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A110284EAEB400DF370F /* ContactsSync.swift */; };
 		3090EA27284A559B00D4DF4B /* ContactsManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */; };
 		3090EA29284A559B00D4DF4B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA28284A559B00D4DF4B /* ContentView.swift */; };
 		3090EA2B284A559C00D4DF4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3090EA2A284A559C00D4DF4B /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3065A10E284D607400DF370F /* DeleteConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationView.swift; sourceTree = "<group>"; };
+		3065A110284EAEB400DF370F /* ContactsSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
 		3090EA23284A559B00D4DF4B /* ContactsManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactsManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManagerApp.swift; sourceTree = "<group>"; };
 		3090EA28284A559B00D4DF4B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				3090EA57284B869D00D4DF4B /* GoogleSync.swift */,
+				3065A110284EAEB400DF370F /* ContactsSync.swift */,
 			);
 			path = DataSync;
 			sourceTree = "<group>";
@@ -201,6 +204,8 @@
 				3090EA1F284A559B00D4DF4B /* Sources */,
 				3090EA20284A559B00D4DF4B /* Frameworks */,
 				3090EA21284A559B00D4DF4B /* Resources */,
+				30DF2545289553D300B0B54A /* Run Script - swift-format */,
+				30DF25462895540A00B0B54A /* Run Script - swift-lint */,
 			);
 			buildRules = (
 			);
@@ -316,6 +321,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		30DF2545289553D300B0B54A /* Run Script - swift-format */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script - swift-format";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swift-format >/dev/null; then\n    swift-format -m format -i -r --configuration swift-format-configuration.json ${PROJECT_DIR}\nelse\n    echo \"error: swift-format not installed\"\n    exit 1\nfi\n";
+		};
+		30DF25462895540A00B0B54A /* Run Script - swift-lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script - swift-lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3090EA1F284A559B00D4DF4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -328,6 +372,7 @@
 				3090EA29284A559B00D4DF4B /* ContentView.swift in Sources */,
 				3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */,
 				3090EA33284A559C00D4DF4B /* ContactsManager.xcdatamodeld in Sources */,
+				3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */,
 				3090EA27284A559B00D4DF4B /* ContactsManagerApp.swift in Sources */,
 				3090EA5F284B929B00D4DF4B /* ContactsDetailView.swift in Sources */,
 				3090EA61284B932100D4DF4B /* Utils.swift in Sources */,
@@ -494,6 +539,7 @@
 				DEVELOPMENT_TEAM = MT8GVH9FL2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSContactsUsageDescription = "This is necessary for providing functionality relating to contacts on your device";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -523,6 +569,7 @@
 				DEVELOPMENT_TEAM = MT8GVH9FL2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSContactsUsageDescription = "This is necessary for providing functionality relating to contacts on your device";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
