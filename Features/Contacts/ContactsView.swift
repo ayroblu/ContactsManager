@@ -5,6 +5,7 @@
 //  Created by Ben Lu on 04/06/2022.
 //
 
+import Contacts
 import CoreData
 import SwiftUI
 
@@ -16,22 +17,26 @@ struct ContactsView: View {
     animation: .default)
   private var items: FetchedResults<Item>
   @State private var searchText = ""
+  let contactsMetaData: ContactsMetaData = getContactsMetaData()
 
   var body: some View {
     NavigationView {
       List {
-        ForEach(items) { item in
+        Label("Lightning", systemImage: "bolt.fill")
+        ForEach(contactsMetaData.contacts) { item in
           DeleteConfirmationView(
             buttonText: "Delete", confirmationText: "Delete Contact",
             action: {
-              deleteItems(items: [item])
+              // deleteItems(items: [item])
             }
           ) {
             NavigationLink {
               ContactsDetailView(item: item)
             } label: {
-              if let timestamp = item.timestamp {
-                Text(timestamp, formatter: itemFormatter)
+              if let contactName = CNContactFormatter.string(
+                from: item.contactData, style: .fullName)
+              {
+                Text(contactName)
               } else {
                 Text("deleting")
               }
@@ -42,7 +47,6 @@ struct ContactsView: View {
               }
             }
           }
-
         }
       }
       .navigationTitle("Contacts")

@@ -28,6 +28,14 @@ TODO
 
 Development
 -----------
+### Of note
+
+- Setup permissions
+  - https://developer.apple.com/documentation/contacts/requesting_authorization_to_access_contacts
+  - https://useyourloaf.com/blog/xcode-13-missing-info.plist/
+- Random warnings when running in mac target
+  - https://stackoverflow.com/questions/70985060/im-trying-to-run-an-app-but-im-getting-an-error-which-says-could-not-find-trans
+
 ### Swift Format
 
 Setup:
@@ -67,6 +75,10 @@ else
     exit 1
 fi
 ```
+
+### Keyboard shortcuts
+
+- ⌘⌥⌃/ - Search Documentation for Selected Text (Help Menu)
 
 Reference
 ---------
