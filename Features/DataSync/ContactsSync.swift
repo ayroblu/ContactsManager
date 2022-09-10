@@ -15,13 +15,9 @@ func getContactsMetaData() -> ContactsMetaData {
   var contactsMetaData = ContactsMetaData(
     groups: [], containers: [], contactsById: [String: Contact]())
   contactStore.requestAccess(for: CNEntityType.contacts) { isGranted, error in
-    //    contactsMetaData.contacts.append(Contact())
-    print("isGranted", isGranted, "; error", error as Any)
     do {
       let groups = try contactStore.groups(matching: nil)
-      print(groups.map { c in c.name })
       let containers = try contactStore.containers(matching: nil)
-      print("containers", containers)
       contactsMetaData.containers = containers
       contactsMetaData.groups = groups
       try containers.forEach { container in
@@ -37,23 +33,11 @@ func getContactsMetaData() -> ContactsMetaData {
           }
         }
       }
-      //      var contacts: [CNContact] = []
-      //      try contactStore.enumerateContacts(with: request) {
-      //        (contact, stop) in
-      //        // Array containing all unified contacts from everywhere
-      //        contacts.append(contact)
-      //      }
-      //      print(
-      //        "contacts",
-      //        contacts.map { c in CNContactFormatter.string(from: c, style: .fullName) })
-
       try groups.forEach { group in
         let predicate = CNContact.predicateForContactsInGroup(withIdentifier: group.identifier)
         let contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: keys)
         contacts.forEach { contact in
-          if var contact = contactsMetaData.contactsById[contact.identifier] {
-            contact.groups.append(group)
-          }
+          contactsMetaData.contactsById[contact.identifier]?.groups.append(group)
         }
       }
     } catch let error {
@@ -68,13 +52,27 @@ struct ContactsMetaData {
   var containers: [CNContainer]
   var contactsById: [String: Contact]
   var contacts: [Contact] {
-    contactsById.map { $0.value }.sort(by: (a, b) -> a > b)
+    contactsById.map { $0.value }.sorted()
   }
 }
 
-struct Contact: Identifiable {
-  var id: String { contactData.identifier }
+struct Contact {
   var contactData: CNContact
   var groups: [CNGroup]
   var containers: [CNContainer]
+
+  func toMaybeName() -> String? {
+    CNContactFormatter.string(from: contactData, style: .fullName)
+  }
+}
+extension Contact: Identifiable {
+  var id: String { contactData.identifier }
+}
+extension CNGroup: Identifiable {
+  public var id: String { identifier }
+}
+extension Contact: Comparable {
+  static func < (lhs: Contact, rhs: Contact) -> Bool {
+    lhs.toMaybeName() ?? "" < rhs.toMaybeName() ?? ""
+  }
 }

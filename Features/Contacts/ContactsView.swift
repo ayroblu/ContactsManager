@@ -22,30 +22,39 @@ struct ContactsView: View {
   var body: some View {
     NavigationView {
       List {
-        Label("Lightning", systemImage: "bolt.fill")
-        ForEach(contactsMetaData.contacts) { item in
-          DeleteConfirmationView(
-            buttonText: "Delete", confirmationText: "Delete Contact",
-            action: {
-              // deleteItems(items: [item])
-            }
-          ) {
-            NavigationLink {
-              ContactsDetailView(item: item)
-            } label: {
-              if let contactName = CNContactFormatter.string(
-                from: item.contactData, style: .fullName)
-              {
-                Text(contactName)
-              } else {
-                Text("deleting")
+        ForEach(contactsMetaData.groups) { group in
+          let contacts = contactsMetaData.contacts.filter {
+            if $0.groups.count > 1 { print("contact groups", $0.groups) }
+            return $0.groups.contains(where: { $0.identifier == group.identifier })
+          }
+          Section {
+            ForEach(contacts) { item in
+              DeleteConfirmationView(
+                buttonText: "Delete", confirmationText: "Delete Contact",
+                action: {
+                  // deleteItems(items: [item])
+                }
+              ) {
+                NavigationLink {
+                  ContactsDetailView(item: item)
+                } label: {
+                  if let contactName = CNContactFormatter.string(
+                    from: item.contactData, style: .fullName)
+                  {
+                    Text(contactName)
+                  } else {
+                    Text("deleting")
+                  }
+                }
+                .swipeActions(edge: .leading) {
+                  Button("Edit Tags") {
+                    print("hi")
+                  }
+                }
               }
             }
-            .swipeActions(edge: .leading) {
-              Button("Edit Tags") {
-                print("hi")
-              }
-            }
+          } header: {
+            Text("\(group.name) (\(contacts.count))")
           }
         }
       }
