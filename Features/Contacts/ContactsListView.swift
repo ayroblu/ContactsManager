@@ -11,9 +11,11 @@ import SwiftUI
 struct ContactsListView: View {
   let navigationTitle: String
   let contacts: [Contact]
+  let container: CNContainer
   let allGroups: [CNGroup]
-  let contactsMetaData: ContactsMetaData
 
+  @Environment(\.editMode) private var editMode
+  @EnvironmentObject var contactsContext: ContactsContext
   @State private var searchText = ""
   @State private var selectedContactIds: Set<String> = []
   @State private var isShowingAddToGroupSheet: Bool = false
@@ -41,7 +43,7 @@ struct ContactsListView: View {
     .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
     .toolbar {
       ToolbarItemGroup(placement: .navigationBarTrailing) {
-        if selectedContactIds.count > 0 {
+        if selectedContactIds.count > 0 && editMode?.wrappedValue == .active {
           getAddToGroupButton()
         }
         EditButton()
@@ -55,7 +57,7 @@ struct ContactsListView: View {
     }
     .sheet(isPresented: $isShowingAddToGroupSheet) {
       let contacts = Array(
-        selectedContactIds.compactMap { contactsMetaData.contactsById[$0] })
+        selectedContactIds.compactMap { contactsContext.contactsMetaData.contactsById[$0] })
       let selectedGroups = allGroups.reduce([String: SelectSelection]()) {
         (result, nextGroup) -> [String: SelectSelection] in
         var result = result
@@ -67,9 +69,15 @@ struct ContactsListView: View {
         return result
       }
       AddToGroupView(
-        contacts: Array(selectedContactIds.compactMap { contactsMetaData.contactsById[$0] }),
+        contacts: Array(
+          selectedContactIds.compactMap { contactsContext.contactsMetaData.contactsById[$0] }),
+        container: container,
         groups: allGroups, initialSelectedGroups: selectedGroups,
-        isShowing: $isShowingAddToGroupSheet
+        isShowing: $isShowingAddToGroupSheet,
+        onSave: {
+          selectedContactIds = []
+          editMode?.wrappedValue = .inactive
+        }
       )
     }
   }
@@ -91,7 +99,9 @@ struct ContactsListView: View {
 struct ContactsListView_Previews: PreviewProvider {
   static var previews: some View {
     ContactsListView(
-      navigationTitle: "Preview", contacts: [], allGroups: [],
-      contactsMetaData: ContactsMetaData(containers: [], contactsById: [:]))
+      navigationTitle: "Preview", contacts: [], container: CNContainer(), allGroups: []
+    )
+    .environmentObject(
+      ContactsContext(contactsMetaData: ContactsMetaData(containers: [], contactsById: [:])))
   }
 }

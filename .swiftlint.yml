@@ -7,3 +7,4 @@ disabled_rules:
   - closure_parameter_position
 opt_in_rules:
   - unused_import
+force_cast: warning

@@ -10,21 +10,27 @@ import SwiftUI
 
 struct AddToGroupView: View {
   let contacts: [Contact]
+  let container: CNContainer
   let groups: [CNGroup]
   let initialSelectedGroups: [String: SelectSelection]
+  let onSave: () -> Void
 
+  @EnvironmentObject var contactsContext: ContactsContext
   @State var newGroups: [String] = []
   @State var selectedGroups: [String: SelectSelection]
   @Binding var isShowing: Bool
 
   init(
-    contacts: [Contact], groups: [CNGroup], initialSelectedGroups: [String: SelectSelection],
-    isShowing: Binding<Bool>
+    contacts: [Contact], container: CNContainer, groups: [CNGroup],
+    initialSelectedGroups: [String: SelectSelection],
+    isShowing: Binding<Bool>, onSave: @escaping () -> Void
   ) {
     self.contacts = contacts
+    self.container = container
     self.groups = groups
     self.selectedGroups = initialSelectedGroups
     self.initialSelectedGroups = initialSelectedGroups
+    self.onSave = onSave
     self._isShowing = isShowing
   }
 
@@ -52,12 +58,45 @@ struct AddToGroupView: View {
             Text("Cancel")
           },
           trailing: Button(action: {
-            print("save", getDiffGroups())
-            isShowing = false
+            saveGroups()
           }) {
             Text("Save").bold()
           })
     }
+  }
+
+  private func saveGroups() {
+    let diffGroups = getDiffGroups()
+    for (groupId, sel) in diffGroups {
+      do {
+        if let group = groups.first(where: { group in group.id == groupId }) {
+          switch sel {
+          case .Unselected:
+            try removeContacts(contacts.map { $0.contactData }, from: [group])
+          case .Selected:
+            try addContacts(contacts.map { $0.contactData }, to: [group])
+          case .MixedSelected:
+            print("This shouldn't happen")
+          }
+        }
+      } catch {
+        print(error)
+      }
+    }
+
+    let newGroupsToAdd = Set(newGroups).filter { $0.count > 0 }
+    for groupName in newGroupsToAdd {
+      do {
+        let group = try addGroup(groupName, toContainerWithIdentifier: container.identifier)
+        try addContacts(contacts.map { $0.contactData }, to: [group])
+      } catch {
+        print(error)
+      }
+    }
+
+    onSave()
+    contactsContext.contactsMetaData = getContactsMetaData()
+    isShowing = false
   }
 
   private func getDiffGroups() -> [String: SelectSelection] {

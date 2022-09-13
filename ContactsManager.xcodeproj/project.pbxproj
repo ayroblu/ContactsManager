@@ -17,6 +17,7 @@
 		3073589F28CFCE45005A6A72 /* MultiInsertListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589E28CFCE45005A6A72 /* MultiInsertListView.swift */; };
 		307358A328D07D1C005A6A72 /* ListButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307358A228D07D1C005A6A72 /* ListButtonStyle.swift */; };
 		307358A528D090D6005A6A72 /* SwiftCNContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307358A428D090D6005A6A72 /* SwiftCNContactViewController.swift */; };
+		307358A728D104E9005A6A72 /* ContactsContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307358A628D104E9005A6A72 /* ContactsContext.swift */; };
 		3090EA27284A559B00D4DF4B /* ContactsManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */; };
 		3090EA29284A559B00D4DF4B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA28284A559B00D4DF4B /* ContentView.swift */; };
 		3090EA2B284A559C00D4DF4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3090EA2A284A559C00D4DF4B /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		3073589E28CFCE45005A6A72 /* MultiInsertListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiInsertListView.swift; sourceTree = "<group>"; };
 		307358A228D07D1C005A6A72 /* ListButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListButtonStyle.swift; sourceTree = "<group>"; };
 		307358A428D090D6005A6A72 /* SwiftCNContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCNContactViewController.swift; sourceTree = "<group>"; };
+		307358A628D104E9005A6A72 /* ContactsContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsContext.swift; sourceTree = "<group>"; };
 		3090EA23284A559B00D4DF4B /* ContactsManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactsManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManagerApp.swift; sourceTree = "<group>"; };
 		3090EA28284A559B00D4DF4B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				3090EA60284B932100D4DF4B /* Utils.swift */,
 				3073589528CE7E21005A6A72 /* ContactsListView.swift */,
 				3073589A28CF4062005A6A72 /* AddToGroupView.swift */,
+				307358A628D104E9005A6A72 /* ContactsContext.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				3090EA58284B869D00D4DF4B /* GoogleSync.swift in Sources */,
 				3090EA30284A559C00D4DF4B /* Persistence.swift in Sources */,
 				3090EA5D284B88E300D4DF4B /* ContactsView.swift in Sources */,
+				307358A728D104E9005A6A72 /* ContactsContext.swift in Sources */,
 				3073589B28CF4062005A6A72 /* AddToGroupView.swift in Sources */,
 				307358A528D090D6005A6A72 /* SwiftCNContactViewController.swift in Sources */,
 				3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */,

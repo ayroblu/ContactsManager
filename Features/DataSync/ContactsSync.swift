@@ -56,11 +56,30 @@ func getContactsMetaData() -> ContactsMetaData {
 let ContactStore = CNContactStore()
 
 // Add to group, remove from group, add to new groups
-func addGroup(_ name: String, toContainerWithIdentifier identifier: String) throws {
+func addGroup(_ name: String, toContainerWithIdentifier identifier: String) throws -> CNGroup {
   let request = CNSaveRequest()
   let group = CNMutableGroup()
   group.name = name
   request.add(group, toContainerWithIdentifier: identifier)
+  try ContactStore.execute(request)
+  return group.copy() as! CNGroup
+}
+func addContacts(_ contacts: [CNContact], to groups: [CNGroup]) throws {
+  let request = CNSaveRequest()
+  for contact in contacts {
+    for group in groups {
+      request.addMember(contact, to: group)
+    }
+  }
+  try ContactStore.execute(request)
+}
+func removeContacts(_ contacts: [CNContact], from groups: [CNGroup]) throws {
+  let request = CNSaveRequest()
+  for contact in contacts {
+    for group in groups {
+      request.removeMember(contact, from: group)
+    }
+  }
   try ContactStore.execute(request)
 }
 

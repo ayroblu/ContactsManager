@@ -17,10 +17,11 @@ struct ContactsView: View {
     animation: .default)
   private var items: FetchedResults<Item>
   @State private var searchText = ""
-  let contactsMetaData: ContactsMetaData = getContactsMetaData()
+  @StateObject var contactsContext = ContactsContext()
 
   var body: some View {
     getVariation2()
+      .environmentObject(contactsContext)
   }
 
   private func getNavigationLinksForContacts(
@@ -30,8 +31,8 @@ struct ContactsView: View {
   {
     NavigationLink {
       ContactsListView(
-        navigationTitle: navigationTitle, contacts: contacts, allGroups: container.groups,
-        contactsMetaData: contactsMetaData)
+        navigationTitle: navigationTitle, contacts: contacts, container: container.container,
+        allGroups: container.groups)
     } label: {
       Text(navigationTitle)
     }
@@ -43,7 +44,7 @@ struct ContactsView: View {
   }
   private func getSection(container: Container) -> some View {
     Section {
-      let ungroupedContacts = contactsMetaData.contacts.filter {
+      let ungroupedContacts = contactsContext.contactsMetaData.contacts.filter {
         return $0.containers.contains(where: { $0.id == container.id })
           && $0.groups.count == 0
       }
@@ -55,7 +56,7 @@ struct ContactsView: View {
             "Not grouped (\(ungroupedContacts.count))")
       }
 
-      let contacts = contactsMetaData.contacts.filter {
+      let contacts = contactsContext.contactsMetaData.contacts.filter {
         return $0.containers.contains(where: { $0.id == container.id })
       }
       getNavigationLinksForContacts(
@@ -64,7 +65,7 @@ struct ContactsView: View {
         navigationTitle: "All (\(contacts.count))")
 
       ForEach(container.groups) { group in
-        let contacts = contactsMetaData.contacts.filter {
+        let contacts = contactsContext.contactsMetaData.contacts.filter {
           // if $0.groups.count > 1 { print("contact groups", $0.groups) }
           return $0.groups.contains(where: { $0.identifier == group.identifier })
         }
@@ -79,7 +80,7 @@ struct ContactsView: View {
   private func getVariation2() -> some View {
     NavigationView {
       List {
-        ForEach(contactsMetaData.containers) { container in
+        ForEach(contactsContext.contactsMetaData.containers) { container in
           getSection(container: container)
         }
       }
