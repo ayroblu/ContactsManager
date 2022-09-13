@@ -44,27 +44,31 @@ struct ContactsView: View {
   }
   private func getSection(container: Container) -> some View {
     Section {
-      let ungroupedContacts = contactsContext.contactsMetaData.contacts.filter {
-        return $0.containers.contains(where: { $0.id == container.id })
-          && $0.groups.count == 0
+      if hasSearchResults(groupName: "Not grouped") {
+        let ungroupedContacts = contactsContext.contactsMetaData.contacts.filter {
+          return $0.containers.contains(where: { $0.id == container.id })
+            && $0.groups.count == 0
+        }
+        if ungroupedContacts.count > 0 {
+          getNavigationLinksForContacts(
+            contacts: ungroupedContacts,
+            container: container,
+            navigationTitle:
+              "Not grouped (\(ungroupedContacts.count))")
+        }
       }
-      if ungroupedContacts.count > 0 {
+
+      if hasSearchResults(groupName: "All") {
+        let contacts = contactsContext.contactsMetaData.contacts.filter {
+          return $0.containers.contains(where: { $0.id == container.id })
+        }
         getNavigationLinksForContacts(
-          contacts: ungroupedContacts,
+          contacts: contacts,
           container: container,
-          navigationTitle:
-            "Not grouped (\(ungroupedContacts.count))")
+          navigationTitle: "All (\(contacts.count))")
       }
 
-      let contacts = contactsContext.contactsMetaData.contacts.filter {
-        return $0.containers.contains(where: { $0.id == container.id })
-      }
-      getNavigationLinksForContacts(
-        contacts: contacts,
-        container: container,
-        navigationTitle: "All (\(contacts.count))")
-
-      ForEach(container.groups) { group in
+      ForEach(getSearchResults(groups: container.groups)) { group in
         let contacts = contactsContext.contactsMetaData.contacts.filter {
           // if $0.groups.count > 1 { print("contact groups", $0.groups) }
           return $0.groups.contains(where: { $0.identifier == group.identifier })
@@ -128,6 +132,25 @@ struct ContactsView: View {
         let nsError = error as NSError
         fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
       }
+    }
+  }
+
+  func getSearchResults(groups: [CNGroup]) -> [CNGroup] {
+    if searchText.isEmpty {
+      return groups
+    } else {
+      let lowercasedSearchText = searchText.lowercased()
+      return groups.filter { group in
+        return group.name.lowercased().contains(lowercasedSearchText)
+      }
+    }
+  }
+  func hasSearchResults(groupName: String) -> Bool {
+    if searchText.isEmpty {
+      return true
+    } else {
+      let lowercasedSearchText = searchText.lowercased()
+      return groupName.lowercased().contains(lowercasedSearchText)
     }
   }
 }

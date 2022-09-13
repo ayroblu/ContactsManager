@@ -6,10 +6,17 @@ App to manage contacts
 TODO
 ----
 
-1. Sync from google / local contacts
-2. Manage contacts with tags
-  - Checkbox - add tag
-  - Query language - filter by multiple tags, no tags
+1. Search filter groups
+  - (perhaps include contacts too)
+  - Performance
+2. Archive groups
+3. Handle delete groups
+4. Sort by members etc
+  - Stateful
+5. Track contacts for "recently changed"
+6. Performance, including on Contact Picker
+7. Handle permissions not given
+8. On macOS - pick first group for master detail view
 
 ### Fundamentals
 
