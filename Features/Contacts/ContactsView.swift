@@ -41,49 +41,46 @@ struct ContactsView: View {
       }
     }
   }
+  private func getSection(container: Container) -> some View {
+    Section {
+      let ungroupedContacts = contactsMetaData.contacts.filter {
+        return $0.containers.contains(where: { $0.id == container.id })
+          && $0.groups.count == 0
+      }
+      if ungroupedContacts.count > 0 {
+        getNavigationLinksForContacts(
+          contacts: ungroupedContacts,
+          container: container,
+          navigationTitle:
+            "Not grouped (\(ungroupedContacts.count))")
+      }
+
+      let contacts = contactsMetaData.contacts.filter {
+        return $0.containers.contains(where: { $0.id == container.id })
+      }
+      getNavigationLinksForContacts(
+        contacts: contacts,
+        container: container,
+        navigationTitle: "All (\(contacts.count))")
+
+      ForEach(container.groups) { group in
+        let contacts = contactsMetaData.contacts.filter {
+          // if $0.groups.count > 1 { print("contact groups", $0.groups) }
+          return $0.groups.contains(where: { $0.identifier == group.identifier })
+        }
+        getNavigationLinksForContacts(
+          contacts: contacts, container: container,
+          navigationTitle: "\(group.name) (\(contacts.count))")
+      }
+    } header: {
+      Text(container.container.name)
+    }
+  }
   private func getVariation2() -> some View {
     NavigationView {
       List {
-        Section {
-          ForEach(contactsMetaData.containers) { container in
-            let ungroupedContacts = contactsMetaData.contacts.filter {
-              return $0.containers.contains(where: { $0.id == container.id })
-                && $0.groups.count == 0
-            }
-            if ungroupedContacts.count > 0 {
-              getNavigationLinksForContacts(
-                contacts: ungroupedContacts,
-                container: container,
-                navigationTitle:
-                  "\(container.container.name) [not grouped] (\(ungroupedContacts.count))")
-            }
-          }
-          ForEach(contactsMetaData.containers) { container in
-            let contacts = contactsMetaData.contacts.filter {
-              return $0.containers.contains(where: { $0.id == container.id })
-            }
-            getNavigationLinksForContacts(
-              contacts: contacts,
-              container: container,
-              navigationTitle: "\(container.container.name) (\(contacts.count))")
-          }
-        } header: {
-          Text("Auto groups")
-        }
         ForEach(contactsMetaData.containers) { container in
-          Section {
-            ForEach(container.groups) { group in
-              let contacts = contactsMetaData.contacts.filter {
-                // if $0.groups.count > 1 { print("contact groups", $0.groups) }
-                return $0.groups.contains(where: { $0.identifier == group.identifier })
-              }
-              getNavigationLinksForContacts(
-                contacts: contacts, container: container,
-                navigationTitle: "\(group.name) (\(contacts.count))")
-            }
-          } header: {
-            Text(container.container.name)
-          }
+          getSection(container: container)
         }
       }
       .listStyle(.plain)

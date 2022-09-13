@@ -17,7 +17,8 @@ func getContactsMetaData() -> ContactsMetaData {
 
   let contactStore = CNContactStore()
   var contactsMetaData = ContactsMetaData(containers: [], contactsById: [String: Contact]())
-  contactStore.requestAccess(for: CNEntityType.contacts) { isGranted, error in
+  contactStore.requestAccess(for: CNEntityType.contacts) { _, error in
+    // _ -> isGranted
     do {
       let containers = try contactStore.containers(matching: nil)
       contactsMetaData.containers = try containers.map { container in
@@ -54,7 +55,8 @@ func getContactsMetaData() -> ContactsMetaData {
 }
 let ContactStore = CNContactStore()
 
-func addGroup(_ name: String, toContainerWithIdentifier identifier: String? = nil) throws {
+// Add to group, remove from group, add to new groups
+func addGroup(_ name: String, toContainerWithIdentifier identifier: String) throws {
   let request = CNSaveRequest()
   let group = CNMutableGroup()
   group.name = name
