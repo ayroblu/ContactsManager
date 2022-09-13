@@ -9,6 +9,7 @@ import Contacts
 import SwiftUI
 
 struct AddToGroupView: View {
+  let contacts: [Contact]
   let groups: [CNGroup]
 
   @State var newGroups: [String] = []
@@ -30,7 +31,7 @@ struct AddToGroupView: View {
         } header: {
           Text("Existing groups")
         }
-      }.listStyle(GroupedListStyle())
+      }.listStyle(.grouped)
         .navigationBarTitle(Text("Edit Groups"), displayMode: .inline)
         .navigationBarItems(
           leading: Button(action: {

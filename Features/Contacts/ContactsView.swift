@@ -23,12 +23,15 @@ struct ContactsView: View {
     getVariation2()
   }
 
-  private func getNavigationLinksForContacts(contacts: [Contact], navigationTitle: String)
+  private func getNavigationLinksForContacts(
+    contacts: [Contact], container: Container, navigationTitle: String
+  )
     -> some View
   {
     NavigationLink {
       ContactsListView(
-        navigationTitle: navigationTitle, contacts: contacts, allGroups: contactsMetaData.groups)
+        navigationTitle: navigationTitle, contacts: contacts, allGroups: container.groups,
+        contactsMetaData: contactsMetaData)
     } label: {
       Text(navigationTitle)
     }
@@ -41,29 +44,46 @@ struct ContactsView: View {
   private func getVariation2() -> some View {
     NavigationView {
       List {
-        let ungroupedContacts = contactsMetaData.contacts.filter {
-          return $0.groups.count == 0
-        }
-        if ungroupedContacts.count > 0 {
-          Section {
-            getNavigationLinksForContacts(
-              contacts: ungroupedContacts,
-              navigationTitle: "Not Grouped (\(ungroupedContacts.count))")
-          } header: {
-            Text("Auto groups")
-          }
-        }
         Section {
-          ForEach(contactsMetaData.groups) { group in
+          ForEach(contactsMetaData.containers) { container in
+            let ungroupedContacts = contactsMetaData.contacts.filter {
+              return $0.containers.contains(where: { $0.id == container.id })
+                && $0.groups.count == 0
+            }
+            if ungroupedContacts.count > 0 {
+              getNavigationLinksForContacts(
+                contacts: ungroupedContacts,
+                container: container,
+                navigationTitle:
+                  "\(container.container.name) [not grouped] (\(ungroupedContacts.count))")
+            }
+          }
+          ForEach(contactsMetaData.containers) { container in
             let contacts = contactsMetaData.contacts.filter {
-              // if $0.groups.count > 1 { print("contact groups", $0.groups) }
-              return $0.groups.contains(where: { $0.identifier == group.identifier })
+              return $0.containers.contains(where: { $0.id == container.id })
             }
             getNavigationLinksForContacts(
-              contacts: contacts, navigationTitle: "\(group.name) (\(contacts.count))")
+              contacts: contacts,
+              container: container,
+              navigationTitle: "\(container.container.name) (\(contacts.count))")
           }
         } header: {
-          Text("Groups")
+          Text("Auto groups")
+        }
+        ForEach(contactsMetaData.containers) { container in
+          Section {
+            ForEach(container.groups) { group in
+              let contacts = contactsMetaData.contacts.filter {
+                // if $0.groups.count > 1 { print("contact groups", $0.groups) }
+                return $0.groups.contains(where: { $0.identifier == group.identifier })
+              }
+              getNavigationLinksForContacts(
+                contacts: contacts, container: container,
+                navigationTitle: "\(group.name) (\(contacts.count))")
+            }
+          } header: {
+            Text(container.container.name)
+          }
         }
       }
       .listStyle(.plain)
@@ -80,64 +100,6 @@ struct ContactsView: View {
     }
     // https://stackoverflow.com/questions/65316497/swiftui-navigationview-navigationbartitle-layoutconstraints-issue
     // .navigationViewStyle(StackNavigationViewStyle())
-  }
-
-  private func getVariation1() -> some View {
-    NavigationView {
-      List {
-        ForEach(contactsMetaData.groups) { group in
-          let contacts = contactsMetaData.contacts.filter {
-            if $0.groups.count > 1 { print("contact groups", $0.groups) }
-            return $0.groups.contains(where: { $0.identifier == group.identifier })
-          }
-          Section {
-            ForEach(contacts) { contact in
-              DeleteConfirmationView(
-                buttonText: "Delete", confirmationText: "Delete Contact",
-                action: {
-                  // deleteItems(items: [contact])
-                }
-              ) {
-                NavigationLink {
-                  ContactsDetailView(item: contact)
-                } label: {
-                  if let contactName = CNContactFormatter.string(
-                    from: contact.contactData, style: .fullName)
-                  {
-                    Text(contactName)
-                  } else {
-                    Text("deleting")
-                  }
-                }
-                .swipeActions(edge: .leading) {
-                  Button("Edit Tags") {
-                    print("hi")
-                  }
-                }
-              }
-            }
-          } header: {
-            Text("\(group.name) (\(contacts.count))")
-          }
-        }
-      }
-      .listStyle(.sidebar)
-      .navigationTitle("Contacts")
-      .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-      .toolbar {
-        //                ToolbarItem(placement: .navigationBarTrailing) {
-        //                    EditButton()
-        //                }
-        ToolbarItem {
-          Button(action: addItem) {
-            Label("Add Item", systemImage: "plus")
-          }
-        }
-      }
-      Text("Select a Contact")
-    }
-    // https://stackoverflow.com/questions/65316497/swiftui-navigationview-navigationbartitle-layoutconstraints-issue
-    .navigationViewStyle(StackNavigationViewStyle())
   }
 
   private func addItem() {

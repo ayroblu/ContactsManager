@@ -11,7 +11,6 @@ struct MultiSelectionListView<Selectable: Identifiable & Hashable>: View {
   let options: [Selectable]
   let optionToString: (Selectable) -> String
 
-  @Environment(\.colorScheme) var colorScheme
   @Binding var selected: Set<Selectable>
 
   var body: some View {
@@ -26,8 +25,9 @@ struct MultiSelectionListView<Selectable: Identifiable & Hashable>: View {
             Image(systemName: "circle").foregroundColor(.gray)
           }
           Text(optionToString(selectable))
+          Spacer()
         }
-      }.tag(selectable.id).foregroundStyle(colorScheme == .dark ? .white : .black)
+      }.tag(selectable.id).buttonStyle(ListButtonStyle())
     }
   }
 

@@ -6,23 +6,29 @@
 //
 
 import Contacts
+import ContactsUI
 
 func getContactsMetaData() -> ContactsMetaData {
   //  let request = CNContactFetchRequest(keysToFetch: keys)
-  let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName)]
+  let keys = [
+    CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+    CNContactViewController.descriptorForRequiredKeys(),
+  ]
 
   let contactStore = CNContactStore()
-  var contactsMetaData = ContactsMetaData(
-    groups: [], containers: [], contactsById: [String: Contact]())
+  var contactsMetaData = ContactsMetaData(containers: [], contactsById: [String: Contact]())
   contactStore.requestAccess(for: CNEntityType.contacts) { isGranted, error in
     do {
-      let groups = try contactStore.groups(matching: nil)
       let containers = try contactStore.containers(matching: nil)
-      contactsMetaData.containers = containers
-      contactsMetaData.groups = groups
-      try containers.forEach { container in
+      contactsMetaData.containers = try containers.map { container in
+        let groups = try contactStore.groups(
+          matching: CNGroup.predicateForGroupsInContainer(withIdentifier: container.identifier))
+        return Container(groups: groups, container: container)
+      }
+      try contactsMetaData.containers.forEach { container in
         let contacts = try contactStore.unifiedContacts(
-          matching: CNContact.predicateForContactsInContainer(withIdentifier: container.identifier),
+          matching: CNContact.predicateForContactsInContainer(
+            withIdentifier: container.container.identifier),
           keysToFetch: keys)
         contacts.forEach { contact in
           if var contact = contactsMetaData.contactsById[contact.identifier] {
@@ -32,12 +38,12 @@ func getContactsMetaData() -> ContactsMetaData {
               contactData: contact, groups: [], containers: [container])
           }
         }
-      }
-      try groups.forEach { group in
-        let predicate = CNContact.predicateForContactsInGroup(withIdentifier: group.identifier)
-        let contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: keys)
-        contacts.forEach { contact in
-          contactsMetaData.contactsById[contact.identifier]?.groups.append(group)
+        try container.groups.forEach { group in
+          let predicate = CNContact.predicateForContactsInGroup(withIdentifier: group.identifier)
+          let contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: keys)
+          contacts.forEach { contact in
+            contactsMetaData.contactsById[contact.identifier]?.groups.append(group)
+          }
         }
       }
     } catch let error {
@@ -46,10 +52,18 @@ func getContactsMetaData() -> ContactsMetaData {
   }
   return contactsMetaData
 }
+let ContactStore = CNContactStore()
+
+func addGroup(_ name: String, toContainerWithIdentifier identifier: String? = nil) throws {
+  let request = CNSaveRequest()
+  let group = CNMutableGroup()
+  group.name = name
+  request.add(group, toContainerWithIdentifier: identifier)
+  try ContactStore.execute(request)
+}
 
 struct ContactsMetaData {
-  var groups: [CNGroup]
-  var containers: [CNContainer]
+  var containers: [Container]
   var contactsById: [String: Contact]
   var contacts: [Contact] {
     contactsById.map { $0.value }.sorted()
@@ -59,7 +73,7 @@ struct ContactsMetaData {
 struct Contact {
   var contactData: CNContact
   var groups: [CNGroup]
-  var containers: [CNContainer]
+  var containers: [Container]
 
   func toMaybeName() -> String? {
     CNContactFormatter.string(from: contactData, style: .fullName)
@@ -68,7 +82,20 @@ struct Contact {
 extension Contact: Identifiable {
   var id: String { contactData.identifier }
 }
+extension Contact: Hashable {
+}
+
+struct Container: Hashable {
+  var groups: [CNGroup]
+  var container: CNContainer
+}
+extension Container: Identifiable {
+  public var id: String { container.identifier }
+}
 extension CNGroup: Identifiable {
+  public var id: String { identifier }
+}
+extension CNContainer: Identifiable {
   public var id: String { identifier }
 }
 extension Contact: Comparable {

@@ -12,7 +12,6 @@ struct MultiInsertListView: View {
 
   @Binding var options: [String]
   @State var text: String = ""
-  @Environment(\.colorScheme) var colorScheme
   @FocusState private var focusField: Int?
 
   var body: some View {
@@ -35,8 +34,9 @@ struct MultiInsertListView: View {
       HStack {
         Image(systemName: "plus.circle.fill").foregroundColor(.green)
         Text(insertLabel)
+        Spacer()
       }
-    }.foregroundStyle(colorScheme == .dark ? .white : .black)
+    }.buttonStyle(ListButtonStyle())
   }
 }
 
