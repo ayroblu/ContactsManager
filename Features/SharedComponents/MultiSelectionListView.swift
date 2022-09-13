@@ -11,17 +11,23 @@ struct MultiSelectionListView<Selectable: Identifiable & Hashable>: View {
   let options: [Selectable]
   let optionToString: (Selectable) -> String
 
-  @Binding var selected: Set<Selectable>
+  @Binding var selections: [Selectable.ID: SelectSelection]
 
   var body: some View {
     ForEach(options) { selectable in
       Button(action: { toggleSelection(selectable: selectable) }) {
         HStack {
-          if selected.contains { $0.id == selectable.id } {
+          let selection = selections[selectable.id]
+          switch selection {
+          case .Selected:
             Image(
               systemName: "checkmark.circle.fill"
             ).foregroundColor(.accentColor)
-          } else {
+          case .MixedSelected:
+            Image(
+              systemName: "minus.circle.fill"
+            ).foregroundColor(.accentColor)
+          case .Unselected, nil:
             Image(systemName: "circle").foregroundColor(.gray)
           }
           Text(optionToString(selectable))
@@ -32,13 +38,24 @@ struct MultiSelectionListView<Selectable: Identifiable & Hashable>: View {
   }
 
   private func toggleSelection(selectable: Selectable) {
-    if selected.contains(where: { $0.id == selectable.id }) {
-      selected.remove(selectable)
-    } else {
-      selected.insert(selectable)
+    let selection = selections[selectable.id]
+    switch selection {
+    case .Selected:
+      selections[selectable.id] = .Unselected
+    case .MixedSelected:
+      selections[selectable.id] = .Unselected
+    case .Unselected, nil:
+      selections[selectable.id] = .Selected
     }
   }
 }
+
+enum SelectSelection {
+  case Selected
+  case Unselected
+  case MixedSelected
+}
+typealias SelectionMap = [String: SelectSelection]
 
 struct MultiSelectionListView_Previews: PreviewProvider {
   static var previews: some View {
@@ -50,12 +67,12 @@ struct MultiSelectionListView_Previews: PreviewProvider {
 }
 
 private struct PreviewRender: View {
-  @State private var selected: Set<String> = []
+  @State private var selections: [String: SelectSelection] = [:]
 
   var body: some View {
     List {
       MultiSelectionListView(
-        options: ["First", "Second", "Third"], optionToString: { o in o }, selected: $selected)
+        options: ["First", "Second", "Third"], optionToString: { o in o }, selections: $selections)
     }
   }
 }

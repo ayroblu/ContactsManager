@@ -13,5 +13,6 @@ struct ListButtonStyle: ButtonStyle {
   func makeBody(configuration: Self.Configuration) -> some View {
     configuration.label
       .foregroundStyle(colorScheme == .dark ? .white : .black)
+      .contentShape(Rectangle())
   }
 }

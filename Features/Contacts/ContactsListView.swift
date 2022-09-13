@@ -42,18 +42,35 @@ struct ContactsListView: View {
     .toolbar {
       ToolbarItemGroup(placement: .navigationBarTrailing) {
         if selectedContactIds.count > 0 {
-          Button(action: { isShowingAddToGroupSheet.toggle() }) {
-            Label("Add to Group", systemImage: "plus.square.on.square")
-          }
-          .sheet(isPresented: $isShowingAddToGroupSheet) {
-            AddToGroupView(
-              contacts: Array(selectedContactIds.compactMap { contactsMetaData.contactsById[$0] }),
-              groups: allGroups,
-              isShowing: $isShowingAddToGroupSheet)
-          }
+          getAddToGroupButton()
         }
         EditButton()
       }
+    }
+  }
+
+  private func getAddToGroupButton() -> some View {
+    Button(action: { isShowingAddToGroupSheet.toggle() }) {
+      Label("Add to Group", systemImage: "plus.square.on.square")
+    }
+    .sheet(isPresented: $isShowingAddToGroupSheet) {
+      let contacts = Array(
+        selectedContactIds.compactMap { contactsMetaData.contactsById[$0] })
+      let selectedGroups = allGroups.reduce([String: SelectSelection]()) {
+        (result, nextGroup) -> [String: SelectSelection] in
+        var result = result
+        result[nextGroup.id] =
+          contacts.allSatisfy { $0.groups.contains(where: { nextGroup.id == $0.id }) }
+          ? SelectSelection.Selected
+          : contacts.contains { $0.groups.contains(where: { nextGroup.id == $0.id }) }
+            ? SelectSelection.MixedSelected : SelectSelection.Unselected
+        return result
+      }
+      AddToGroupView(
+        contacts: Array(selectedContactIds.compactMap { contactsMetaData.contactsById[$0] }),
+        groups: allGroups, initialSelectedGroups: selectedGroups,
+        isShowing: $isShowingAddToGroupSheet
+      )
     }
   }
 
