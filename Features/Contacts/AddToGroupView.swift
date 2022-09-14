@@ -9,7 +9,7 @@ import Contacts
 import SwiftUI
 
 struct AddToGroupView: View {
-  let contacts: [Contact]
+  let contacts: [CNContact]
   let container: CNContainer
   let groups: [CNGroup]
   let initialSelectedGroups: [String: SelectSelection]
@@ -21,7 +21,7 @@ struct AddToGroupView: View {
   @Binding var isShowing: Bool
 
   init(
-    contacts: [Contact], container: CNContainer, groups: [CNGroup],
+    contacts: [CNContact], container: CNContainer, groups: [CNGroup],
     initialSelectedGroups: [String: SelectSelection],
     isShowing: Binding<Bool>, onSave: @escaping () -> Void
   ) {
@@ -72,9 +72,9 @@ struct AddToGroupView: View {
         if let group = groups.first(where: { group in group.id == groupId }) {
           switch sel {
           case .Unselected:
-            try removeContacts(contacts.map { $0.contactData }, from: [group])
+            try removeContacts(contacts.map { $0 }, from: [group])
           case .Selected:
-            try addContacts(contacts.map { $0.contactData }, to: [group])
+            try addContacts(contacts.map { $0 }, to: [group])
           case .MixedSelected:
             print("This shouldn't happen")
           }
@@ -88,7 +88,7 @@ struct AddToGroupView: View {
     for groupName in newGroupsToAdd {
       do {
         let group = try addGroup(groupName, toContainerWithIdentifier: container.identifier)
-        try addContacts(contacts.map { $0.contactData }, to: [group])
+        try addContacts(contacts.map { $0 }, to: [group])
       } catch {
         print(error)
       }

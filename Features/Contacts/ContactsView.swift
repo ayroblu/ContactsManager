@@ -25,14 +25,12 @@ struct ContactsView: View {
   }
 
   private func getNavigationLinksForContacts(
-    contacts: [Contact], container: Container, navigationTitle: String
-  )
-    -> some View
-  {
+    contacts: [CNContact], container: CNContainer, groups: [CNGroup], navigationTitle: String
+  ) -> some View {
     NavigationLink {
       ContactsListView(
-        navigationTitle: navigationTitle, contacts: contacts, container: container.container,
-        allGroups: container.groups)
+        navigationTitle: navigationTitle, contacts: contacts, container: container,
+        allGroups: groups)
     } label: {
       Text(navigationTitle)
     }
@@ -42,53 +40,70 @@ struct ContactsView: View {
       }
     }
   }
-  private func getSection(container: Container) -> some View {
+  private func getSection(container: CNContainer) -> some View {
     Section {
+      let groups = contactsContext.contactsMetaData.getGroupsByContainerId(
+        containerId: container.identifier)
+      // getUngroupedContacts(forContainer: container, groups: groups)
       if hasSearchResults(groupName: "Not grouped") {
-        let ungroupedContacts = contactsContext.contactsMetaData.contacts.filter {
-          return $0.containers.contains(where: { $0.id == container.id })
-            && $0.groups.count == 0
-        }
+        let ungroupedContacts = contactsContext.contactsMetaData.getUngroupedContactsByContainerId(
+          containerId: container.id)
         if ungroupedContacts.count > 0 {
           getNavigationLinksForContacts(
             contacts: ungroupedContacts,
             container: container,
-            navigationTitle:
-              "Not grouped (\(ungroupedContacts.count))")
+            groups: groups,
+            navigationTitle: "Not grouped (\(ungroupedContacts.count))")
         }
       }
 
       if hasSearchResults(groupName: "All") {
-        let contacts = contactsContext.contactsMetaData.contacts.filter {
-          return $0.containers.contains(where: { $0.id == container.id })
-        }
+        let contacts = contactsContext.contactsMetaData.getContactsByContainerId(
+          containerId: container.id)
         getNavigationLinksForContacts(
           contacts: contacts,
           container: container,
+          groups: groups,
           navigationTitle: "All (\(contacts.count))")
       }
 
-      ForEach(getSearchResults(groups: container.groups)) { group in
-        let contacts = contactsContext.contactsMetaData.contacts.filter {
-          // if $0.groups.count > 1 { print("contact groups", $0.groups) }
-          return $0.groups.contains(where: { $0.identifier == group.identifier })
-        }
+      ForEach(getSearchResults(groups: groups)) { group in
+        let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
+          groupId: group.identifier)
         getNavigationLinksForContacts(
-          contacts: contacts, container: container,
+          contacts: contacts, container: container, groups: groups,
           navigationTitle: "\(group.name) (\(contacts.count))")
       }
     } header: {
-      Text(container.container.name)
+      Text(container.name)
     }
   }
+
+  private func getArchivedSection(container: CNContainer) -> some View {
+    Section {
+      let groups = contactsContext.contactsMetaData.getGroupsByContainerId(
+        containerId: container.identifier)
+      ForEach(getSearchResults(groups: groups)) { group in
+        let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
+          groupId: group.identifier)
+        getNavigationLinksForContacts(
+          contacts: contacts, container: container, groups: groups,
+          navigationTitle: "\(group.name) (\(contacts.count))")
+      }
+    } header: {
+      Text("Archived")
+    }
+  }
+
   private func getVariation2() -> some View {
     NavigationView {
       List {
         ForEach(contactsContext.contactsMetaData.containers) { container in
           getSection(container: container)
+          getArchivedSection(container: container)
         }
       }
-      .listStyle(.plain)
+      .listStyle(.sidebar)
       .navigationTitle("Contacts")
       .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
       .toolbar {

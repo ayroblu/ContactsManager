@@ -9,8 +9,8 @@ import Contacts
 import SwiftUI
 
 struct ContactsDetailView: View {
-  let item: Contact
+  let contact: CNContact
   var body: some View {
-    Text(CNContactFormatter.string(from: item.contactData, style: .fullName) ?? item.id)
+    Text(CNContactFormatter.string(from: contact, style: .fullName) ?? contact.identifier)
   }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContactsListView: View {
   let navigationTitle: String
-  let contacts: [Contact]
+  let contacts: [CNContact]
   let container: CNContainer
   let allGroups: [CNGroup]
 
@@ -24,9 +24,9 @@ struct ContactsListView: View {
   var body: some View {
     List(searchResults, selection: $selectedContactIds) { contact in
       if let contactName = CNContactFormatter.string(
-        from: contact.contactData, style: .fullName)
+        from: contact, style: .fullName)
       {
-        NavigationLink(destination: SwiftCNContactViewController(contact: contact.contactData)) {
+        NavigationLink(destination: SwiftCNContactViewController(contact: contact)) {
           Text(contactName)
         }
         // Not quite showing recycling sheet in the right way
@@ -57,20 +57,20 @@ struct ContactsListView: View {
     }
     .sheet(isPresented: $isShowingAddToGroupSheet) {
       let contacts = Array(
-        selectedContactIds.compactMap { contactsContext.contactsMetaData.contactsById[$0] })
+        selectedContactIds.compactMap { contactsContext.contactsMetaData.contactById[$0] })
       let selectedGroups = allGroups.reduce([String: SelectSelection]()) {
         (result, nextGroup) -> [String: SelectSelection] in
         var result = result
-        result[nextGroup.id] =
-          contacts.allSatisfy { $0.groups.contains(where: { nextGroup.id == $0.id }) }
-          ? SelectSelection.Selected
-          : contacts.contains { $0.groups.contains(where: { nextGroup.id == $0.id }) }
-            ? SelectSelection.MixedSelected : SelectSelection.Unselected
+        result[nextGroup.id] = getSelectSelection(
+          fromList: contacts,
+          getSet: { from in
+            contactsContext.contactsMetaData.groupIdsByContactId[from.identifier] ?? Set()
+          }, with: nextGroup.id)
         return result
       }
       AddToGroupView(
         contacts: Array(
-          selectedContactIds.compactMap { contactsContext.contactsMetaData.contactsById[$0] }),
+          selectedContactIds.compactMap { contactsContext.contactsMetaData.contactById[$0] }),
         container: container,
         groups: allGroups, initialSelectedGroups: selectedGroups,
         isShowing: $isShowingAddToGroupSheet,
@@ -82,14 +82,41 @@ struct ContactsListView: View {
     }
   }
 
-  var searchResults: [Contact] {
+  /**
+   * Algorithm for picking whether something is in all, none or some of a group, using a lookup dict
+   * Basically over 2+ items, if they have different membership, then return mixed, otherwise, need to go through the whole list to be sure
+   * Should be faster than allSatisfy + contains (for the mixed case especially)
+   */
+  private func getSelectSelection<From>(
+    fromList: [From], getSet: (From) -> Set<String>, with: String
+  ) -> SelectSelection {
+    var selectSelection: SelectSelection?
+    for from in fromList {
+      if getSet(from).contains(with) {
+        if selectSelection == SelectSelection.Unselected {
+          return SelectSelection.MixedSelected
+        } else if selectSelection == nil {
+          selectSelection = SelectSelection.Selected
+        }
+      } else {
+        if selectSelection == SelectSelection.Selected {
+          return SelectSelection.MixedSelected
+        } else if selectSelection == nil {
+          selectSelection = SelectSelection.Unselected
+        }
+      }
+    }
+    return selectSelection ?? SelectSelection.Unselected
+  }
+
+  var searchResults: [CNContact] {
     if searchText.isEmpty {
       return contacts
     } else {
       let lowercasedSearchText = searchText.lowercased()
       return contacts.filter { contact in
         let contactName =
-          CNContactFormatter.string(from: contact.contactData, style: .fullName) ?? ""
+          CNContactFormatter.string(from: contact, style: .fullName) ?? ""
         return contactName.lowercased().contains(lowercasedSearchText)
       }
     }
@@ -102,6 +129,6 @@ struct ContactsListView_Previews: PreviewProvider {
       navigationTitle: "Preview", contacts: [], container: CNContainer(), allGroups: []
     )
     .environmentObject(
-      ContactsContext(contactsMetaData: ContactsMetaData(containers: [], contactsById: [:])))
+      ContactsContext(contactsMetaData: ContactsMetaData()))
   }
 }
