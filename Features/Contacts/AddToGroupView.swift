@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AddToGroupView: View {
   let contacts: [CNContact]
-  let container: CNContainer
+  let containerId: String
   let groups: [CNGroup]
   let initialSelectedGroups: [String: SelectSelection]
   let onSave: () -> Void
@@ -21,12 +21,12 @@ struct AddToGroupView: View {
   @Binding var isShowing: Bool
 
   init(
-    contacts: [CNContact], container: CNContainer, groups: [CNGroup],
+    contacts: [CNContact], containerId: String, groups: [CNGroup],
     initialSelectedGroups: [String: SelectSelection],
     isShowing: Binding<Bool>, onSave: @escaping () -> Void
   ) {
     self.contacts = contacts
-    self.container = container
+    self.containerId = containerId
     self.groups = groups
     self.selectedGroups = initialSelectedGroups
     self.initialSelectedGroups = initialSelectedGroups
@@ -72,9 +72,9 @@ struct AddToGroupView: View {
         if let group = groups.first(where: { group in group.id == groupId }) {
           switch sel {
           case .Unselected:
-            try removeContacts(contacts.map { $0 }, from: [group])
+            try removeContacts(contacts, from: [group])
           case .Selected:
-            try addContacts(contacts.map { $0 }, to: [group])
+            try addContacts(contacts, to: [group])
           case .MixedSelected:
             print("This shouldn't happen")
           }
@@ -87,8 +87,8 @@ struct AddToGroupView: View {
     let newGroupsToAdd = Set(newGroups).filter { $0.count > 0 }
     for groupName in newGroupsToAdd {
       do {
-        let group = try addGroup(groupName, toContainerWithIdentifier: container.identifier)
-        try addContacts(contacts.map { $0 }, to: [group])
+        let group = try addGroup(groupName, toContainerWithIdentifier: containerId)
+        try addContacts(contacts, to: [group])
       } catch {
         print(error)
       }

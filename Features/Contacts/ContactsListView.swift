@@ -11,7 +11,7 @@ import SwiftUI
 struct ContactsListView: View {
   let navigationTitle: String
   let contacts: [CNContact]
-  let container: CNContainer
+  let containerId: String
   let allGroups: [CNGroup]
 
   @Environment(\.editMode) private var editMode
@@ -71,7 +71,7 @@ struct ContactsListView: View {
       AddToGroupView(
         contacts: Array(
           selectedContactIds.compactMap { contactsContext.contactsMetaData.contactById[$0] }),
-        container: container,
+        containerId: containerId,
         groups: allGroups, initialSelectedGroups: selectedGroups,
         isShowing: $isShowingAddToGroupSheet,
         onSave: {
@@ -126,7 +126,7 @@ struct ContactsListView: View {
 struct ContactsListView_Previews: PreviewProvider {
   static var previews: some View {
     ContactsListView(
-      navigationTitle: "Preview", contacts: [], container: CNContainer(), allGroups: []
+      navigationTitle: "Preview", contacts: [], containerId: "todo", allGroups: []
     )
     .environmentObject(
       ContactsContext(contactsMetaData: ContactsMetaData()))
