@@ -53,6 +53,53 @@ func getContactsMetaData() -> ContactsMetaData {
   }
   return contactsMetaData
 }
+
+func getContactsMetaData2() -> ContactsMetaData2 {
+  let keys = [
+    CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+    CNContactViewController.descriptorForRequiredKeys(),
+  ]
+
+  let contactStore = CNContactStore()
+  var contactsMetaData = ContactsMetaData2()
+  contactStore.requestAccess(for: CNEntityType.contacts) { _, error in
+    // _ -> isGranted
+    do {
+      let containers = try contactStore.containers(matching: nil)
+      contactsMetaData.containerById = Dictionary(
+        uniqueKeysWithValues: containers.map { ($0.identifier, $0) })
+      try containers.forEach { container in
+        let contacts = try contactStore.unifiedContacts(
+          matching: CNContact.predicateForContactsInContainer(
+            withIdentifier: container.identifier),
+          keysToFetch: keys)
+        contactsMetaData.contactIdsByContainerId[container.identifier] = contacts.map {
+          $0.identifier
+        }
+        for contact in contacts where contactsMetaData.contactById[contact.identifier] == nil {
+          contactsMetaData.contactById[contact.identifier] = contact
+        }
+
+        let groups = try contactStore.groups(
+          matching: CNGroup.predicateForGroupsInContainer(withIdentifier: container.identifier))
+        contactsMetaData.groupIdsByContainerId[container.identifier] = groups.map { $0.identifier }
+
+        for group in groups where contactsMetaData.groupById[group.identifier] == nil {
+          contactsMetaData.groupById[group.identifier] = group
+        }
+        for group in groups {
+          let predicate = CNContact.predicateForContactsInGroup(withIdentifier: group.identifier)
+          let contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: keys)
+          contactsMetaData.contactIdsByGroupId[group.identifier] = contacts.map { $0.identifier }
+        }
+      }
+    } catch let error {
+      print("unable to fetch contacts \(error)")
+    }
+  }
+  return contactsMetaData
+}
+
 let ContactStore = CNContactStore()
 
 // Add to group, remove from group, add to new groups
@@ -90,6 +137,30 @@ struct ContactsMetaData {
     contactsById.map { $0.value }.sorted()
   }
 }
+struct ContactsMetaData2 {
+  var containerById: [String: CNContainer] = [:]
+  var groupById: [String: CNGroup] = [:]
+  var contactById: [String: CNContact] = [:]
+  var groupIdsByContainerId: [String: [String]] = [:]
+  var contactIdsByContainerId: [String: [String]] = [:]
+  var contactIdsByGroupId: [String: [String]] = [:]
+
+  var containers: [CNContainer] {
+    containerById.map { $0.value }.sorted()
+  }
+  func groupsByContainerId(containerId: String) -> [CNGroup] {
+    let groupIds: [String] = groupIdsByContainerId[containerId] ?? []
+    return groupIds.compactMap { groupById[$0] }.sorted()
+  }
+  func contactsByContainerId(containerId: String) -> [CNContact] {
+    let contactIds: [String] = contactIdsByContainerId[containerId] ?? []
+    return contactIds.compactMap { contactById[$0] }.sorted()
+  }
+  func contactsByGroupId(groupId: String) -> [CNContact] {
+    let contactIds: [String] = contactIdsByGroupId[groupId] ?? []
+    return contactIds.compactMap { contactById[$0] }.sorted()
+  }
+}
 
 struct Contact {
   var contactData: CNContact
@@ -118,6 +189,24 @@ extension CNGroup: Identifiable {
 }
 extension CNContainer: Identifiable {
   public var id: String { identifier }
+}
+extension CNContainer: Comparable {
+  public static func < (lhs: CNContainer, rhs: CNContainer) -> Bool {
+    lhs.name < rhs.name
+  }
+}
+extension CNGroup: Comparable {
+  public static func < (lhs: CNGroup, rhs: CNGroup) -> Bool {
+    lhs.name < rhs.name
+  }
+}
+extension CNContact: Comparable {
+  func toMaybeName() -> String? {
+    CNContactFormatter.string(from: self, style: .fullName)
+  }
+  public static func < (lhs: CNContact, rhs: CNContact) -> Bool {
+    lhs.toMaybeName() ?? "" < rhs.toMaybeName() ?? ""
+  }
 }
 extension Contact: Comparable {
   static func < (lhs: Contact, rhs: Contact) -> Bool {
