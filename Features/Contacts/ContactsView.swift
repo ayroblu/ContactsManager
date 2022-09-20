@@ -20,8 +20,26 @@ struct ContactsView: View {
   @StateObject var contactsContext = ContactsContext()
 
   var body: some View {
-    getVariation2()
-      .environmentObject(contactsContext)
+    NavigationView {
+      List {
+        ForEach(contactsContext.contactsMetaData.containers) { container in
+          getSection(container: container)
+          ArchiveSection(containerId: container.id, searchText: searchText)
+        }
+      }
+      .listStyle(.plain)
+      .navigationTitle("Contacts")
+      .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+      .toolbar {
+        ToolbarItemGroup(placement: .navigationBarTrailing) {
+          EditButton()
+        }
+      }
+      Text("Select a Contact")
+    }
+    // https://stackoverflow.com/questions/65316497/swiftui-navigationview-navigationbartitle-layoutconstraints-issue
+    // .navigationViewStyle(StackNavigationViewStyle())
+    .environmentObject(contactsContext)
   }
 
   private func getSection(container: CNContainer) -> some View {
@@ -56,35 +74,14 @@ struct ContactsView: View {
           groupId: group.identifier)
         ContactsNav(
           contacts: contacts, containerId: container.id, groups: groups,
-          navigationTitle: "\(group.name) (\(contacts.count))")
+          navigationTitle: "\(group.name) (\(contacts.count))",
+          group: group
+        )
       }
+      //      .onDelete { a in print(a) }
     } header: {
       Text(container.name)
     }
-  }
-
-  private func getVariation2() -> some View {
-    NavigationView {
-      List {
-        ForEach(contactsContext.contactsMetaData.containers) { container in
-          getSection(container: container)
-          ArchiveSection(containerId: container.id, searchText: searchText)
-        }
-      }
-      .listStyle(.plain)
-      .navigationTitle("Contacts")
-      .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-      .toolbar {
-        ToolbarItem {
-          Button(action: addItem) {
-            Label("Add Item", systemImage: "plus")
-          }
-        }
-      }
-      Text("Select a Contact")
-    }
-    // https://stackoverflow.com/questions/65316497/swiftui-navigationview-navigationbartitle-layoutconstraints-issue
-    // .navigationViewStyle(StackNavigationViewStyle())
   }
 
   private func addItem() {
@@ -172,24 +169,42 @@ struct ArchiveSection: View {
   }
 }
 
-struct ContactsNav: View {
+private struct ContactsNav: View {
   let contacts: [CNContact]
   let containerId: String
   let groups: [CNGroup]
   let navigationTitle: String
+  var group: CNGroup?
+
+  @State private var isShowingAlert = false
+  @State private var alertInput = ""
 
   var body: some View {
+    if let group = group {
+      getLink()
+        .textFieldAlert(
+          isShowing: $isShowingAlert, text: $alertInput,
+          onSave: { editGroupNameSafe(group: group, name: alertInput) }, title: "Edit Group Name"
+        )
+        .swipeActions(edge: .leading) {
+          Button("Edit") {
+            alertInput = group.name
+            isShowingAlert = true
+          }
+          .tint(.yellow)
+        }
+    } else {
+      getLink()
+    }
+  }
+
+  private func getLink() -> some View {
     NavigationLink {
       ContactsListView(
         navigationTitle: navigationTitle, contacts: contacts, containerId: containerId,
         allGroups: groups)
     } label: {
       Text(navigationTitle)
-    }
-    .swipeActions(edge: .leading) {
-      Button("Edit Tags") {
-        print("hi")
-      }
     }
   }
 }

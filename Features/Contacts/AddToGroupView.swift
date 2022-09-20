@@ -87,15 +87,16 @@ struct AddToGroupView: View {
     let newGroupsToAdd = Set(newGroups).filter { $0.count > 0 }
     for groupName in newGroupsToAdd {
       do {
-        let group = try addGroup(groupName, toContainerWithIdentifier: containerId)
-        try addContacts(contacts, to: [group])
+        if let group = try addGroup(groupName, toContainerWithIdentifier: containerId) {
+          try addContacts(contacts, to: [group])
+        }
       } catch {
         print(error)
       }
     }
 
     onSave()
-    contactsContext.contactsMetaData = getContactsMetaData()
+    contactsContext.refresh()
     isShowing = false
   }
 

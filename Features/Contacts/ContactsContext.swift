@@ -9,8 +9,13 @@ import SwiftUI
 
 class ContactsContext: ObservableObject {
   @Published var contactsMetaData: ContactsMetaData
+  let getData: () -> ContactsMetaData
 
-  init(contactsMetaData: ContactsMetaData = getContactsMetaData()) {
-    self.contactsMetaData = contactsMetaData
+  init(getData: @escaping () -> ContactsMetaData = getContactsMetaData) {
+    self.getData = getData
+    self.contactsMetaData = getData()
+  }
+  public func refresh() {
+    self.contactsMetaData = getData()
   }
 }

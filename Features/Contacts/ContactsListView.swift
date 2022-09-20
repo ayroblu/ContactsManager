@@ -129,6 +129,6 @@ struct ContactsListView_Previews: PreviewProvider {
       navigationTitle: "Preview", contacts: [], containerId: "todo", allGroups: []
     )
     .environmentObject(
-      ContactsContext(contactsMetaData: ContactsMetaData()))
+      ContactsContext(getData: { ContactsMetaData() }))
   }
 }

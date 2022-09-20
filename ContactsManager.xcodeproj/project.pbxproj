@@ -10,6 +10,7 @@
 		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
 		3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10E284D607400DF370F /* DeleteConfirmationView.swift */; };
 		3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A110284EAEB400DF370F /* ContactsSync.swift */; };
+		3070BEE328DA7BDD00914C52 /* AlertInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3070BEE228DA7BDD00914C52 /* AlertInputViewController.swift */; };
 		3073589628CE7E21005A6A72 /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589528CE7E21005A6A72 /* ContactsListView.swift */; };
 		3073589928CE82B4005A6A72 /* FuzzyMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589828CE82B4005A6A72 /* FuzzyMatch.swift */; };
 		3073589B28CF4062005A6A72 /* AddToGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589A28CF4062005A6A72 /* AddToGroupView.swift */; };
@@ -18,6 +19,7 @@
 		307358A328D07D1C005A6A72 /* ListButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307358A228D07D1C005A6A72 /* ListButtonStyle.swift */; };
 		307358A528D090D6005A6A72 /* SwiftCNContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307358A428D090D6005A6A72 /* SwiftCNContactViewController.swift */; };
 		307358A728D104E9005A6A72 /* ContactsContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307358A628D104E9005A6A72 /* ContactsContext.swift */; };
+		307358A928D24A5D005A6A72 /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307358A828D24A5D005A6A72 /* TextFieldAlert.swift */; };
 		3090EA27284A559B00D4DF4B /* ContactsManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */; };
 		3090EA29284A559B00D4DF4B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA28284A559B00D4DF4B /* ContentView.swift */; };
 		3090EA2B284A559C00D4DF4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3090EA2A284A559C00D4DF4B /* Assets.xcassets */; };
@@ -54,6 +56,7 @@
 		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3065A10E284D607400DF370F /* DeleteConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationView.swift; sourceTree = "<group>"; };
 		3065A110284EAEB400DF370F /* ContactsSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
+		3070BEE228DA7BDD00914C52 /* AlertInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertInputViewController.swift; sourceTree = "<group>"; };
 		3073589528CE7E21005A6A72 /* ContactsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListView.swift; sourceTree = "<group>"; };
 		3073589828CE82B4005A6A72 /* FuzzyMatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyMatch.swift; sourceTree = "<group>"; };
 		3073589A28CF4062005A6A72 /* AddToGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToGroupView.swift; sourceTree = "<group>"; };
@@ -62,6 +65,7 @@
 		307358A228D07D1C005A6A72 /* ListButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListButtonStyle.swift; sourceTree = "<group>"; };
 		307358A428D090D6005A6A72 /* SwiftCNContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCNContactViewController.swift; sourceTree = "<group>"; };
 		307358A628D104E9005A6A72 /* ContactsContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsContext.swift; sourceTree = "<group>"; };
+		307358A828D24A5D005A6A72 /* TextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlert.swift; sourceTree = "<group>"; };
 		3090EA23284A559B00D4DF4B /* ContactsManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactsManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsManagerApp.swift; sourceTree = "<group>"; };
 		3090EA28284A559B00D4DF4B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 				3073589E28CFCE45005A6A72 /* MultiInsertListView.swift */,
 				307358A228D07D1C005A6A72 /* ListButtonStyle.swift */,
 				307358A428D090D6005A6A72 /* SwiftCNContactViewController.swift */,
+				307358A828D24A5D005A6A72 /* TextFieldAlert.swift */,
+				3070BEE228DA7BDD00914C52 /* AlertInputViewController.swift */,
 			);
 			path = SharedComponents;
 			sourceTree = "<group>";
@@ -397,7 +403,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				307358A928D24A5D005A6A72 /* TextFieldAlert.swift in Sources */,
 				3090EA58284B869D00D4DF4B /* GoogleSync.swift in Sources */,
+				3070BEE328DA7BDD00914C52 /* AlertInputViewController.swift in Sources */,
 				3090EA30284A559C00D4DF4B /* Persistence.swift in Sources */,
 				3090EA5D284B88E300D4DF4B /* ContactsView.swift in Sources */,
 				307358A728D104E9005A6A72 /* ContactsContext.swift in Sources */,

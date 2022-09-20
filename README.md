@@ -6,17 +6,18 @@ App to manage contacts
 TODO
 ----
 
-1. Search filter groups
-  - (perhaps include contacts too)
-  - Performance
-2. Archive groups
-3. Handle delete groups
-4. Sort by members etc
+- Handle delete groups (edit)
+- Archive groups
+  - Persist to `[ContainerId: Set<String>]` of CoreData
+- Sort by members etc
   - Stateful
-5. Track contacts for "recently changed"
-6. Performance, including on Contact Picker
-7. Handle permissions not given
-8. On macOS - pick first group for master detail view
+- Track contacts for "recently changed"
+- Performance, including on Contact Picker
+- Handle permissions not given
+- On macOS - pick first group for master detail view
+- Search filter groups
+  - Also show contacts below groups
+  - Performance is a bit choppy
 
 ### Fundamentals
 
