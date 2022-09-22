@@ -90,6 +90,19 @@ func editGroupNameSafe(group: CNGroup, name: String) {
     print("unable to editGroupName \(error)")
   }
 }
+func deleteGroup(group: CNGroup) throws {
+  guard let mutableGroup = group.mutableCopy() as? CNMutableGroup else { return }
+  let request = CNSaveRequest()
+  request.delete(mutableGroup)
+  try ContactStore.execute(request)
+}
+func deleteGroupSafe(group: CNGroup) {
+  do {
+    try deleteGroup(group: group)
+  } catch let error {
+    print("unable to deleteGroup \(error)")
+  }
+}
 func addContacts(_ contacts: [CNContact], to groups: [CNGroup]) throws {
   let request = CNSaveRequest()
   for contact in contacts {

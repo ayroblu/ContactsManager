@@ -30,11 +30,11 @@ struct ContactsView: View {
       .listStyle(.plain)
       .navigationTitle("Contacts")
       .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-      .toolbar {
-        ToolbarItemGroup(placement: .navigationBarTrailing) {
-          EditButton()
-        }
-      }
+      //      .toolbar {
+      //        ToolbarItemGroup(placement: .navigationBarTrailing) {
+      //          EditButton()
+      //        }
+      //      }
       Text("Select a Contact")
     }
     // https://stackoverflow.com/questions/65316497/swiftui-navigationview-navigationbartitle-layoutconstraints-issue
@@ -78,7 +78,9 @@ struct ContactsView: View {
           group: group
         )
       }
-      //      .onDelete { a in print(a) }
+      //      .onDelete { a in
+      //        print(a)
+      //      }
     } header: {
       Text(container.name)
     }
@@ -176,22 +178,46 @@ private struct ContactsNav: View {
   let navigationTitle: String
   var group: CNGroup?
 
-  @State private var isShowingAlert = false
+  @State private var isShowingEditAlert = false
+  @State private var isShowingDeleteAlert = false
   @State private var alertInput = ""
+  @EnvironmentObject var contactsContext: ContactsContext
 
   var body: some View {
     if let group = group {
       getLink()
-        .textFieldAlert(
-          isShowing: $isShowingAlert, text: $alertInput,
-          onSave: { editGroupNameSafe(group: group, name: alertInput) }, title: "Edit Group Name"
-        )
+        .textFieldAlert(isShowing: isShowingEditAlert) {
+          TextFieldAlert(
+            title: "Edit Group Name", message: "What would you like to call your Contact Group?",
+            placeholder: "Group name...", initialInputText: group.name,
+            onSave: { newName in
+              editGroupNameSafe(group: group, name: newName)
+              contactsContext.refresh()
+            },
+            isShowing: $isShowingEditAlert)
+        }
         .swipeActions(edge: .leading) {
           Button("Edit") {
             alertInput = group.name
-            isShowingAlert = true
+            isShowingEditAlert = true
           }
-          .tint(.yellow)
+          .tint(.orange)
+        }
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+          Button("Delete") {
+            isShowingDeleteAlert = true
+            print("isShowingDeleteAlert")
+          }
+          .tint(.red)
+        }
+        .alert("Delete group \"\(group.name)\"?", isPresented: $isShowingDeleteAlert) {
+          Button("Cancel", role: .cancel) {}
+          Button("Confirm", role: .destructive) {
+            withAnimation {
+              deleteGroupSafe(group: group)
+              contactsContext.refresh()
+            }
+          }
         }
     } else {
       getLink()

@@ -7,68 +7,42 @@
 
 import SwiftUI
 
-struct TextFieldAlert<Presenting>: View where Presenting: View {
-  @Binding var isShowing: Bool
-  @Binding var text: String
-  let onSave: () -> Void
-  let presenting: Presenting
-  let title: String
+typealias TextFieldAlert = SwiftUIAlertInputViewController
 
-  var body: some View {
-    GeometryReader { (deviceSize: GeometryProxy) in
-      ZStack {
-        self.presenting
-          .disabled(isShowing)
-        VStack {
-          Text(self.title)
-          TextField(self.title, text: self.$text)
-          Divider()
-          HStack {
-            Button(action: {
-              withAnimation {
-                self.isShowing.toggle()
-              }
-            }) {
-              Text("Dismiss")
-            }
-            Button(action: {
-              withAnimation {
-                self.onSave()
-                self.isShowing.toggle()
-              }
-            }) {
-              Text("Save")
-            }
-          }
-        }
-        .padding()
-        .background(.background)
-        .frame(
-          width: deviceSize.size.width * 0.7,
-          height: deviceSize.size.height * 0.7
-        )
-        .shadow(radius: 1)
-        .opacity(self.isShowing ? 1 : 0)
-      }
-    }
-  }
-}
 extension View {
   func textFieldAlert(
-    isShowing: Binding<Bool>, text: Binding<String>, onSave: @escaping () -> Void, title: String
+    isShowing: Bool,
+    content: @escaping () -> TextFieldAlert
   ) -> some View {
-    TextFieldAlert(isShowing: isShowing, text: text, onSave: onSave, presenting: self, title: title)
+    TextFieldWrapper(
+      isShowing: isShowing,
+      presentingView: self,
+      content: content)
+  }
+}
+
+struct TextFieldWrapper<PresentingView: View>: View {
+  let isShowing: Bool
+  let presentingView: PresentingView
+  let content: () -> TextFieldAlert
+
+  var body: some View {
+    ZStack {
+      if isShowing { content() }
+      presentingView
+    }
   }
 }
 
 private struct Preview: View {
-  @State var isShowing: Bool = true
+  @State var isShowing: Bool = false
   @State var text: String = ""
 
   var body: some View {
-    TextFieldAlert(
-      isShowing: $isShowing, text: $text, onSave: {}, presenting: self,
-      title: "Enter some information here!")
+    SwiftUIAlertInputViewController(
+      title: "Enter some information here!", message: "What do you think?",
+      placeholder: "info here...", initialInputText: "InitialName", onSave: { _ in },
+      isShowing: $isShowing)
   }
 }
 struct TextFieldAlert_Previews: PreviewProvider {
