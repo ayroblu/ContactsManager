@@ -6,11 +6,6 @@ App to manage contacts
 TODO
 ----
 
-- Handle delete groups (edit)
-- Archive groups
-  - Persist to `[ContainerId: Set<String>]` of CoreData
-- Sort by members etc
-  - Stateful
 - Track contacts for "recently changed"
 - Performance, including on Contact Picker
 - Handle permissions not given
@@ -18,6 +13,17 @@ TODO
 - Search filter groups
   - Also show contacts below groups
   - Performance is a bit choppy
+
+### Maybe?
+
+- Sort by members etc
+  - Stateful
+
+### Long term todos
+
+- Localize for different languages
+- Tests + UI Tests
+- App Store submission
 
 ### Fundamentals
 

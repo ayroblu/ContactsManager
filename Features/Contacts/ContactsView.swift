@@ -16,6 +16,8 @@ struct ContactsView: View {
     sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
     animation: .default)
   private var items: FetchedResults<Item>
+  @FetchRequest(sortDescriptors: [])
+  private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
   @State private var searchText = ""
   @StateObject var contactsContext = ContactsContext()
 
@@ -43,9 +45,11 @@ struct ContactsView: View {
   }
 
   private func getSection(container: CNContainer) -> some View {
-    Section {
-      let groups = contactsContext.contactsMetaData.getGroupsByContainerId(
-        containerId: container.identifier)
+    let archivedGroupIdsSet = getArchivedGroupIds()
+    let groups = contactsContext.contactsMetaData.getGroupsByContainerId(
+      containerId: container.identifier
+    ).filter { !archivedGroupIdsSet.contains($0.identifier) }
+    return Section {
       // getUngroupedContacts(forContainer: container, groups: groups)
       if hasSearchResults(groupName: "Not grouped") {
         let ungroupedContacts = contactsContext.contactsMetaData.getUngroupedContactsByContainerId(
@@ -84,6 +88,10 @@ struct ContactsView: View {
     } header: {
       Text(container.name)
     }
+  }
+  private func getArchivedGroupIds() -> Set<String> {
+    // Container id?
+    Set(cdArchivedGroups.compactMap { $0.groupId })
   }
 
   private func addItem() {
@@ -144,30 +152,43 @@ struct ArchiveSection: View {
   let containerId: String
   let searchText: String
 
+  @FetchRequest(sortDescriptors: [])
+  private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
+
   @State private var archiveExpanded: Bool = false
   @StateObject var contactsContext = ContactsContext()
 
   var body: some View {
-    DisclosureGroup(isExpanded: $archiveExpanded) {
-      let groups = contactsContext.contactsMetaData.getGroupsByContainerId(
-        containerId: containerId)
+    let archivedGroupIdsSet = getArchivedGroupIds()
+    let groups = contactsContext.contactsMetaData.getGroupsByContainerId(
+      containerId: containerId
+    ).filter { archivedGroupIdsSet.contains($0.identifier) }
+    let searchResults = ContactsManager.getSearchResults(groups: groups, searchText: searchText)
 
-      ForEach(ContactsManager.getSearchResults(groups: groups, searchText: searchText)) { group in
-        let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
-          groupId: group.identifier)
-        ContactsNav(
-          contacts: contacts, containerId: containerId, groups: groups,
-          navigationTitle: "\(group.name) (\(contacts.count))")
-        //            getNavigationLinksForContacts(
-        //              contacts: contacts, container: container, groups: groups,
-        //              navigationTitle: "\(group.name) (\(contacts.count))")
+    if searchResults.count > 0 {
+      DisclosureGroup(isExpanded: $archiveExpanded) {
+        ForEach(searchResults) { group in
+          let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
+            groupId: group.identifier)
+          ContactsNav(
+            contacts: contacts, containerId: containerId, groups: groups,
+            navigationTitle: "\(group.name) (\(contacts.count))", group: group, isArchived: true)
+          //            getNavigationLinksForContacts(
+          //              contacts: contacts, container: container, groups: groups,
+          //              navigationTitle: "\(group.name) (\(contacts.count))")
+        }
+      } label: {
+        Text("Archived")
+          .font(.subheadline)
+          .foregroundColor(.gray)
+          .bold()
       }
-    } label: {
-      Text("Archived")
-        .font(.subheadline)
-        .foregroundColor(.gray)
-        .bold()
     }
+  }
+
+  private func getArchivedGroupIds() -> Set<String> {
+    // Container id?
+    Set(cdArchivedGroups.compactMap { $0.groupId })
   }
 }
 
@@ -177,11 +198,15 @@ private struct ContactsNav: View {
   let groups: [CNGroup]
   let navigationTitle: String
   var group: CNGroup?
+  var isArchived: Bool = false
 
   @State private var isShowingEditAlert = false
   @State private var isShowingDeleteAlert = false
   @State private var alertInput = ""
   @EnvironmentObject var contactsContext: ContactsContext
+  @Environment(\.managedObjectContext) private var moc
+  @FetchRequest(sortDescriptors: [])
+  private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
 
   var body: some View {
     if let group = group {
@@ -206,9 +231,21 @@ private struct ContactsNav: View {
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
           Button("Delete") {
             isShowingDeleteAlert = true
-            print("isShowingDeleteAlert")
           }
           .tint(.red)
+        }
+        .swipeActions(edge: .trailing) {
+          if isArchived {
+            Button("Unarchive") {
+              unarchiveGroup()
+            }
+            .tint(.orange)
+          } else {
+            Button("Archive") {
+              archiveGroup()
+            }
+            .tint(.orange)
+          }
         }
         .alert("Delete group \"\(group.name)\"?", isPresented: $isShowingDeleteAlert) {
           Button("Cancel", role: .cancel) {}
@@ -231,6 +268,33 @@ private struct ContactsNav: View {
         allGroups: groups)
     } label: {
       Text(navigationTitle)
+    }
+  }
+
+  private func archiveGroup() {
+    if let group = group {
+      withAnimation {
+        let cdArchivedGroup = CDArchivedGroups(context: moc)
+        cdArchivedGroup.groupId = group.identifier
+        cdArchivedGroup.containerId = containerId
+        try? moc.save()
+      }
+    }
+  }
+  private func unarchiveGroup() {
+    if let group = group {
+      let fetchRequest: NSFetchRequest<CDArchivedGroups> = CDArchivedGroups.fetchRequest()
+      fetchRequest.predicate = NSPredicate(
+        format: "groupId LIKE %@", group.identifier
+      )
+      fetchRequest.fetchLimit = 1
+
+      if let cdArchivedGroups = try? moc.fetch(fetchRequest), cdArchivedGroups.count > 0 {
+        cdArchivedGroups.forEach(moc.delete)
+        withAnimation {
+          try? moc.save()
+        }
+      }
     }
   }
 }
