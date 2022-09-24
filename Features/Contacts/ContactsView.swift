@@ -10,14 +10,13 @@ import CoreData
 import SwiftUI
 
 struct ContactsView: View {
-  @Environment(\.managedObjectContext) private var viewContext
-
-  @FetchRequest(
-    sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-    animation: .default)
-  private var items: FetchedResults<Item>
   @FetchRequest(sortDescriptors: [])
   private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
+  @FetchRequest(sortDescriptors: [
+    NSSortDescriptor(keyPath: \CDContactHashes.timestamp, ascending: false)
+  ])
+  private var cdContactHashes: FetchedResults<CDContactHashes>
+
   @State private var searchText = ""
   @StateObject var contactsContext = ContactsContext()
 
@@ -25,7 +24,7 @@ struct ContactsView: View {
     NavigationView {
       List {
         ForEach(contactsContext.contactsMetaData.containers) { container in
-          getSection(container: container)
+          ContainerGroupsSection(container: container, searchText: searchText)
           ArchiveSection(containerId: container.id, searchText: searchText)
         }
       }
@@ -43,14 +42,45 @@ struct ContactsView: View {
     // .navigationViewStyle(StackNavigationViewStyle())
     .environmentObject(contactsContext)
   }
+}
 
-  private func getSection(container: CNContainer) -> some View {
+private struct ContainerGroupsSection: View {
+  let container: CNContainer
+  let searchText: String
+
+  @EnvironmentObject var contactsContext: ContactsContext
+  @FetchRequest(sortDescriptors: []) private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
+  @Environment(\.managedObjectContext) private var moc
+  @FetchRequest private var cdContactHashes: FetchedResults<CDContactHashes>
+
+  init(container: CNContainer, searchText: String) {
+    _cdContactHashes = FetchRequest<CDContactHashes>(
+      sortDescriptors: [],
+      predicate: NSPredicate(
+        format: "containerId = %@", container.identifier
+      ))
+
+    self.container = container
+    self.searchText = searchText
+  }
+
+  var body: some View {
     let archivedGroupIdsSet = getArchivedGroupIds()
     let groups = contactsContext.contactsMetaData.getGroupsByContainerId(
       containerId: container.identifier
     ).filter { !archivedGroupIdsSet.contains($0.identifier) }
+    let allContacts = contactsContext.contactsMetaData.getContactsByContainerId(
+      containerId: container.id)
+
     return Section {
-      // getUngroupedContacts(forContainer: container, groups: groups)
+      if hasSearchResults(groupName: "All") {
+        ContactsNav(
+          contacts: allContacts,
+          containerId: container.id,
+          groups: groups,
+          navigationTitle: Text("All (\(allContacts.count))").italic())
+      }
+
       if hasSearchResults(groupName: "Not grouped") {
         let ungroupedContacts = contactsContext.contactsMetaData.getUngroupedContactsByContainerId(
           containerId: container.id)
@@ -59,26 +89,20 @@ struct ContactsView: View {
             contacts: ungroupedContacts,
             containerId: container.id,
             groups: groups,
-            navigationTitle: "Not grouped (\(ungroupedContacts.count))")
+            navigationTitle: Text("Not grouped (\(ungroupedContacts.count))").italic())
         }
       }
 
-      if hasSearchResults(groupName: "All") {
-        let contacts = contactsContext.contactsMetaData.getContactsByContainerId(
-          containerId: container.id)
-        ContactsNav(
-          contacts: contacts,
-          containerId: container.id,
-          groups: groups,
-          navigationTitle: "All (\(contacts.count))")
-      }
+      Recents(
+        containerId: container.identifier, contacts: allContacts, groups: groups,
+        isVisible: hasSearchResults(groupName: "Recents"))
 
       ForEach(getSearchResults(groups: groups)) { group in
         let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
           groupId: group.identifier)
         ContactsNav(
           contacts: contacts, containerId: container.id, groups: groups,
-          navigationTitle: "\(group.name) (\(contacts.count))",
+          navigationTitle: Text("\(group.name) (\(contacts.count))"),
           group: group
         )
       }
@@ -88,40 +112,60 @@ struct ContactsView: View {
     } header: {
       Text(container.name)
     }
+    .onAppear {
+      handleContactHashesInit(
+        cdContactHashes: cdContactHashes, contacts: allContacts, containerId: container.identifier)
+    }
   }
+
   private func getArchivedGroupIds() -> Set<String> {
     // Container id?
     Set(cdArchivedGroups.compactMap { $0.groupId })
   }
 
-  private func addItem() {
-    withAnimation {
-      let newItem = Item(context: viewContext)
-      newItem.timestamp = Date()
-
-      do {
-        try viewContext.save()
-      } catch {
-        // Replace this implementation with code to handle the error appropriately.
-        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        let nsError = error as NSError
-        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+  /**
+   * This is specifically used to render the "Recents" item
+   * Note: https://forums.swift.org/t/psa-the-stdlib-now-uses-randomly-seeded-hash-values/10789/30
+   * We specifically disable random seeding with an environment variable: SWIFT_DETERMINISTIC_HASHING=1
+   */
+  private func handleContactHashesInit(
+    cdContactHashes: FetchedResults<CDContactHashes>, contacts: [CNContact], containerId: String
+  ) {
+    // TODO: Delete the items when a contact is deleted
+    if !cdContactHashes.isEmpty {
+      let contactIdHashMap = ContactHashData.getContactIdHashMap(cdContactHashes: cdContactHashes)
+      contacts.forEach { contact in
+        let contactHash = getHash(for: contact)
+        if let contactHashData = contactIdHashMap[contact.identifier] {
+          if contactHashData.contactHash != contactHash {
+            // Hashes are different -> update hash and timestamp
+            moc.performAndWait {
+              let model = contactHashData.originalModel
+              model.contactHash = Int64(contactHash)
+              model.timestamp = Date()
+              try? moc.save()
+            }
+          }
+        } else {
+          // Hashes doesn't exist -> create new hash with now timestamp
+          let cdContactHash = CDContactHashes(context: moc)
+          cdContactHash.contactId = contact.id
+          cdContactHash.contactHash = Int64(contactHash)
+          cdContactHash.containerId = containerId
+          cdContactHash.timestamp = Date()
+          try? moc.save()
+        }
       }
-    }
-  }
-
-  private func deleteItems(items: [FetchedResults<Item>.Element]) {
-    withAnimation {
-      items.forEach(viewContext.delete)
-
-      do {
-        try viewContext.save()
-      } catch {
-        // Replace this implementation with code to handle the error appropriately.
-        // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        let nsError = error as NSError
-        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+    } else {
+      // No hashes exist -> create with nil timestamps (aka ignored initially)
+      contacts.forEach { contact in
+        let cdContactHash = CDContactHashes(context: moc)
+        cdContactHash.contactId = contact.id
+        cdContactHash.contactHash = Int64(getHash(for: contact))
+        cdContactHash.containerId = containerId
+        cdContactHash.timestamp = nil
       }
+      try? moc.save()
     }
   }
 
@@ -137,6 +181,7 @@ struct ContactsView: View {
     }
   }
 }
+
 private func getSearchResults(groups: [CNGroup], searchText: String) -> [CNGroup] {
   if searchText.isEmpty {
     return groups
@@ -156,7 +201,7 @@ struct ArchiveSection: View {
   private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
 
   @State private var archiveExpanded: Bool = false
-  @StateObject var contactsContext = ContactsContext()
+  @EnvironmentObject var contactsContext: ContactsContext
 
   var body: some View {
     let archivedGroupIdsSet = getArchivedGroupIds()
@@ -172,7 +217,8 @@ struct ArchiveSection: View {
             groupId: group.identifier)
           ContactsNav(
             contacts: contacts, containerId: containerId, groups: groups,
-            navigationTitle: "\(group.name) (\(contacts.count))", group: group, isArchived: true)
+            navigationTitle: Text("\(group.name) (\(contacts.count))"), group: group,
+            isArchived: true)
           //            getNavigationLinksForContacts(
           //              contacts: contacts, container: container, groups: groups,
           //              navigationTitle: "\(group.name) (\(contacts.count))")
@@ -192,11 +238,95 @@ struct ArchiveSection: View {
   }
 }
 
+private struct Recents: View {
+  let containerId: String
+  let contacts: [CNContact]
+  let groups: [CNGroup]
+  let isVisible: Bool
+
+  @Environment(\.managedObjectContext) private var moc
+
+  @FetchRequest private var cdContactHashes: FetchedResults<CDContactHashes>
+
+  init(containerId: String, contacts: [CNContact], groups: [CNGroup], isVisible: Bool) {
+    _cdContactHashes = FetchRequest<CDContactHashes>(
+      sortDescriptors: [],
+      predicate: NSPredicate(
+        format: "containerId = %@", containerId
+      ))
+
+    self.containerId = containerId
+    self.contacts = contacts
+    self.groups = groups
+    self.isVisible = isVisible
+  }
+
+  var body: some View {
+    let recentContacts = getRecentContacts()
+    if isVisible && (!recentContacts.isEmpty || recentContacts.count != contacts.count) {
+      ContactsNav(
+        contacts: recentContacts, containerId: containerId, groups: groups,
+        navigationTitle: Text("Recents (\(recentContacts.count))").italic())
+    }
+  }
+
+  private func getRecentContacts() -> [CNContact] {
+    // For some contacts, contactIdHashMap, get where found and timestamp is not nil and timestamp is recent
+    let contactIdHashMap = ContactHashData.getContactIdHashMap(cdContactHashes: cdContactHashes)
+    let recentThreshold = Calendar.current.date(byAdding: .day, value: -4, to: Date())!
+    return contacts.filter { contact in
+      if let hashData = contactIdHashMap[contact.identifier], let timestamp = hashData.timestamp,
+        timestamp > recentThreshold
+      {
+        return true
+      }
+      return false
+    }.sorted {
+      if let timestamp0 = contactIdHashMap[$0.identifier]?.timestamp,
+        let timestamp1 = contactIdHashMap[$1.identifier]?.timestamp
+      {
+        return timestamp0 > timestamp1
+      }
+      return false
+    }
+  }
+}
+
+struct ContactHashData {
+  let contactId: String
+  let contactHash: Int
+  let timestamp: Date?
+  let originalModel: FetchedResults<CDContactHashes>.Element
+
+  static func create(data: FetchedResults<CDContactHashes>.Element) -> ContactHashData? {
+    if let contactId = data.contactId {
+      return ContactHashData(
+        contactId: contactId, contactHash: Int(data.contactHash), timestamp: data.timestamp,
+        originalModel: data)
+    }
+    return nil
+  }
+
+}
+extension ContactHashData {
+  static func getContactIdHashMap(cdContactHashes: FetchedResults<CDContactHashes>)
+    -> [String: ContactHashData]
+  {
+    Dictionary(
+      uniqueKeysWithValues: cdContactHashes.compactMap {
+        if let contactId = $0.contactId, let data = ContactHashData.create(data: $0) {
+          return (contactId, data)
+        }
+        return nil
+      })
+  }
+}
+
 private struct ContactsNav: View {
   let contacts: [CNContact]
   let containerId: String
   let groups: [CNGroup]
-  let navigationTitle: String
+  let navigationTitle: Text
   var group: CNGroup?
   var isArchived: Bool = false
 
@@ -267,7 +397,7 @@ private struct ContactsNav: View {
         navigationTitle: navigationTitle, contacts: contacts, containerId: containerId,
         allGroups: groups)
     } label: {
-      Text(navigationTitle)
+      navigationTitle
     }
   }
 
@@ -285,7 +415,7 @@ private struct ContactsNav: View {
     if let group = group {
       let fetchRequest: NSFetchRequest<CDArchivedGroups> = CDArchivedGroups.fetchRequest()
       fetchRequest.predicate = NSPredicate(
-        format: "groupId LIKE %@", group.identifier
+        format: "groupId = %@", group.identifier
       )
       fetchRequest.fetchLimit = 1
 

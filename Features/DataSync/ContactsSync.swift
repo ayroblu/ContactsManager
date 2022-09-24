@@ -184,3 +184,49 @@ extension CNContact: Comparable {
     lhs.toMaybeName() ?? "" < rhs.toMaybeName() ?? ""
   }
 }
+extension CNContact {
+  public override var hash: Int {
+    var hasher = Hasher()
+    // Identifiers
+    hasher.combine(identifier)
+    hasher.combine(contactType)
+    // Name info
+    hasher.combine(namePrefix)
+    hasher.combine(givenName)
+    hasher.combine(middleName)
+    hasher.combine(familyName)
+    hasher.combine(previousFamilyName)
+    hasher.combine(nameSuffix)
+    hasher.combine(nickname)
+    hasher.combine(phoneticGivenName)
+    hasher.combine(phoneticMiddleName)
+    hasher.combine(phoneticFamilyName)
+    // work info
+    hasher.combine(jobTitle)
+    hasher.combine(departmentName)
+    hasher.combine(organizationName)
+    hasher.combine(phoneticOrganizationName)
+    // addresses
+    hasher.combine(postalAddresses)
+    hasher.combine(emailAddresses)
+    hasher.combine(urlAddresses)
+    // phone numbers
+    hasher.combine(phoneNumbers)
+    // social profiles
+    hasher.combine(socialProfiles)
+    // birthdays
+    hasher.combine(birthday)
+    hasher.combine(nonGregorianBirthday)
+    hasher.combine(dates)
+    // // notes (requires extra permissions)
+    // hasher.combine(note)
+    // contact images
+    hasher.combine(imageData)
+    hasher.combine(thumbnailImageData)
+    hasher.combine(imageDataAvailable)
+    // related information
+    hasher.combine(contactRelations)
+    hasher.combine(instantMessageAddresses)
+    return hasher.finalize()
+  }
+}

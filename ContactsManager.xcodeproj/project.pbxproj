@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		303A2C1A28DF66E200EC398A /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C1928DF66E200EC398A /* Misc.swift */; };
 		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
 		3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10E284D607400DF370F /* DeleteConfirmationView.swift */; };
 		3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A110284EAEB400DF370F /* ContactsSync.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		303A2C1928DF66E200EC398A /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3065A10E284D607400DF370F /* DeleteConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationView.swift; sourceTree = "<group>"; };
 		3065A110284EAEB400DF370F /* ContactsSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				3073589828CE82B4005A6A72 /* FuzzyMatch.swift */,
+				303A2C1928DF66E200EC398A /* Misc.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				3073589F28CFCE45005A6A72 /* MultiInsertListView.swift in Sources */,
 				3090EA27284A559B00D4DF4B /* ContactsManagerApp.swift in Sources */,
 				3090EA5F284B929B00D4DF4B /* ContactsDetailView.swift in Sources */,
+				303A2C1A28DF66E200EC398A /* Misc.swift in Sources */,
 				3090EA61284B932100D4DF4B /* Utils.swift in Sources */,
 				3073589928CE82B4005A6A72 /* FuzzyMatch.swift in Sources */,
 			);

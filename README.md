@@ -6,9 +6,9 @@ App to manage contacts
 TODO
 ----
 
-- Track contacts for "recently changed"
+- Handle permissions not given, or permissions first start are granted
+- Delete contact hashes, archived groups derived data from coreData when they are deleted
 - Performance, including on Contact Picker
-- Handle permissions not given
 - On macOS - pick first group for master detail view
 - Search filter groups
   - Also show contacts below groups
