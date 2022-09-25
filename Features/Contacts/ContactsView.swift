@@ -29,7 +29,7 @@ struct ContactsView: View {
         }
       }
       .listStyle(.plain)
-      .navigationTitle("Contacts")
+      .navigationTitle("Groups")
       .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
       //      .toolbar {
       //        ToolbarItemGroup(placement: .navigationBarTrailing) {

@@ -12,18 +12,7 @@ struct ContentView: View {
   let disabled: Void = disableLayoutConstraintLog()
 
   var body: some View {
-    TabView {
-      ContactsView()
-        .tabItem {
-          Image(systemName: "person.crop.circle")
-          Text("Contacts")
-        }
-      SettingsView()
-        .tabItem {
-          Image(systemName: "gear.circle")
-          Text("Settings")
-        }
-    }
+    ContactsPermissionsView()
   }
 }
 

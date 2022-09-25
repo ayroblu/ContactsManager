@@ -16,50 +16,47 @@ func getContactsMetaData() -> ContactsMetaData {
 
   let contactStore = CNContactStore()
   var contactsMetaData = ContactsMetaData()
-  contactStore.requestAccess(for: CNEntityType.contacts) { _, error in
-    // _ -> isGranted
-    do {
-      let containers = try contactStore.containers(matching: nil)
-      contactsMetaData.containerById = Dictionary(
-        uniqueKeysWithValues: containers.map { ($0.identifier, $0) })
-      try containers.forEach { container in
-        let contacts = try contactStore.unifiedContacts(
-          matching: CNContact.predicateForContactsInContainer(
-            withIdentifier: container.identifier),
-          keysToFetch: keys)
-        contactsMetaData.contactIdsByContainerId[container.identifier] = contacts.map {
-          $0.identifier
-        }
-        for contact in contacts where contactsMetaData.contactById[contact.identifier] == nil {
-          contactsMetaData.contactById[contact.identifier] = contact
-        }
+  do {
+    let containers = try contactStore.containers(matching: nil)
+    contactsMetaData.containerById = Dictionary(
+      uniqueKeysWithValues: containers.map { ($0.identifier, $0) })
+    try containers.forEach { container in
+      let contacts = try contactStore.unifiedContacts(
+        matching: CNContact.predicateForContactsInContainer(
+          withIdentifier: container.identifier),
+        keysToFetch: keys)
+      contactsMetaData.contactIdsByContainerId[container.identifier] = contacts.map {
+        $0.identifier
+      }
+      for contact in contacts where contactsMetaData.contactById[contact.identifier] == nil {
+        contactsMetaData.contactById[contact.identifier] = contact
+      }
 
-        let groups = try contactStore.groups(
-          matching: CNGroup.predicateForGroupsInContainer(withIdentifier: container.identifier))
-        contactsMetaData.groupIdsByContainerId[container.identifier] = groups.map { $0.identifier }
+      let groups = try contactStore.groups(
+        matching: CNGroup.predicateForGroupsInContainer(withIdentifier: container.identifier))
+      contactsMetaData.groupIdsByContainerId[container.identifier] = groups.map { $0.identifier }
 
-        for group in groups where contactsMetaData.groupById[group.identifier] == nil {
-          contactsMetaData.groupById[group.identifier] = group
-        }
-        for group in groups {
-          let predicate = CNContact.predicateForContactsInGroup(withIdentifier: group.identifier)
-          let contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: keys)
-          contactsMetaData.contactIdsByGroupId[group.identifier] = contacts.map { $0.identifier }
-          for contact in contacts {
-            if var groupIds = contactsMetaData.groupIdsByContactId[contact.identifier] {
-              groupIds.insert(group.identifier)
-            } else {
-              contactsMetaData.groupIdsByContactId[contact.identifier] = [group.identifier]
-            }
+      for group in groups where contactsMetaData.groupById[group.identifier] == nil {
+        contactsMetaData.groupById[group.identifier] = group
+      }
+      for group in groups {
+        let predicate = CNContact.predicateForContactsInGroup(withIdentifier: group.identifier)
+        let contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: keys)
+        contactsMetaData.contactIdsByGroupId[group.identifier] = contacts.map { $0.identifier }
+        for contact in contacts {
+          if var groupIds = contactsMetaData.groupIdsByContactId[contact.identifier] {
+            groupIds.insert(group.identifier)
+          } else {
+            contactsMetaData.groupIdsByContactId[contact.identifier] = [group.identifier]
           }
         }
-        contactsMetaData.ungroupedContactIdsByContainerId[container.identifier] = contacts.filter {
-          (contactsMetaData.groupIdsByContactId[$0.identifier] ?? Set()).count == 0
-        }.map { $0.identifier }
       }
-    } catch let error {
-      print("unable to fetch contacts \(error)")
+      contactsMetaData.ungroupedContactIdsByContainerId[container.identifier] = contacts.filter {
+        (contactsMetaData.groupIdsByContactId[$0.identifier] ?? Set()).count == 0
+      }.map { $0.identifier }
     }
+  } catch let error {
+    print("unable to fetch contacts \(error)")
   }
   return contactsMetaData
 }
