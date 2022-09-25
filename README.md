@@ -45,6 +45,8 @@ Development
 - Swipe Actions for Lists:
   - https://peterfriese.dev/posts/swiftui-listview-part4/
   - https://www.hackingwithswift.com/quick-start/swiftui/how-to-add-custom-swipe-action-buttons-to-a-list-row
+- String format specifiers Apple
+  - https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Strings/Articles/formatSpecifiers.html
 
 ### Swift Format
 

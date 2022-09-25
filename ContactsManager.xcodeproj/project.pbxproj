@@ -10,6 +10,7 @@
 		303A2C1A28DF66E200EC398A /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C1928DF66E200EC398A /* Misc.swift */; };
 		303A2C1C28E0A36D00EC398A /* ContactsNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C1B28E0A36D00EC398A /* ContactsNavView.swift */; };
 		303A2C1E28E0B1AB00EC398A /* ContactsPermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C1D28E0B1AB00EC398A /* ContactsPermissionsView.swift */; };
+		303A2C2128E0FD0200EC398A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 303A2C2328E0FD0200EC398A /* Localizable.strings */; };
 		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
 		3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10E284D607400DF370F /* DeleteConfirmationView.swift */; };
 		3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A110284EAEB400DF370F /* ContactsSync.swift */; };
@@ -56,6 +57,13 @@
 		303A2C1928DF66E200EC398A /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		303A2C1B28E0A36D00EC398A /* ContactsNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsNavView.swift; sourceTree = "<group>"; };
 		303A2C1D28E0B1AB00EC398A /* ContactsPermissionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsPermissionsView.swift; sourceTree = "<group>"; };
+		303A2C2228E0FD0200EC398A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		303A2C2428E0FD3500EC398A /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		303A2C2528E0FD6600EC398A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		303A2C2628E0FD6D00EC398A /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		303A2C2B28E0FDA900EC398A /* en-NZ */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-NZ"; path = "en-NZ.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		303A2C2D28E0FDCB00EC398A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		303A2C3328E0FDFE00EC398A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3065A10E284D607400DF370F /* DeleteConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationView.swift; sourceTree = "<group>"; };
 		3065A110284EAEB400DF370F /* ContactsSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
@@ -160,6 +168,7 @@
 				3090EA2F284A559C00D4DF4B /* Persistence.swift */,
 				3090EA31284A559C00D4DF4B /* ContactsManager.xcdatamodeld */,
 				3090EA2C284A559C00D4DF4B /* Preview Content */,
+				303A2C2328E0FD0200EC398A /* Localizable.strings */,
 			);
 			path = ContactsManager;
 			sourceTree = "<group>";
@@ -320,6 +329,12 @@
 			knownRegions = (
 				en,
 				Base,
+				"en-GB",
+				ar,
+				"zh-HK",
+				"en-NZ",
+				fr,
+				es,
 			);
 			mainGroup = 3090EA1A284A559B00D4DF4B;
 			productRefGroup = 3090EA24284A559B00D4DF4B /* Products */;
@@ -339,6 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3090EA2E284A559C00D4DF4B /* Preview Assets.xcassets in Resources */,
+				303A2C2128E0FD0200EC398A /* Localizable.strings in Resources */,
 				3090EA2B284A559C00D4DF4B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,11 +475,29 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		303A2C2328E0FD0200EC398A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				303A2C2228E0FD0200EC398A /* en */,
+				303A2C2428E0FD3500EC398A /* en-GB */,
+				303A2C2528E0FD6600EC398A /* ar */,
+				303A2C2628E0FD6D00EC398A /* zh-HK */,
+				303A2C2B28E0FDA900EC398A /* en-NZ */,
+				303A2C2D28E0FDCB00EC398A /* fr */,
+				303A2C3328E0FDFE00EC398A /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		3090EA4A284A559C00D4DF4B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -525,6 +559,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

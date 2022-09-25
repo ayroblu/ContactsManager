@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  ContactsManager
+
+  Created by Ben Lu on 25/09/2022.
+*/
+
+"Groups" = "Groupes";
+"All" = "Tout";
+"All (%lld)" = "Tout (%lld)";
+"Not grouped" = "Non groupé";
+"Not grouped (%lld)" = "Non groupé (%lld)";
+"Recents" = "Récents";
+"Recents (%lld)" = "Récents (%lld)";
+// "%@ (%lld)" = "%@ (%lld)";
+"Edit" = "Éditer";
+"Archive" = "Archiver";
+"Delete" = "Effacer";

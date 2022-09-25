@@ -74,8 +74,8 @@ private struct ContainerGroupsSection: View {
       containerId: container.id)
 
     return Section {
-      if hasSearchResults(groupName: "All") {
-        let navigationTitle = "All (\(allContacts.count))"
+      if hasSearchResults(groupName: String(localized: "All")) {
+        let navigationTitle = String(localized: "All (\(allContacts.count))")
         ContactsNavView(
           contacts: allContacts,
           containerId: container.id,
@@ -84,11 +84,11 @@ private struct ContainerGroupsSection: View {
           navigationTitleLabel: Text(navigationTitle).italic())
       }
 
-      if hasSearchResults(groupName: "Not grouped") {
+      if hasSearchResults(groupName: String(localized: "Not grouped")) {
         let ungroupedContacts = contactsContext.contactsMetaData.getUngroupedContactsByContainerId(
           containerId: container.id)
         if ungroupedContacts.count > 0 {
-          let navigationTitle = "Not grouped (\(ungroupedContacts.count))"
+          let navigationTitle = String(localized: "Not grouped (\(ungroupedContacts.count))")
           ContactsNavView(
             contacts: ungroupedContacts,
             containerId: container.id,
@@ -100,12 +100,12 @@ private struct ContainerGroupsSection: View {
 
       Recents(
         containerId: container.identifier, contacts: allContacts, groups: groups,
-        isVisible: hasSearchResults(groupName: "Recents"))
+        isVisible: hasSearchResults(groupName: String(localized: "Recents")))
 
       ForEach(getSearchResults(groups: groups)) { group in
         let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
           groupId: group.identifier)
-        let navigationTitle = "\(group.name) (\(contacts.count))"
+        let navigationTitle = String(localized: "\(group.name) (\(contacts.count))")
         ContactsNavView(
           contacts: contacts, containerId: container.id, groups: groups,
           navigationTitle: navigationTitle,
@@ -295,7 +295,7 @@ private struct Recents: View {
 
   var body: some View {
     let recentContacts = getRecentContacts()
-    let navigationTitle = "Recents (\(recentContacts.count))"
+    let navigationTitle = String(localized: "Recents (\(recentContacts.count))")
     if isVisible && !recentContacts.isEmpty && recentContacts.count != contacts.count {
       ContactsNavView(
         contacts: recentContacts, containerId: containerId, groups: groups,
