@@ -12,7 +12,6 @@
 		3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10E284D607400DF370F /* DeleteConfirmationView.swift */; };
 		3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A110284EAEB400DF370F /* ContactsSync.swift */; };
 		3073589628CE7E21005A6A72 /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589528CE7E21005A6A72 /* ContactsListView.swift */; };
-		3073589928CE82B4005A6A72 /* FuzzyMatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589828CE82B4005A6A72 /* FuzzyMatch.swift */; };
 		3073589B28CF4062005A6A72 /* AddToGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589A28CF4062005A6A72 /* AddToGroupView.swift */; };
 		3073589D28CF4468005A6A72 /* MultiSelectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589C28CF4468005A6A72 /* MultiSelectionListView.swift */; };
 		3073589F28CFCE45005A6A72 /* MultiInsertListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589E28CFCE45005A6A72 /* MultiInsertListView.swift */; };
@@ -58,7 +57,6 @@
 		3065A10E284D607400DF370F /* DeleteConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationView.swift; sourceTree = "<group>"; };
 		3065A110284EAEB400DF370F /* ContactsSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
 		3073589528CE7E21005A6A72 /* ContactsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListView.swift; sourceTree = "<group>"; };
-		3073589828CE82B4005A6A72 /* FuzzyMatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyMatch.swift; sourceTree = "<group>"; };
 		3073589A28CF4062005A6A72 /* AddToGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToGroupView.swift; sourceTree = "<group>"; };
 		3073589C28CF4468005A6A72 /* MultiSelectionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionListView.swift; sourceTree = "<group>"; };
 		3073589E28CFCE45005A6A72 /* MultiInsertListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiInsertListView.swift; sourceTree = "<group>"; };
@@ -125,7 +123,6 @@
 		3073589728CE829B005A6A72 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				3073589828CE82B4005A6A72 /* FuzzyMatch.swift */,
 				303A2C1928DF66E200EC398A /* Misc.swift */,
 			);
 			path = Utils;
@@ -423,7 +420,6 @@
 				3090EA5F284B929B00D4DF4B /* ContactsDetailView.swift in Sources */,
 				303A2C1A28DF66E200EC398A /* Misc.swift in Sources */,
 				3090EA61284B932100D4DF4B /* Utils.swift in Sources */,
-				3073589928CE82B4005A6A72 /* FuzzyMatch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
