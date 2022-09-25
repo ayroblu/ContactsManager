@@ -94,6 +94,7 @@ private struct HasPermissionView: View {
 }
 
 private struct DeniedView: View {
+  // From: https://stackoverflow.com/questions/28152526/how-do-i-open-phone-settings-when-a-button-is-clicked
   let settingsUrl = URL(string: UIApplication.openSettingsURLString)
 
   var body: some View {

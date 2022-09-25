@@ -6,18 +6,7 @@ App to manage contacts
 TODO
 ----
 
-- Handle permissions not given, or permissions first start are granted
 - Delete contact hashes, archived groups derived data from coreData when they are deleted
-- Performance, including on Contact Picker
-- On macOS - pick first group for master detail view
-- Search filter groups
-  - Also show contacts below groups
-  - Performance is a bit choppy
-- (maybe) Sort by members etc
-  - Stateful
-
-### Medium term todos
-
 - Localize for different languages
 - Tests + UI Tests
 - App Store submission
@@ -26,21 +15,11 @@ TODO
 ### Long term todos
 
 - Fuzzy search
-
-### Fundamentals
-
-- Init
-  - If not setup - setup contacts sync
-  - If setup go to contacts listview
-- Contacts listview
-  - rows of contact information
-- Right Sidebar
-  - Add filter to contacts by query language
-- Settings
-  - Display settings?
-  - Configure sync
-- Contacts full view
-  - editable details
+- Master detail view - render all contacts
+- Search - include contacts in group search at bottom
+  - Performance?
+- (maybe) Sort by members etc
+  - Stateful
 
 Development
 -----------
@@ -51,6 +30,22 @@ Development
   - https://useyourloaf.com/blog/xcode-13-missing-info.plist/
 - Random warnings when running in mac target
   - https://stackoverflow.com/questions/70985060/im-trying-to-run-an-app-but-im-getting-an-error-which-says-could-not-find-trans
+- CoreData basics:
+  - https://blckbirds.com/post/core-data-and-swiftui/
+- Swifty Contacts lib reference code
+  - https://github.com/SwiftyContacts/SwiftyContacts/blob/master/Sources/SwiftyContacts/SwiftyContacts.swift
+- Learn to iOS, swift ui with Stanford CS193P
+  - https://www.youtube.com/watch?v=oWZOFSYS5GE&list=PLpGHT1n4-mAsxuRxVPv7kj4-dQYoC3VVu&index=9
+- Fuzzy Search tutorial
+  - https://www.objc.io/blog/2020/08/18/fuzzy-search/
+
+### Reference docs to supplement Apple docs
+
+- Swift UI text sizes:
+  - https://sarunw.com/posts/how-to-change-swiftui-font-size/
+- Swipe Actions for Lists:
+  - https://peterfriese.dev/posts/swiftui-listview-part4/
+  - https://www.hackingwithswift.com/quick-start/swiftui/how-to-add-custom-swipe-action-buttons-to-a-list-row
 
 ### Swift Format
 
