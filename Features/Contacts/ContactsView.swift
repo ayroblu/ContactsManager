@@ -74,7 +74,7 @@ private struct ContainerGroupsSection: View {
     return Section {
       if hasSearchResults(groupName: "All") {
         let navigationTitle = "All (\(allContacts.count))"
-        ContactsNav(
+        ContactsNavView(
           contacts: allContacts,
           containerId: container.id,
           groups: groups,
@@ -87,7 +87,7 @@ private struct ContainerGroupsSection: View {
           containerId: container.id)
         if ungroupedContacts.count > 0 {
           let navigationTitle = "Not grouped (\(ungroupedContacts.count))"
-          ContactsNav(
+          ContactsNavView(
             contacts: ungroupedContacts,
             containerId: container.id,
             groups: groups,
@@ -104,7 +104,7 @@ private struct ContainerGroupsSection: View {
         let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
           groupId: group.identifier)
         let navigationTitle = "\(group.name) (\(contacts.count))"
-        ContactsNav(
+        ContactsNavView(
           contacts: contacts, containerId: container.id, groups: groups,
           navigationTitle: navigationTitle,
           navigationTitleLabel: Text(navigationTitle),
@@ -220,7 +220,7 @@ struct ArchiveSection: View {
         ForEach(searchResults) { group in
           let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
             groupId: group.identifier)
-          ContactsNav(
+          ContactsNavView(
             contacts: contacts, containerId: containerId, groups: groups,
             navigationTitle: "\(group.name) (\(contacts.count))", group: group,
             isArchived: true)
@@ -270,7 +270,7 @@ private struct Recents: View {
     let recentContacts = getRecentContacts()
     let navigationTitle = "Recents (\(recentContacts.count))"
     if isVisible && !recentContacts.isEmpty && recentContacts.count != contacts.count {
-      ContactsNav(
+      ContactsNavView(
         contacts: recentContacts, containerId: containerId, groups: groups,
         navigationTitle: navigationTitle,
         navigationTitleLabel: Text(navigationTitle).italic()
@@ -327,115 +327,6 @@ extension ContactHashData {
         }
         return nil
       })
-  }
-}
-
-private struct ContactsNav: View {
-  let contacts: [CNContact]
-  let containerId: String
-  let groups: [CNGroup]
-  let navigationTitle: String
-  var navigationTitleLabel: Text?
-  var group: CNGroup?
-  var isArchived: Bool = false
-
-  @State private var isShowingEditAlert = false
-  @State private var isShowingDeleteAlert = false
-  @State private var alertInput = ""
-  @EnvironmentObject var contactsContext: ContactsContext
-  @Environment(\.managedObjectContext) private var moc
-  @FetchRequest(sortDescriptors: [])
-  private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
-
-  var body: some View {
-    if let group = group {
-      getLink()
-        .textFieldAlert(isShowing: isShowingEditAlert) {
-          TextFieldAlert(
-            title: "Edit Group Name", message: "What would you like to call your Contact Group?",
-            placeholder: "Group name...", initialInputText: group.name,
-            onSave: { newName in
-              editGroupNameSafe(group: group, name: newName)
-              contactsContext.refresh()
-            },
-            isShowing: $isShowingEditAlert)
-        }
-        .swipeActions(edge: .leading) {
-          Button("Edit") {
-            alertInput = group.name
-            isShowingEditAlert = true
-          }
-          .tint(.orange)
-        }
-        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-          Button("Delete") {
-            isShowingDeleteAlert = true
-          }
-          .tint(.red)
-        }
-        .swipeActions(edge: .trailing) {
-          if isArchived {
-            Button("Unarchive") {
-              unarchiveGroup()
-            }
-            .tint(.orange)
-          } else {
-            Button("Archive") {
-              archiveGroup()
-            }
-            .tint(.orange)
-          }
-        }
-        .alert("Delete group \"\(group.name)\"?", isPresented: $isShowingDeleteAlert) {
-          Button("Cancel", role: .cancel) {}
-          Button("Confirm", role: .destructive) {
-            withAnimation {
-              deleteGroupSafe(group: group)
-              contactsContext.refresh()
-            }
-          }
-        }
-    } else {
-      getLink()
-    }
-  }
-
-  private func getLink() -> some View {
-    let navigationTitleText = navigationTitleLabel ?? Text(navigationTitle)
-    return NavigationLink {
-      ContactsListView(
-        navigationTitle: navigationTitle, contacts: contacts, containerId: containerId,
-        allGroups: groups)
-    } label: {
-      navigationTitleText
-    }
-  }
-
-  private func archiveGroup() {
-    if let group = group {
-      withAnimation {
-        let cdArchivedGroup = CDArchivedGroups(context: moc)
-        cdArchivedGroup.groupId = group.identifier
-        cdArchivedGroup.containerId = containerId
-        try? moc.save()
-      }
-    }
-  }
-  private func unarchiveGroup() {
-    if let group = group {
-      let fetchRequest: NSFetchRequest<CDArchivedGroups> = CDArchivedGroups.fetchRequest()
-      fetchRequest.predicate = NSPredicate(
-        format: "groupId = %@", group.identifier
-      )
-      fetchRequest.fetchLimit = 1
-
-      if let cdArchivedGroups = try? moc.fetch(fetchRequest), cdArchivedGroups.count > 0 {
-        cdArchivedGroups.forEach(moc.delete)
-        withAnimation {
-          try? moc.save()
-        }
-      }
-    }
   }
 }
 

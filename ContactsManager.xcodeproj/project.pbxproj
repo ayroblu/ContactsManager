@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		303A2C1A28DF66E200EC398A /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C1928DF66E200EC398A /* Misc.swift */; };
+		303A2C1C28E0A36D00EC398A /* ContactsNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C1B28E0A36D00EC398A /* ContactsNavView.swift */; };
 		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
 		3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10E284D607400DF370F /* DeleteConfirmationView.swift */; };
 		3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A110284EAEB400DF370F /* ContactsSync.swift */; };
@@ -53,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		303A2C1928DF66E200EC398A /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
+		303A2C1B28E0A36D00EC398A /* ContactsNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsNavView.swift; sourceTree = "<group>"; };
 		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3065A10E284D607400DF370F /* DeleteConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationView.swift; sourceTree = "<group>"; };
 		3065A110284EAEB400DF370F /* ContactsSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				3073589528CE7E21005A6A72 /* ContactsListView.swift */,
 				3073589A28CF4062005A6A72 /* AddToGroupView.swift */,
 				307358A628D104E9005A6A72 /* ContactsContext.swift */,
+				303A2C1B28E0A36D00EC398A /* ContactsNavView.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 				3090EA33284A559C00D4DF4B /* ContactsManager.xcdatamodeld in Sources */,
 				3073589628CE7E21005A6A72 /* ContactsListView.swift in Sources */,
 				3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */,
+				303A2C1C28E0A36D00EC398A /* ContactsNavView.swift in Sources */,
 				3073589D28CF4468005A6A72 /* MultiSelectionListView.swift in Sources */,
 				3073589F28CFCE45005A6A72 /* MultiInsertListView.swift in Sources */,
 				3090EA27284A559B00D4DF4B /* ContactsManagerApp.swift in Sources */,
