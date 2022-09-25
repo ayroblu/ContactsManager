@@ -13,17 +13,19 @@ TODO
 - Search filter groups
   - Also show contacts below groups
   - Performance is a bit choppy
-
-### Maybe?
-
-- Sort by members etc
+- (maybe) Sort by members etc
   - Stateful
 
-### Long term todos
+### Medium term todos
 
 - Localize for different languages
 - Tests + UI Tests
 - App Store submission
+- Capture logging and crashes
+
+### Long term todos
+
+- Fuzzy search
 
 ### Fundamentals
 

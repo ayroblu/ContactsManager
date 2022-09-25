@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CDArchivedGroups" representedClassName="CDArchivedGroups" syncable="YES" codeGenerationType="class">
-        <attribute name="containerId" optional="YES" attributeType="String"/>
+        <attribute name="containerId" attributeType="String"/>
         <attribute name="groupId" attributeType="String"/>
     </entity>
     <entity name="CDContactHashes" representedClassName="CDContactHashes" syncable="YES" codeGenerationType="class">
@@ -11,11 +11,7 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="CDPreferences" representedClassName="CDPreferences" syncable="YES" codeGenerationType="class"/>
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
-    </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="14"/>
         <element name="CDPreferences" positionX="-63" positionY="-27" width="128" height="29"/>
         <element name="CDArchivedGroups" positionX="-54" positionY="-18" width="128" height="73"/>
         <element name="CDContactHashes" positionX="-27" positionY="27" width="128" height="89"/>

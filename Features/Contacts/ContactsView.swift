@@ -36,10 +36,9 @@ struct ContactsView: View {
       //          EditButton()
       //        }
       //      }
-      Text("Select a Contact")
+      // TODO: Render all contacts
+      Text("Select a Group")
     }
-    // https://stackoverflow.com/questions/65316497/swiftui-navigationview-navigationbartitle-layoutconstraints-issue
-    // .navigationViewStyle(StackNavigationViewStyle())
     .environmentObject(contactsContext)
   }
 }
@@ -74,22 +73,26 @@ private struct ContainerGroupsSection: View {
 
     return Section {
       if hasSearchResults(groupName: "All") {
+        let navigationTitle = "All (\(allContacts.count))"
         ContactsNav(
           contacts: allContacts,
           containerId: container.id,
           groups: groups,
-          navigationTitle: Text("All (\(allContacts.count))").italic())
+          navigationTitle: navigationTitle,
+          navigationTitleLabel: Text(navigationTitle).italic())
       }
 
       if hasSearchResults(groupName: "Not grouped") {
         let ungroupedContacts = contactsContext.contactsMetaData.getUngroupedContactsByContainerId(
           containerId: container.id)
         if ungroupedContacts.count > 0 {
+          let navigationTitle = "Not grouped (\(ungroupedContacts.count))"
           ContactsNav(
             contacts: ungroupedContacts,
             containerId: container.id,
             groups: groups,
-            navigationTitle: Text("Not grouped (\(ungroupedContacts.count))").italic())
+            navigationTitle: navigationTitle,
+            navigationTitleLabel: Text(navigationTitle).italic())
         }
       }
 
@@ -100,9 +103,11 @@ private struct ContainerGroupsSection: View {
       ForEach(getSearchResults(groups: groups)) { group in
         let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
           groupId: group.identifier)
+        let navigationTitle = "\(group.name) (\(contacts.count))"
         ContactsNav(
           contacts: contacts, containerId: container.id, groups: groups,
-          navigationTitle: Text("\(group.name) (\(contacts.count))"),
+          navigationTitle: navigationTitle,
+          navigationTitleLabel: Text(navigationTitle),
           group: group
         )
       }
@@ -217,7 +222,7 @@ struct ArchiveSection: View {
             groupId: group.identifier)
           ContactsNav(
             contacts: contacts, containerId: containerId, groups: groups,
-            navigationTitle: Text("\(group.name) (\(contacts.count))"), group: group,
+            navigationTitle: "\(group.name) (\(contacts.count))", group: group,
             isArchived: true)
           //            getNavigationLinksForContacts(
           //              contacts: contacts, container: container, groups: groups,
@@ -263,10 +268,13 @@ private struct Recents: View {
 
   var body: some View {
     let recentContacts = getRecentContacts()
-    if isVisible && (!recentContacts.isEmpty || recentContacts.count != contacts.count) {
+    let navigationTitle = "Recents (\(recentContacts.count))"
+    if isVisible && !recentContacts.isEmpty && recentContacts.count != contacts.count {
       ContactsNav(
         contacts: recentContacts, containerId: containerId, groups: groups,
-        navigationTitle: Text("Recents (\(recentContacts.count))").italic())
+        navigationTitle: navigationTitle,
+        navigationTitleLabel: Text(navigationTitle).italic()
+      )
     }
   }
 
@@ -326,7 +334,8 @@ private struct ContactsNav: View {
   let contacts: [CNContact]
   let containerId: String
   let groups: [CNGroup]
-  let navigationTitle: Text
+  let navigationTitle: String
+  var navigationTitleLabel: Text?
   var group: CNGroup?
   var isArchived: Bool = false
 
@@ -392,12 +401,13 @@ private struct ContactsNav: View {
   }
 
   private func getLink() -> some View {
-    NavigationLink {
+    let navigationTitleText = navigationTitleLabel ?? Text(navigationTitle)
+    return NavigationLink {
       ContactsListView(
         navigationTitle: navigationTitle, contacts: contacts, containerId: containerId,
         allGroups: groups)
     } label: {
-      navigationTitle
+      navigationTitleText
     }
   }
 

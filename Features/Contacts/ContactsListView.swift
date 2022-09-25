@@ -9,7 +9,7 @@ import Contacts
 import SwiftUI
 
 struct ContactsListView: View {
-  let navigationTitle: Text
+  let navigationTitle: String
   let contacts: [CNContact]
   let containerId: String
   let allGroups: [CNGroup]
@@ -126,7 +126,7 @@ struct ContactsListView: View {
 struct ContactsListView_Previews: PreviewProvider {
   static var previews: some View {
     ContactsListView(
-      navigationTitle: Text("Preview"), contacts: [], containerId: "todo", allGroups: []
+      navigationTitle: "Preview", contacts: [], containerId: "todo", allGroups: []
     )
     .environmentObject(
       ContactsContext(getData: { ContactsMetaData() }))

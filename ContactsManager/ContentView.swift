@@ -9,6 +9,8 @@ import CoreData
 import SwiftUI
 
 struct ContentView: View {
+  let disabled: Void = disableLayoutConstraintLog()
+
   var body: some View {
     TabView {
       ContactsView()
@@ -23,6 +25,11 @@ struct ContentView: View {
         }
     }
   }
+}
+
+/// https://stackoverflow.com/questions/65316497/swiftui-navigationview-navigationbartitle-layoutconstraints-issue
+private func disableLayoutConstraintLog() {
+  UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
 }
 
 struct ContentView_Previews: PreviewProvider {
