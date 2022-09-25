@@ -6,7 +6,6 @@ App to manage contacts
 TODO
 ----
 
-- Delete contact hashes, archived groups derived data from coreData when they are deleted
 - Localize for different languages
 - Tests + UI Tests
 - App Store submission

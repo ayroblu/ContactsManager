@@ -10,13 +10,6 @@ import CoreData
 import SwiftUI
 
 struct ContactsView: View {
-  @FetchRequest(sortDescriptors: [])
-  private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
-  @FetchRequest(sortDescriptors: [
-    NSSortDescriptor(keyPath: \CDContactHashes.timestamp, ascending: false)
-  ])
-  private var cdContactHashes: FetchedResults<CDContactHashes>
-
   @State private var searchText = ""
   @StateObject var contactsContext = ContactsContext()
 
@@ -24,8 +17,12 @@ struct ContactsView: View {
     NavigationView {
       List {
         ForEach(contactsContext.contactsMetaData.containers) { container in
-          ContainerGroupsSection(container: container, searchText: searchText)
-          ArchiveSection(containerId: container.id, searchText: searchText)
+          let groups = contactsContext.contactsMetaData.getGroupsByContainerId(
+            containerId: container.id
+          )
+          ContainerGroupsSection(
+            container: container, searchText: searchText, containerGroups: groups)
+          ArchiveSection(containerId: container.id, searchText: searchText, containerGroups: groups)
         }
       }
       .listStyle(.plain)
@@ -46,14 +43,20 @@ struct ContactsView: View {
 private struct ContainerGroupsSection: View {
   let container: CNContainer
   let searchText: String
+  let containerGroups: [CNGroup]
 
   @EnvironmentObject var contactsContext: ContactsContext
-  @FetchRequest(sortDescriptors: []) private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
   @Environment(\.managedObjectContext) private var moc
+  @FetchRequest private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
   @FetchRequest private var cdContactHashes: FetchedResults<CDContactHashes>
 
-  init(container: CNContainer, searchText: String) {
+  init(container: CNContainer, searchText: String, containerGroups: [CNGroup]) {
     _cdContactHashes = FetchRequest<CDContactHashes>(
+      sortDescriptors: [],
+      predicate: NSPredicate(
+        format: "containerId = %@", container.identifier
+      ))
+    _cdArchivedGroups = FetchRequest<CDArchivedGroups>(
       sortDescriptors: [],
       predicate: NSPredicate(
         format: "containerId = %@", container.identifier
@@ -61,13 +64,12 @@ private struct ContainerGroupsSection: View {
 
     self.container = container
     self.searchText = searchText
+    self.containerGroups = containerGroups
   }
 
   var body: some View {
     let archivedGroupIdsSet = getArchivedGroupIds()
-    let groups = contactsContext.contactsMetaData.getGroupsByContainerId(
-      containerId: container.identifier
-    ).filter { !archivedGroupIdsSet.contains($0.identifier) }
+    let groups = containerGroups.filter { !archivedGroupIdsSet.contains($0.identifier) }
     let allContacts = contactsContext.contactsMetaData.getContactsByContainerId(
       containerId: container.id)
 
@@ -111,9 +113,6 @@ private struct ContainerGroupsSection: View {
           group: group
         )
       }
-      //      .onDelete { a in
-      //        print(a)
-      //      }
     } header: {
       Text(container.name)
     }
@@ -124,7 +123,6 @@ private struct ContainerGroupsSection: View {
   }
 
   private func getArchivedGroupIds() -> Set<String> {
-    // Container id?
     Set(cdArchivedGroups.compactMap { $0.groupId })
   }
 
@@ -136,7 +134,6 @@ private struct ContainerGroupsSection: View {
   private func handleContactHashesInit(
     cdContactHashes: FetchedResults<CDContactHashes>, contacts: [CNContact], containerId: String
   ) {
-    // TODO: Delete the items when a contact is deleted
     if !cdContactHashes.isEmpty {
       let contactIdHashMap = ContactHashData.getContactIdHashMap(cdContactHashes: cdContactHashes)
       contacts.forEach { contact in
@@ -160,6 +157,14 @@ private struct ContainerGroupsSection: View {
           cdContactHash.timestamp = Date()
           try? moc.save()
         }
+      }
+
+      // Cleanup where contacts where deleted, but not deleted in CoreData
+      let contactIds = Set(contacts.map { $0.identifier })
+      let toDelete = contactIdHashMap.filter { (key, _) in !contactIds.contains(key) }
+      if !toDelete.isEmpty {
+        toDelete.forEach { moc.delete($0.value.originalModel) }
+        try? moc.save()
       }
     } else {
       // No hashes exist -> create with nil timestamps (aka ignored initially)
@@ -201,18 +206,29 @@ private func getSearchResults(groups: [CNGroup], searchText: String) -> [CNGroup
 struct ArchiveSection: View {
   let containerId: String
   let searchText: String
+  let containerGroups: [CNGroup]
 
-  @FetchRequest(sortDescriptors: [])
-  private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
-
+  @FetchRequest private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
   @State private var archiveExpanded: Bool = false
   @EnvironmentObject var contactsContext: ContactsContext
+  @Environment(\.managedObjectContext) private var moc
+
+  init(containerId: String, searchText: String, containerGroups: [CNGroup]) {
+    _cdArchivedGroups = FetchRequest<CDArchivedGroups>(
+      sortDescriptors: [],
+      predicate: NSPredicate(
+        format: "containerId = %@", containerId
+      ))
+    self.containerId = containerId
+    self.searchText = searchText
+    self.containerGroups = containerGroups
+
+    handleCleanupGroupIds()
+  }
 
   var body: some View {
     let archivedGroupIdsSet = getArchivedGroupIds()
-    let groups = contactsContext.contactsMetaData.getGroupsByContainerId(
-      containerId: containerId
-    ).filter { archivedGroupIdsSet.contains($0.identifier) }
+    let groups = containerGroups.filter { archivedGroupIdsSet.contains($0.identifier) }
     let searchResults = ContactsManager.getSearchResults(groups: groups, searchText: searchText)
 
     if searchResults.count > 0 {
@@ -224,9 +240,6 @@ struct ArchiveSection: View {
             contacts: contacts, containerId: containerId, groups: groups,
             navigationTitle: "\(group.name) (\(contacts.count))", group: group,
             isArchived: true)
-          //            getNavigationLinksForContacts(
-          //              contacts: contacts, container: container, groups: groups,
-          //              navigationTitle: "\(group.name) (\(contacts.count))")
         }
       } label: {
         Text("Archived")
@@ -238,8 +251,22 @@ struct ArchiveSection: View {
   }
 
   private func getArchivedGroupIds() -> Set<String> {
-    // Container id?
     Set(cdArchivedGroups.compactMap { $0.groupId })
+  }
+
+  private func handleCleanupGroupIds() {
+    let groupIdSet = Set(containerGroups.map { $0.identifier })
+    let archivedGroupsToDelete = cdArchivedGroups.filter {
+      if let groupId = $0.groupId {
+        return !groupIdSet.contains(groupId)
+      } else {
+        return true
+      }
+    }
+    if !archivedGroupsToDelete.isEmpty {
+      archivedGroupsToDelete.forEach { moc.delete($0) }
+      try? moc.save()
+    }
   }
 }
 
