@@ -1,8 +1,45 @@
-/*
-  Localizable.strings
-  ContactsManager
-
-  Created by Ben Lu on 25/09/2022.
-*/
-
+"Add to Group" = "Add to Group";
+"All (%lld)" = "All (%lld)";
+"All" = "All";
+"Archive" = "Archive";
+"Cancel" = "Cancel";
+"Confirm" = "Confirm";
+"Contacts" = "Contacts";
+"Delete group \"%@\"?" = "Delete group \"%@\"?";
+"Delete" = "Delete";
+"Dismiss" = "Dismiss";
+"Edit Group Name" = "Edit Group Name";
+"Edit Groups" = "Edit Groups";
+"Edit" = "Edit";
+"Existing groups" = "Existing groups";
+"Group name..." = "Group name...";
 "Groups" = "Groups";
+"New groups" = "New groups";
+"Not grouped (%lld)" = "Not grouped (%lld)";
+"Not grouped" = "Not grouped";
+"Open Settings" = "Open Settings";
+"Please grant permissions to this app for your contacts in your settings" = "Please grant permissions to this app for your contacts in your settings";
+"Recents (%lld)" = "Recents (%lld)";
+"Recents" = "Recents";
+"Save" = "Save";
+"Select a Group" = "Select a Group";
+"Settings" = "Settings";
+"Show contacts permission" = "Show contacts permission";
+"Sorry, it appears that your user is restricted, such as due to parental controls" = "Sorry, it appears that your user is restricted, such as due to parental controls";
+"Submit" = "Submit";
+"Sync" = "Sync";
+"Thank you for supporting me and downloading ContactsManager!
+
+You will need to grant access to your contacts for this app to work
+
+_Your contacts data is never sent to anyone and stays on device!_" = "Thank you for supporting me and downloading ContactsManager!
+
+You will need to grant access to your contacts for this app to work
+
+_Your contacts data is never sent to anyone and stays on device!_";
+"This app does not have permissions to view your contacts" = "This app does not have permissions to view your contacts";
+"Unarchive" = "Unarchive";
+"Welcome!" = "Welcome!";
+"What would you like to call your Contact Group?" = "What would you like to call your Contact Group?";
+"add group" = "add group";
+"deleting..." = "deleting...";

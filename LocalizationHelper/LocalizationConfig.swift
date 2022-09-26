@@ -9,10 +9,13 @@ import Foundation
 
 func run() {
   let localizationHelper = LocalizationHelper(
-    base: en,
+    base: enBase,
     translations: [
+      Translation(languageCode: "en", mappings: en),
+      Translation(languageCode: "en-GB", mappings: enGB),
       Translation(languageCode: "fr", mappings: fr),
       Translation(languageCode: "es", mappings: es),
+      // Arabic, Chinese (Hong Kong)
     ])
   localizationHelper.check()
 
@@ -32,5 +35,25 @@ func run() {
     // swiftlint:disable force_try
     try! str.write(
       to: URL(fileURLWithPath: filePath), atomically: true, encoding: String.Encoding.utf8)
+  }
+  let languageCodes = Set(localizationHelper.translations.map { $0.languageCode })
+  let targetPath = NSString.path(withComponents: [
+    projectDir, "ContactsManager",
+  ])
+  let targetUrl = URL(fileURLWithPath: targetPath)
+  if let directoryContents = try? fileManager.contentsOfDirectory(
+    at: targetUrl,
+    includingPropertiesForKeys: [URLResourceKey.isDirectoryKey]
+  ) {
+    let directoryKeys = Set(
+      directoryContents.filter { $0.lastPathComponent.hasSuffix(".lproj") }.map {
+        $0.lastPathComponent.replacingOccurrences(of: ".lproj", with: "")
+      })
+    let missingTranslationConfigs = Array(directoryKeys.subtracting(languageCodes)).sorted()
+    if !missingTranslationConfigs.isEmpty {
+      print("Missing configs for: \(missingTranslationConfigs)")
+    }
+  } else {
+    print("Failed to fetch directory contents for \(targetPath)")
   }
 }

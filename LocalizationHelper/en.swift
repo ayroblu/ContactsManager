@@ -7,7 +7,7 @@
 
 import Foundation
 
-let en: Set<String> = [
+let enBase: Set<String> = [
   "Add to Group",
   "All (%lld)",
   "All",
@@ -60,3 +60,6 @@ let en: Set<String> = [
   "Settings",
   "Sync",
 ]
+
+let en = Dictionary(uniqueKeysWithValues: enBase.map { ($0, $0) })
+let enGB = en

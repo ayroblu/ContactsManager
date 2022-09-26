@@ -79,13 +79,11 @@
 		303A2C2428E0FD3500EC398A /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		303A2C2528E0FD6600EC398A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		303A2C2628E0FD6D00EC398A /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		303A2C2B28E0FDA900EC398A /* en-NZ */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-NZ"; path = "en-NZ.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		303A2C2D28E0FDCB00EC398A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		303A2C3328E0FDFE00EC398A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		303A2C4228E201B800EC398A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		303A2C4428E201B900EC398A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		303A2C4528E201BA00EC398A /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		303A2C4628E201BB00EC398A /* en-NZ */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-NZ"; path = "en-NZ.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		303A2C4728E201BB00EC398A /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		303A2C4828E201BC00EC398A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		303A2C4928E201BC00EC398A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -407,7 +405,6 @@
 				"en-GB",
 				ar,
 				"zh-HK",
-				"en-NZ",
 				fr,
 				es,
 			);
@@ -608,7 +605,6 @@
 				303A2C2428E0FD3500EC398A /* en-GB */,
 				303A2C2528E0FD6600EC398A /* ar */,
 				303A2C2628E0FD6D00EC398A /* zh-HK */,
-				303A2C2B28E0FDA900EC398A /* en-NZ */,
 				303A2C2D28E0FDCB00EC398A /* fr */,
 				303A2C3328E0FDFE00EC398A /* es */,
 			);
@@ -621,7 +617,6 @@
 				303A2C4228E201B800EC398A /* en */,
 				303A2C4428E201B900EC398A /* ar */,
 				303A2C4528E201BA00EC398A /* zh-HK */,
-				303A2C4628E201BB00EC398A /* en-NZ */,
 				303A2C4728E201BB00EC398A /* en-GB */,
 				303A2C4828E201BC00EC398A /* fr */,
 				303A2C4928E201BC00EC398A /* es */,
