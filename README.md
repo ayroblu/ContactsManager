@@ -56,6 +56,10 @@ Development
     - https://stackoverflow.com/questions/25736700/how-to-localise-a-string-inside-the-ios-info-plist-file/25736915#25736915
     - https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LocalizingYourApp/LocalizingYourApp.html#//apple_ref/doc/uid/10000171i-CH5-SW7
     - https://developer.apple.com/forums/thread/76633
+- Targets, Schemes, builds, scripts
+  - https://developer.apple.com/documentation/xcode/configuring-a-new-target-in-your-project
+  - https://www.raywenderlich.com/25816315-using-swift-scripts-with-xcode
+  - https://tech.olx.com/xcode-targets-arent-schemes-a087ac4bbe3a
 
 ### Reference docs to supplement Apple docs
 

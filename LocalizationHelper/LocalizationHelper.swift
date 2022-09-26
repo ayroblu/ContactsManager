@@ -33,6 +33,11 @@ struct Translation {
   let mappings: [String: String]
 
   func getStringsFileText() -> String {
-    mappings.map { (key, value) in "\"\(key)\" = \"\(value)\";" }.joined(separator: "\n")
+    mappings.map { (key, value) in
+      "\"\(escapeQuotes(str: key))\" = \"\(escapeQuotes(str: value))\";"
+    }.sorted().joined(separator: "\n")
+  }
+  private func escapeQuotes(str: String) -> String {
+    str.replacingOccurrences(of: "\"", with: "\\\"")
   }
 }
