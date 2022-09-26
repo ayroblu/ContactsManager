@@ -23,9 +23,7 @@ struct ContactsListView: View {
 
   var body: some View {
     List(searchResults, selection: $selectedContactIds) { contact in
-      if let contactName = CNContactFormatter.string(
-        from: contact, style: .fullName)
-      {
+      if let contactName = contact.toMaybeName() {
         NavigationLink(destination: SwiftCNContactViewController(contact: contact)) {
           Text(contactName)
         }
@@ -36,7 +34,7 @@ struct ContactsListView: View {
         //          }
         //          .buttonStyle(ListButtonStyle())
       } else {
-        Text("deleting")
+        Text("deleting...")
       }
     }
     .navigationTitle(navigationTitle)

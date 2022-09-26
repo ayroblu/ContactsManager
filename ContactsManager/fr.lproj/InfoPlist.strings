@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  ContactsManager
+
+  Created by Ben Lu on 26/09/2022.
+  
+*/
+"NSContactsUsageDescription" = "Ceci est nécessaire pour fournir des fonctionnalités relatives aux contacts sur votre appareil";
+

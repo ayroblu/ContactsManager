@@ -1,18 +1,61 @@
-/* 
+/*
   Localizable.strings
   ContactsManager
 
   Created by Ben Lu on 25/09/2022.
 */
 
-"Groups" = "Groupes";
-"All" = "Tout";
+"Add to Group" = "Ajouter au groupe";
 "All (%lld)" = "Tout (%lld)";
-"Not grouped" = "Non groupé";
-"Not grouped (%lld)" = "Non groupé (%lld)";
-"Recents" = "Récents";
-"Recents (%lld)" = "Récents (%lld)";
-// "%@ (%lld)" = "%@ (%lld)";
-"Edit" = "Éditer";
+"All" = "Tout";
 "Archive" = "Archiver";
+"Contacts" = "Contacts";
 "Delete" = "Effacer";
+"Edit" = "Éditer";
+"Groups" = "Groupes";
+"Not grouped (%lld)" = "Non groupé (%lld)";
+"Not grouped" = "Non groupé";
+"Open Settings" = "Ouvrir les paramètres";
+"Please grant permissions to this app for your contacts in your settings" = "Veuillez accorder des autorisations à cette application pour vos contacts dans vos paramètres";
+"Recents (%lld)" = "Récents (%lld)";
+"Recents" = "Récents";
+"Show contacts permission" = "Afficher l'autorisation des contacts";
+"Sorry, it appears that your user is restricted, such as due to parental controls" = "Désolé, il semble que votre utilisateur soit limité, par exemple en raison du contrôle parental";
+"This app does not have permissions to view your contacts"= "Cette application n'est pas autorisée à afficher vos contacts";
+"Welcome!" = "Bienvenue!";
+"add group" = "ajouter un groupe";
+"New groups" = "Nouveaux groupes";
+"Existing groups" = "Groupes existants";
+"Edit Groups" = "Modifier les groupes";
+"Cancel" = "Annuler";
+"Save" = "Sauvegarder";
+"What would you like to call your Contact Group?" = "Comment souhaitez-vous appeler votre groupe de contact ?";
+"Edit Group Name" = "Modifier le nom du groupe";
+"Group name..." = "Nom de groupe...";
+"Unarchive" = "Désarchiver";
+"Archive" = "Archive";
+"Delete group \"%@\"?" = "Supprimer le groupe \"%@\"?";
+"Confirm" = "Confirmer";
+
+// Long strings (can't be sorted)
+"Thank you for supporting me and downloading ContactsManager!
+
+You will need to grant access to your contacts for this app to work
+
+_Your contacts data is never sent to anyone and stays on device!_" = "Merci de me soutenir et de télécharger ContactsManager !
+
+Vous devrez autoriser l'accès à vos contacts pour que cette application fonctionne
+
+_Vos données de contacts ne sont jamais envoyées à personne et restent sur l'appareil !_";
+
+// Shared components
+"Dismiss" = "Rejeter";
+"Submit" = "Soumettre";
+
+// Not used
+"Settings" = "Réglages";
+"Sync" = "Synchroniser";
+
+// More temporary strings
+"Select a Group" = "Sélectionnez un groupe";
+"deleting..." = "suppression...";

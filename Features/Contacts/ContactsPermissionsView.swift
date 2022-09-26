@@ -28,14 +28,6 @@ struct ContactsPermissionsView: View {
   }
 }
 
-private let entryMessage = """
-  Thank you for supporting me and downloading ContactsManager!
-
-  You will need to grant access to your contacts for this app to work
-
-  _Your contacts data is never sent to anyone and stays on device!_
-  """.trimmingCharacters(in: .whitespacesAndNewlines)
-
 /// This is generally the first view that users will see
 private struct ToBeDeterminedView: View {
   @Binding var updaterId: Int

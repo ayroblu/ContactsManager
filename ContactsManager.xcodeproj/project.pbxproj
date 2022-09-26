@@ -11,8 +11,8 @@
 		303A2C1C28E0A36D00EC398A /* ContactsNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C1B28E0A36D00EC398A /* ContactsNavView.swift */; };
 		303A2C1E28E0B1AB00EC398A /* ContactsPermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C1D28E0B1AB00EC398A /* ContactsPermissionsView.swift */; };
 		303A2C2128E0FD0200EC398A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 303A2C2328E0FD0200EC398A /* Localizable.strings */; };
+		303A2C4128E201B800EC398A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 303A2C4328E201B800EC398A /* InfoPlist.strings */; };
 		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
-		3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10E284D607400DF370F /* DeleteConfirmationView.swift */; };
 		3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A110284EAEB400DF370F /* ContactsSync.swift */; };
 		3073589628CE7E21005A6A72 /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589528CE7E21005A6A72 /* ContactsListView.swift */; };
 		3073589B28CF4062005A6A72 /* AddToGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589A28CF4062005A6A72 /* AddToGroupView.swift */; };
@@ -64,8 +64,14 @@
 		303A2C2B28E0FDA900EC398A /* en-NZ */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-NZ"; path = "en-NZ.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		303A2C2D28E0FDCB00EC398A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		303A2C3328E0FDFE00EC398A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		303A2C4228E201B800EC398A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		303A2C4428E201B900EC398A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		303A2C4528E201BA00EC398A /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		303A2C4628E201BB00EC398A /* en-NZ */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-NZ"; path = "en-NZ.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		303A2C4728E201BB00EC398A /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		303A2C4828E201BC00EC398A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		303A2C4928E201BC00EC398A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		3065A10E284D607400DF370F /* DeleteConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationView.swift; sourceTree = "<group>"; };
 		3065A110284EAEB400DF370F /* ContactsSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
 		3073589528CE7E21005A6A72 /* ContactsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListView.swift; sourceTree = "<group>"; };
 		3073589A28CF4062005A6A72 /* AddToGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToGroupView.swift; sourceTree = "<group>"; };
@@ -120,7 +126,6 @@
 		3065A10D284D602000DF370F /* SharedComponents */ = {
 			isa = PBXGroup;
 			children = (
-				3065A10E284D607400DF370F /* DeleteConfirmationView.swift */,
 				3073589C28CF4468005A6A72 /* MultiSelectionListView.swift */,
 				3073589E28CFCE45005A6A72 /* MultiInsertListView.swift */,
 				307358A228D07D1C005A6A72 /* ListButtonStyle.swift */,
@@ -168,6 +173,7 @@
 				3090EA2F284A559C00D4DF4B /* Persistence.swift */,
 				3090EA31284A559C00D4DF4B /* ContactsManager.xcdatamodeld */,
 				3090EA2C284A559C00D4DF4B /* Preview Content */,
+				303A2C4328E201B800EC398A /* InfoPlist.strings */,
 				303A2C2328E0FD0200EC398A /* Localizable.strings */,
 			);
 			path = ContactsManager;
@@ -356,6 +362,7 @@
 				3090EA2E284A559C00D4DF4B /* Preview Assets.xcassets in Resources */,
 				303A2C2128E0FD0200EC398A /* Localizable.strings in Resources */,
 				3090EA2B284A559C00D4DF4B /* Assets.xcassets in Resources */,
+				303A2C4128E201B800EC398A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,7 +436,6 @@
 				303A2C1E28E0B1AB00EC398A /* ContactsPermissionsView.swift in Sources */,
 				3090EA29284A559B00D4DF4B /* ContentView.swift in Sources */,
 				307358A328D07D1C005A6A72 /* ListButtonStyle.swift in Sources */,
-				3065A10F284D607400DF370F /* DeleteConfirmationView.swift in Sources */,
 				3090EA33284A559C00D4DF4B /* ContactsManager.xcdatamodeld in Sources */,
 				3073589628CE7E21005A6A72 /* ContactsListView.swift in Sources */,
 				3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */,
@@ -488,6 +494,20 @@
 				303A2C3328E0FDFE00EC398A /* es */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		303A2C4328E201B800EC398A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				303A2C4228E201B800EC398A /* en */,
+				303A2C4428E201B900EC398A /* ar */,
+				303A2C4528E201BA00EC398A /* zh-HK */,
+				303A2C4628E201BB00EC398A /* en-NZ */,
+				303A2C4728E201BB00EC398A /* en-GB */,
+				303A2C4828E201BC00EC398A /* fr */,
+				303A2C4928E201BC00EC398A /* es */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
