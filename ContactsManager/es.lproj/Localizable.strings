@@ -1,10 +1,3 @@
-/*
-  Localizable.strings
-  ContactsManager
-
-  Created by Ben Lu on 25/09/2022.
-*/
-
 "Add to Group" = "Añadir al grupo";
 "All (%lld)" = "Todos (%lld)";
 "All" = "Todos";
@@ -14,6 +7,7 @@
 "Contacts" = "Contactos";
 "Delete group \"%@\"?" = "Eliminar grupo \"%@\"?";
 "Delete" = "Borrar";
+"Dismiss" = "Despedir";
 "Edit Group Name" = "Editar nombre de grupo";
 "Edit Groups" = "Editar grupos";
 "Edit" = "Editar";
@@ -28,15 +22,12 @@
 "Recents (%lld)" = "Recientes (%lld)";
 "Recents" = "Recientes";
 "Save" = "Ahorrar";
+"Select a Group" = "Seleccione un grupo";
+"Settings" = "Ajustes";
 "Show contacts permission" = "Mostrar permiso de contactos";
 "Sorry, it appears that your user is restricted, such as due to parental controls" = "Lo sentimos, parece que su usuario está restringido, por ejemplo, debido a los controles parentales.";
-"This app does not have permissions to view your contacts"= "Esta aplicación no tiene permisos para ver tus contactos.";
-"Unarchive" = "Desarchivar";
-"Welcome!" = "¡Bienvenidas!";
-"What would you like to call your Contact Group?" = "¿Cómo le gustaría llamar a su grupo de contacto?";
-"add group" = "añadir grupo";
-
-// Long strings (can't be sorted)
+"Submit" = "Enviar";
+"Sync" = "Sincronizar";
 "Thank you for supporting me and downloading ContactsManager!
 
 You will need to grant access to your contacts for this app to work
@@ -46,15 +37,9 @@ _Your contacts data is never sent to anyone and stays on device!_" = "¡Gracias 
 Deberá otorgar acceso a sus contactos para que esta aplicación funcione
 
 _¡Los datos de tus contactos nunca se envían a nadie y permanecen en el dispositivo!_";
-
-// Shared components
-"Dismiss" = "Despedir";
-"Submit" = "Enviar";
-
-// More temporary strings
-"Select a Group" = "Seleccione un grupo";
+"This app does not have permissions to view your contacts" = "Esta aplicación no tiene permisos para ver tus contactos.";
+"Unarchive" = "Desarchivar";
+"Welcome!" = "¡Bienvenidas!";
+"What would you like to call your Contact Group?" = "¿Cómo le gustaría llamar a su grupo de contacto?";
+"add group" = "añadir grupo";
 "deleting..." = "borrando...";
-
-// Not used
-"Settings" = "Ajustes";
-"Sync" = "Sincronizar";

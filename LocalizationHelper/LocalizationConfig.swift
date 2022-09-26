@@ -11,7 +11,8 @@ func run() {
   let localizationHelper = LocalizationHelper(
     base: en,
     translations: [
-      Translation(languageCode: "fr", mappings: fr)
+      Translation(languageCode: "fr", mappings: fr),
+      Translation(languageCode: "es", mappings: es),
     ])
   localizationHelper.check()
 

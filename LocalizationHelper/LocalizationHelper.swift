@@ -13,7 +13,6 @@ struct LocalizationHelper {
 
   func check() {
     translations.forEach { translation in
-      print("LocalizationHelper: start translation for \(translation.languageCode)")
       let mappingKeys = Set(translation.mappings.map { $0.key })
       let missingMappingKeys = base.subtracting(mappingKeys)
       let missingBaseKeys = mappingKeys.subtracting(base)
@@ -23,7 +22,6 @@ struct LocalizationHelper {
       if !missingBaseKeys.isEmpty {
         print("\(translation.languageCode) has extra keys: \(Array(missingBaseKeys).sorted())")
       }
-      print("---")
     }
   }
 }

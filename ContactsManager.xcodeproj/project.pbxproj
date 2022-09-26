@@ -17,6 +17,7 @@
 		303A2C5F28E2538C00EC398A /* LocalizationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C4B28E2256E00EC398A /* LocalizationHelper.swift */; };
 		303A2C6328E2610D00EC398A /* en.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C6228E2610D00EC398A /* en.swift */; };
 		303A2C6528E2612A00EC398A /* fr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C6428E2612A00EC398A /* fr.swift */; };
+		303A2C6728E267A200EC398A /* es.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C6628E267A200EC398A /* es.swift */; };
 		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
 		3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A110284EAEB400DF370F /* ContactsSync.swift */; };
 		3073589628CE7E21005A6A72 /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589528CE7E21005A6A72 /* ContactsListView.swift */; };
@@ -94,6 +95,7 @@
 		303A2C5928E2537B00EC398A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		303A2C6228E2610D00EC398A /* en.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = en.swift; sourceTree = "<group>"; };
 		303A2C6428E2612A00EC398A /* fr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fr.swift; sourceTree = "<group>"; };
+		303A2C6628E267A200EC398A /* es.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = es.swift; sourceTree = "<group>"; };
 		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3065A110284EAEB400DF370F /* ContactsSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
 		3073589528CE7E21005A6A72 /* ContactsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListView.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				303A2C4D28E2503200EC398A /* LocalizationConfig.swift */,
 				303A2C6228E2610D00EC398A /* en.swift */,
 				303A2C6428E2612A00EC398A /* fr.swift */,
+				303A2C6628E267A200EC398A /* es.swift */,
 			);
 			path = LocalizationHelper;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				303A2C5E28E2538C00EC398A /* LocalizationConfig.swift in Sources */,
+				303A2C6728E267A200EC398A /* es.swift in Sources */,
 				303A2C5A28E2537B00EC398A /* main.swift in Sources */,
 				303A2C6528E2612A00EC398A /* fr.swift in Sources */,
 				303A2C6328E2610D00EC398A /* en.swift in Sources */,

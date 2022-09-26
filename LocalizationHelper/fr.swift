@@ -69,5 +69,4 @@ let fr = [
   // Not used
   "Settings": "Réglages",
   "Sync": "Synchroniser",
-
 ]
