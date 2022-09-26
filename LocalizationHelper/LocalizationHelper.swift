@@ -31,4 +31,8 @@ struct LocalizationHelper {
 struct Translation {
   let languageCode: String
   let mappings: [String: String]
+
+  func getStringsFileText() -> String {
+    mappings.map { (key, value) in "\"\(key)\" = \"\(value)\";" }.joined(separator: "\n")
+  }
 }

@@ -13,8 +13,10 @@
 		303A2C2128E0FD0200EC398A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 303A2C2328E0FD0200EC398A /* Localizable.strings */; };
 		303A2C4128E201B800EC398A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 303A2C4328E201B800EC398A /* InfoPlist.strings */; };
 		303A2C5A28E2537B00EC398A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C5928E2537B00EC398A /* main.swift */; };
-		303A2C5E28E2538C00EC398A /* LocalizationRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C4D28E2503200EC398A /* LocalizationRun.swift */; };
+		303A2C5E28E2538C00EC398A /* LocalizationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C4D28E2503200EC398A /* LocalizationConfig.swift */; };
 		303A2C5F28E2538C00EC398A /* LocalizationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C4B28E2256E00EC398A /* LocalizationHelper.swift */; };
+		303A2C6328E2610D00EC398A /* en.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C6228E2610D00EC398A /* en.swift */; };
+		303A2C6528E2612A00EC398A /* fr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C6428E2612A00EC398A /* fr.swift */; };
 		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
 		3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A110284EAEB400DF370F /* ContactsSync.swift */; };
 		3073589628CE7E21005A6A72 /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589528CE7E21005A6A72 /* ContactsListView.swift */; };
@@ -87,9 +89,11 @@
 		303A2C4828E201BC00EC398A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		303A2C4928E201BC00EC398A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		303A2C4B28E2256E00EC398A /* LocalizationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationHelper.swift; sourceTree = "<group>"; };
-		303A2C4D28E2503200EC398A /* LocalizationRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationRun.swift; sourceTree = "<group>"; };
+		303A2C4D28E2503200EC398A /* LocalizationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationConfig.swift; sourceTree = "<group>"; };
 		303A2C5728E2537B00EC398A /* LocalizationHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LocalizationHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		303A2C5928E2537B00EC398A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		303A2C6228E2610D00EC398A /* en.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = en.swift; sourceTree = "<group>"; };
+		303A2C6428E2612A00EC398A /* fr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fr.swift; sourceTree = "<group>"; };
 		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3065A110284EAEB400DF370F /* ContactsSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
 		3073589528CE7E21005A6A72 /* ContactsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListView.swift; sourceTree = "<group>"; };
@@ -154,7 +158,9 @@
 			children = (
 				303A2C5928E2537B00EC398A /* main.swift */,
 				303A2C4B28E2256E00EC398A /* LocalizationHelper.swift */,
-				303A2C4D28E2503200EC398A /* LocalizationRun.swift */,
+				303A2C4D28E2503200EC398A /* LocalizationConfig.swift */,
+				303A2C6228E2610D00EC398A /* en.swift */,
+				303A2C6428E2612A00EC398A /* fr.swift */,
 			);
 			path = LocalizationHelper;
 			sourceTree = "<group>";
@@ -523,8 +529,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				303A2C5E28E2538C00EC398A /* LocalizationRun.swift in Sources */,
+				303A2C5E28E2538C00EC398A /* LocalizationConfig.swift in Sources */,
 				303A2C5A28E2537B00EC398A /* main.swift in Sources */,
+				303A2C6528E2612A00EC398A /* fr.swift in Sources */,
+				303A2C6328E2610D00EC398A /* en.swift in Sources */,
 				303A2C5F28E2538C00EC398A /* LocalizationHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
