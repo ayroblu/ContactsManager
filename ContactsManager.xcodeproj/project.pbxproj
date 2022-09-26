@@ -182,7 +182,6 @@
 		3090EA1A284A559B00D4DF4B = {
 			isa = PBXGroup;
 			children = (
-				3090EA56284B866200D4DF4B /* Features */,
 				3090EA25284A559B00D4DF4B /* ContactsManager */,
 				3090EA3B284A559C00D4DF4B /* ContactsManagerTests */,
 				3090EA45284A559C00D4DF4B /* ContactsManagerUITests */,
@@ -205,6 +204,7 @@
 		3090EA25284A559B00D4DF4B /* ContactsManager */ = {
 			isa = PBXGroup;
 			children = (
+				3090EA56284B866200D4DF4B /* Features */,
 				3090EA26284A559B00D4DF4B /* ContactsManagerApp.swift */,
 				3090EA28284A559B00D4DF4B /* ContentView.swift */,
 				3090EA2A284A559C00D4DF4B /* Assets.xcassets */,
@@ -478,7 +478,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint > /dev/null; then\n  swiftlint lint --config .swiftlint.yml ${PROJECT_DIR}\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  exit 1\nfi\n";
+			shellScript = "if which swiftlint > /dev/null; then\n  swiftlint lint --config .swiftlint.yml ${PROJECT_DIR}/${TARGET_NAME}\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  exit 1\nfi\n";
 		};
 		30DF2545289553D300B0B54A /* Run Script - swift-format */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -514,7 +514,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  exit 1\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint > /dev/null; then\n  swiftlint lint --config .swiftlint.yml ${PROJECT_DIR}/${TARGET_NAME}\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  exit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
