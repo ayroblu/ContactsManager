@@ -7,6 +7,7 @@ TODO
 ----
 
 - Localize for different languages
+  - Use TypeScript (maybe swift?) to store all translations, then convert to Localizable.strings files
 - Tests + UI Tests
 - App Store submission
 - Capture logging and crashes
