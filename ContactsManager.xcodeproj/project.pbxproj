@@ -12,6 +12,9 @@
 		303A2C1E28E0B1AB00EC398A /* ContactsPermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C1D28E0B1AB00EC398A /* ContactsPermissionsView.swift */; };
 		303A2C2128E0FD0200EC398A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 303A2C2328E0FD0200EC398A /* Localizable.strings */; };
 		303A2C4128E201B800EC398A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 303A2C4328E201B800EC398A /* InfoPlist.strings */; };
+		303A2C5A28E2537B00EC398A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C5928E2537B00EC398A /* main.swift */; };
+		303A2C5E28E2538C00EC398A /* LocalizationRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C4D28E2503200EC398A /* LocalizationRun.swift */; };
+		303A2C5F28E2538C00EC398A /* LocalizationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303A2C4B28E2256E00EC398A /* LocalizationHelper.swift */; };
 		3065A10C284D4C1100DF370F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B284D4C1100DF370F /* SettingsView.swift */; };
 		3065A111284EAEB400DF370F /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A110284EAEB400DF370F /* ContactsSync.swift */; };
 		3073589628CE7E21005A6A72 /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3073589528CE7E21005A6A72 /* ContactsListView.swift */; };
@@ -53,6 +56,18 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		303A2C5528E2537B00EC398A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		303A2C1928DF66E200EC398A /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		303A2C1B28E0A36D00EC398A /* ContactsNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsNavView.swift; sourceTree = "<group>"; };
@@ -71,6 +86,10 @@
 		303A2C4728E201BB00EC398A /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		303A2C4828E201BC00EC398A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		303A2C4928E201BC00EC398A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		303A2C4B28E2256E00EC398A /* LocalizationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationHelper.swift; sourceTree = "<group>"; };
+		303A2C4D28E2503200EC398A /* LocalizationRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationRun.swift; sourceTree = "<group>"; };
+		303A2C5728E2537B00EC398A /* LocalizationHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LocalizationHelper; sourceTree = BUILT_PRODUCTS_DIR; };
+		303A2C5928E2537B00EC398A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3065A10B284D4C1100DF370F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3065A110284EAEB400DF370F /* ContactsSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
 		3073589528CE7E21005A6A72 /* ContactsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListView.swift; sourceTree = "<group>"; };
@@ -99,6 +118,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		303A2C5428E2537B00EC398A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3090EA20284A559B00D4DF4B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -123,6 +149,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		303A2C5828E2537B00EC398A /* LocalizationHelper */ = {
+			isa = PBXGroup;
+			children = (
+				303A2C5928E2537B00EC398A /* main.swift */,
+				303A2C4B28E2256E00EC398A /* LocalizationHelper.swift */,
+				303A2C4D28E2503200EC398A /* LocalizationRun.swift */,
+			);
+			path = LocalizationHelper;
+			sourceTree = "<group>";
+		};
 		3065A10D284D602000DF370F /* SharedComponents */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +186,7 @@
 				3090EA25284A559B00D4DF4B /* ContactsManager */,
 				3090EA3B284A559C00D4DF4B /* ContactsManagerTests */,
 				3090EA45284A559C00D4DF4B /* ContactsManagerUITests */,
+				303A2C5828E2537B00EC398A /* LocalizationHelper */,
 				3090EA24284A559B00D4DF4B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -160,6 +197,7 @@
 				3090EA23284A559B00D4DF4B /* ContactsManager.app */,
 				3090EA38284A559C00D4DF4B /* ContactsManagerTests.xctest */,
 				3090EA42284A559C00D4DF4B /* ContactsManagerUITests.xctest */,
+				303A2C5728E2537B00EC398A /* LocalizationHelper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -250,6 +288,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		303A2C5628E2537B00EC398A /* LocalizationHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 303A2C5B28E2537B00EC398A /* Build configuration list for PBXNativeTarget "LocalizationHelper" */;
+			buildPhases = (
+				303A2C5328E2537B00EC398A /* Sources */,
+				303A2C5428E2537B00EC398A /* Frameworks */,
+				303A2C5528E2537B00EC398A /* CopyFiles */,
+				303A2C6028E25B5C00EC398A /* Run Script - swift format */,
+				303A2C6128E25C6500EC398A /* Run Script - swift-lint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LocalizationHelper;
+			productName = LocalizationHelper;
+			productReference = 303A2C5728E2537B00EC398A /* LocalizationHelper */;
+			productType = "com.apple.product-type.tool";
+		};
 		3090EA22284A559B00D4DF4B /* ContactsManager */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3090EA4C284A559C00D4DF4B /* Build configuration list for PBXNativeTarget "ContactsManager" */;
@@ -315,6 +372,9 @@
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					303A2C5628E2537B00EC398A = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 					3090EA22284A559B00D4DF4B = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -350,6 +410,7 @@
 				3090EA22284A559B00D4DF4B /* ContactsManager */,
 				3090EA37284A559C00D4DF4B /* ContactsManagerTests */,
 				3090EA41284A559C00D4DF4B /* ContactsManagerUITests */,
+				303A2C5628E2537B00EC398A /* LocalizationHelper */,
 			);
 		};
 /* End PBXProject section */
@@ -383,6 +444,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		303A2C6028E25B5C00EC398A /* Run Script - swift format */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script - swift format";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swift-format >/dev/null; then\n    swift-format -m format -i -r --configuration swift-format-configuration.json ${PROJECT_DIR}\nelse\n    echo \"error: swift-format not installed\"\n    exit 1\nfi\n";
+		};
+		303A2C6128E25C6500EC398A /* Run Script - swift-lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script - swift-lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint > /dev/null; then\n  swiftlint lint --config .swiftlint.yml ${PROJECT_DIR}\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  exit 1\nfi\n";
+		};
 		30DF2545289553D300B0B54A /* Run Script - swift-format */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -422,6 +519,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		303A2C5328E2537B00EC398A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				303A2C5E28E2538C00EC398A /* LocalizationRun.swift in Sources */,
+				303A2C5A28E2537B00EC398A /* main.swift in Sources */,
+				303A2C5F28E2538C00EC398A /* LocalizationHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3090EA1F284A559B00D4DF4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -513,6 +620,32 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		303A2C5C28E2537B00EC398A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MT8GVH9FL2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		303A2C5D28E2537B00EC398A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MT8GVH9FL2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		3090EA4A284A559C00D4DF4B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -770,6 +903,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		303A2C5B28E2537B00EC398A /* Build configuration list for PBXNativeTarget "LocalizationHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				303A2C5C28E2537B00EC398A /* Debug */,
+				303A2C5D28E2537B00EC398A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3090EA1E284A559B00D4DF4B /* Build configuration list for PBXProject "ContactsManager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

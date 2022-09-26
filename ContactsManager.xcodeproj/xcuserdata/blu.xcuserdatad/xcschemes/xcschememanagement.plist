@@ -7,11 +7,26 @@
 		<key>ContactsManager.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>LocalizationBuilder.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>LocalizationHelper.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>303A2C5628E2537B00EC398A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3090EA22284A559B00D4DF4B</key>
 		<dict>
 			<key>primary</key>
