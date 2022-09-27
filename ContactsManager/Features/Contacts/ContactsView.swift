@@ -102,7 +102,7 @@ private struct ContainerGroupsSection: View {
         containerId: container.identifier, contacts: allContacts, groups: groups,
         isVisible: hasSearchResults(groupName: String(localized: "Recents")))
 
-      ForEach(getSearchResults(groups: groups)) { group in
+      ForEach(getSearchResults(groups: groups, searchText: searchText)) { group in
         let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
           groupId: group.identifier)
         let navigationTitle = String(localized: "\(group.name) (\(contacts.count))")
@@ -179,9 +179,6 @@ private struct ContainerGroupsSection: View {
     }
   }
 
-  private func getSearchResults(groups: [CNGroup]) -> [CNGroup] {
-    ContactsManager.getSearchResults(groups: groups, searchText: searchText)
-  }
   private func hasSearchResults(groupName: String) -> Bool {
     if searchText.isEmpty {
       return true
@@ -229,7 +226,7 @@ struct ArchiveSection: View {
   var body: some View {
     let archivedGroupIdsSet = getArchivedGroupIds()
     let groups = containerGroups.filter { archivedGroupIdsSet.contains($0.identifier) }
-    let searchResults = ContactsManager.getSearchResults(groups: groups, searchText: searchText)
+    let searchResults = getSearchResults(groups: groups, searchText: searchText)
 
     if searchResults.count > 0 {
       DisclosureGroup(isExpanded: $archiveExpanded) {
