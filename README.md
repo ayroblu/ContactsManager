@@ -45,6 +45,8 @@ Development
     3. Most translations in SwiftUI should just work, otherwise use `String(localized: "key here...")`
     4. Permissions strings (show up in the dialog) need to be translated separately, notably you need to add an `InfoPlist.strings` file with the description key for translations
       - https://stackoverflow.com/questions/25736700/how-to-localise-a-string-inside-the-ios-info-plist-file/25736915#25736915
+  - Note:
+    - Non latin alphabets don't support italics (markdown)
   - https://phrase.com/blog/posts/swiftui-tutorial-localization/
   - https://www.youtube.com/watch?v=1YsyHr0eslI
     - Walkthrough
