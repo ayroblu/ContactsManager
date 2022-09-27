@@ -6,18 +6,20 @@ App to manage contacts
 TODO
 ----
 
-- Localize for different languages
-  - Use TypeScript (maybe swift?) to store all translations, then convert to Localizable.strings files
+- Setup githb CI builds
 - Tests + UI Tests
-- App Store submission
 - Capture logging and crashes
 
 ### Long term todos
 
-- Fuzzy search
+- Analyse types for strings to support localization keys
+- Add swipe actions to contacts
+- Fix contact detail viewing, editing
+- iPad view, use stuck master detail
 - Master detail view - render all contacts
 - Search - include contacts in group search at bottom
   - Performance?
+- Fuzzy search
 - (maybe) Sort by members etc
   - Stateful
 
