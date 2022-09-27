@@ -7,30 +7,23 @@
 
 import Foundation
 
-func run() {
-  let localizationHelper = LocalizationHelper(
-    base: enBase,
-    translations: [
-      Translation(languageCode: "ar", mappings: ar),
-      Translation(languageCode: "en", mappings: en),
-      Translation(languageCode: "en-GB", mappings: enGB),
-      Translation(languageCode: "es", mappings: es),
-      Translation(languageCode: "fr", mappings: fr),
-      Translation(languageCode: "zh-HK", mappings: zhHK),
-    ])
+func runLocalization(with localizationHelper: LocalizationHelper) {
   localizationHelper.check()
 
   let fileManager = FileManager.default
   let projectDir = fileManager.currentDirectoryPath
   localizationHelper.translations.forEach { translation in
     let filePath = NSString.path(withComponents: [
-      projectDir, "ContactsManager/\(translation.languageCode).lproj/Localizable.strings",
+      projectDir,
+      "ContactsManager/\(translation.languageCode).lproj/\(localizationHelper.fileName)",
     ])
     if !fileManager.fileExists(atPath: filePath) {
       print("could not find: \(filePath)")
+      return
     }
     if !fileManager.isWritableFile(atPath: filePath) {
       print("file not writable: \(filePath)")
+      return
     }
     let str = translation.getStringsFileText()
     // swiftlint:disable force_try

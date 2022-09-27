@@ -70,3 +70,8 @@ let fr = [
   "Settings": "Réglages",
   "Sync": "Synchroniser",
 ]
+
+let frInfo = [
+  "NSContactsUsageDescription":
+    "Ceci est nécessaire pour fournir des fonctionnalités relatives aux contacts sur votre appareil"
+]

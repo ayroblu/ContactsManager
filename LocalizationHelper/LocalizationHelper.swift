@@ -10,6 +10,7 @@ import Foundation
 struct LocalizationHelper {
   let base: Set<String>
   let translations: [Translation]
+  let fileName: String
 
   func check() {
     translations.forEach { translation in

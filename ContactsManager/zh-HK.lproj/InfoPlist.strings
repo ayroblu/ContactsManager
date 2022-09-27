@@ -1,8 +1,1 @@
-/* 
-  InfoPlist.strings
-  ContactsManager
-
-  Created by Ben Lu on 26/09/2022.
-  
-*/
-"This is necessary for providing functionality relating to contacts on your device" = "This is necessary for providing functionality relating to contacts on your device";
+"NSContactsUsageDescription" = "這是提供與設備上的聯繫人相關的功能所必需的";

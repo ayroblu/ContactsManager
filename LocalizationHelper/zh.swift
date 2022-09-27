@@ -73,3 +73,8 @@ let zhHant = [
 
 let zhHK = zhHant
 // let zh = zhHans
+
+let zhHantInfo = [
+  "NSContactsUsageDescription": "這是提供與設備上的聯繫人相關的功能所必需的"
+]
+let zhHKInfo = zhHantInfo

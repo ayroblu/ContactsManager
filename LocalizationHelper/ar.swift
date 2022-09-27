@@ -70,3 +70,8 @@ let ar = [
   "Settings": "إعدادات",
   "Sync": "مزامنة",
 ]
+
+let arInfo = [
+  "NSContactsUsageDescription":
+    "يعد هذا ضروريًا لتوفير الوظائف المتعلقة بجهات الاتصال الموجودة على جهازك"
+]

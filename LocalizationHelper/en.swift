@@ -63,3 +63,11 @@ let enBase: Set<String> = [
 
 let en = Dictionary(uniqueKeysWithValues: enBase.map { ($0, $0) })
 let enGB = en
+
+let enBaseInfo: Set<String> = ["NSContactsUsageDescription"]
+
+let enInfo = [
+  "NSContactsUsageDescription":
+    "This is necessary for providing functionality relating to contacts on your device"
+]
+let enGBInfo = enInfo
