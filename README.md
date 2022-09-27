@@ -66,6 +66,13 @@ Development
   - Use appicon.co
 - Distribution
   - https://youtu.be/fXeDe9tafG8
+  - Images use:
+    - iPhone 13 pro max
+    - iPhone 8 plus
+    - iPad pro 12.9 inch
+    - Custom iPad Pro 12.9 2nd generation
+      - `xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-"`
+      - from: https://stackoverflow.com/questions/58524085/device-ipad-pro-12-9-inch-2nd-generation-not-in-list-of-available-simulato
 
 ### Reference docs to supplement Apple docs
 
