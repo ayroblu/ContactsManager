@@ -45,7 +45,7 @@ let fr = [
 
   // Long strings (can't be sorted)
   """
-  Thank you for supporting me and downloading ContactsManager!
+  Thank you for supporting me and downloading Contact Groups Manager!
 
   You will need to grant access to your contacts for this app to work
 

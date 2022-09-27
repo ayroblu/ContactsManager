@@ -45,13 +45,13 @@ let es = [
 
   // Long strings (can't be sorted)
   """
-  Thank you for supporting me and downloading ContactsManager!
+  Thank you for supporting me and downloading Contact Groups Manager!
 
   You will need to grant access to your contacts for this app to work
 
   _Your contacts data is never sent to anyone and stays on device!_
   """: """
-    ¡Gracias por apoyarme y descargar ContactsManager!
+    ¡Gracias por apoyarme y descargar Contact Groups Manager!
 
     Deberá otorgar acceso a sus contactos para que esta aplicación funcione
 

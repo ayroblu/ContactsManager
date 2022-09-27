@@ -38,7 +38,7 @@ private struct ToBeDeterminedView: View {
         .padding()
       Text(
         """
-        Thank you for supporting me and downloading ContactsManager!
+        Thank you for supporting me and downloading Contact Groups Manager!
 
         You will need to grant access to your contacts for this app to work
 
