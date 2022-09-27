@@ -62,6 +62,10 @@ Development
   - https://developer.apple.com/documentation/xcode/configuring-a-new-target-in-your-project
   - https://www.raywenderlich.com/25816315-using-swift-scripts-with-xcode
   - https://tech.olx.com/xcode-targets-arent-schemes-a087ac4bbe3a
+- Icons
+  - Use appicon.co
+- Distribution
+  - https://youtu.be/fXeDe9tafG8
 
 ### Reference docs to supplement Apple docs
 
