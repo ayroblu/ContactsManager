@@ -15,7 +15,7 @@ let es = [
   "Cancel": "Cancelar",
   "Confirm": "Confirmar",
   "Contacts": "Contactos",
-  "Delete group \"%@\"?": "Eliminar grupo \"%@\"?",
+  "Delete group “%@”?": "¿Eliminar el grupo “%@”?",
   "Delete": "Borrar",
   "Edit Group Name": "Editar nombre de grupo",
   "Edit Groups": "Editar grupos",

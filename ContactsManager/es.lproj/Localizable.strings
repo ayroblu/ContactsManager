@@ -5,7 +5,7 @@
 "Cancel" = "Cancelar";
 "Confirm" = "Confirmar";
 "Contacts" = "Contactos";
-"Delete group \"%@\"?" = "Eliminar grupo \"%@\"?";
+"Delete group “%@”?" = "¿Eliminar el grupo “%@”?";
 "Delete" = "Borrar";
 "Dismiss" = "Despedir";
 "Edit Group Name" = "Editar nombre de grupo";

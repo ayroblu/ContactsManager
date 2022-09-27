@@ -15,7 +15,7 @@ let enBase: Set<String> = [
   "Cancel",
   "Confirm",
   "Contacts",
-  "Delete group \"%@\"?",
+  "Delete group “%@”?",
   "Delete",
   "Edit Group Name",
   "Edit Groups",

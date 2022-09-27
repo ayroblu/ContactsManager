@@ -5,7 +5,7 @@
 "Cancel" = "Cancel";
 "Confirm" = "Confirm";
 "Contacts" = "Contacts";
-"Delete group \"%@\"?" = "Delete group \"%@\"?";
+"Delete group “%@”?" = "Delete group “%@”?";
 "Delete" = "Delete";
 "Dismiss" = "Dismiss";
 "Edit Group Name" = "Edit Group Name";

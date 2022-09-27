@@ -65,7 +65,7 @@ struct ContactsNavView: View {
             .tint(.orange)
           }
         }
-        .alert("Delete group \"\(group.name)\"?", isPresented: $isShowingDeleteAlert) {
+        .alert("Delete group “\(group.name)”?", isPresented: $isShowingDeleteAlert) {
           Button("Cancel", role: .cancel) {}
           Button("Confirm", role: .destructive) {
             withAnimation {

@@ -11,11 +11,12 @@ func run() {
   let localizationHelper = LocalizationHelper(
     base: enBase,
     translations: [
+      Translation(languageCode: "ar", mappings: ar),
       Translation(languageCode: "en", mappings: en),
       Translation(languageCode: "en-GB", mappings: enGB),
-      Translation(languageCode: "fr", mappings: fr),
       Translation(languageCode: "es", mappings: es),
-      // Arabic, Chinese (Hong Kong)
+      Translation(languageCode: "fr", mappings: fr),
+      Translation(languageCode: "zh-HK", mappings: zhHK),
     ])
   localizationHelper.check()
 

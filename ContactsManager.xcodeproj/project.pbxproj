@@ -40,6 +40,8 @@
 		3090EA5D284B88E300D4DF4B /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA5C284B88E300D4DF4B /* ContactsView.swift */; };
 		3090EA5F284B929B00D4DF4B /* ContactsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA5E284B929B00D4DF4B /* ContactsDetailView.swift */; };
 		3090EA61284B932100D4DF4B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3090EA60284B932100D4DF4B /* Utils.swift */; };
+		30D13C1028E2722800E6850F /* zh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D13C0F28E2722800E6850F /* zh.swift */; };
+		30D13C1228E2723600E6850F /* ar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D13C1128E2723600E6850F /* ar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,8 @@
 		3090EA5C284B88E300D4DF4B /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		3090EA5E284B929B00D4DF4B /* ContactsDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsDetailView.swift; sourceTree = "<group>"; };
 		3090EA60284B932100D4DF4B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		30D13C0F28E2722800E6850F /* zh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = zh.swift; sourceTree = "<group>"; };
+		30D13C1128E2723600E6850F /* ar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +166,8 @@
 				303A2C6228E2610D00EC398A /* en.swift */,
 				303A2C6428E2612A00EC398A /* fr.swift */,
 				303A2C6628E267A200EC398A /* es.swift */,
+				30D13C0F28E2722800E6850F /* zh.swift */,
+				30D13C1128E2723600E6850F /* ar.swift */,
 			);
 			path = LocalizationHelper;
 			sourceTree = "<group>";
@@ -533,7 +539,9 @@
 				303A2C6728E267A200EC398A /* es.swift in Sources */,
 				303A2C5A28E2537B00EC398A /* main.swift in Sources */,
 				303A2C6528E2612A00EC398A /* fr.swift in Sources */,
+				30D13C1028E2722800E6850F /* zh.swift in Sources */,
 				303A2C6328E2610D00EC398A /* en.swift in Sources */,
+				30D13C1228E2723600E6850F /* ar.swift in Sources */,
 				303A2C5F28E2538C00EC398A /* LocalizationHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
