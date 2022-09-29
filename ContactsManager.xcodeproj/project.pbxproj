@@ -510,7 +510,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swift-format >/dev/null; then\n    swift-format -m format -i -r --configuration swift-format-configuration.json ${PROJECT_DIR}\nelse\n    echo \"error: swift-format not installed\"\n    #exit 1\nfi\n";
+			shellScript = "if which swift-format >/dev/null; then\n    #swift-format format --in-place --recursive --configuration swift-format-configuration.json ${PROJECT_DIR}\nelse\n    echo \"error: swift-format not installed\"\n    #exit 1\nfi\n";
 		};
 		30DF25462895540A00B0B54A /* Run Script - swift-lint */ = {
 			isa = PBXShellScriptBuildPhase;
