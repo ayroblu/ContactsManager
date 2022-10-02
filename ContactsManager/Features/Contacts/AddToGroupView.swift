@@ -6,6 +6,7 @@
 //
 
 import Contacts
+import CoreData
 import SwiftUI
 
 struct AddToGroupView: View {
@@ -19,16 +20,22 @@ struct AddToGroupView: View {
   @State var newGroups: [String] = []
   @State var selectedGroups: [String: SelectSelection]
   @Binding var isShowing: Bool
+  @FetchRequest private var cdArchivedGroups: FetchedResults<CDArchivedGroups>
 
   init(
     contacts: [CNContact], containerId: String, groups: [CNGroup],
     initialSelectedGroups: [String: SelectSelection],
     isShowing: Binding<Bool>, onSave: @escaping () -> Void
   ) {
+    _cdArchivedGroups = FetchRequest<CDArchivedGroups>(
+      sortDescriptors: [],
+      predicate: NSPredicate(
+        format: "containerId = %@", containerId
+      ))
     self.contacts = contacts
     self.containerId = containerId
     self.groups = groups
-    self.selectedGroups = initialSelectedGroups
+    _selectedGroups = State(initialValue: initialSelectedGroups)
     self.initialSelectedGroups = initialSelectedGroups
     self.onSave = onSave
     self._isShowing = isShowing
@@ -36,6 +43,9 @@ struct AddToGroupView: View {
 
   // Form which shows radio group of list of groups (+ counts) + add a group text input
   var body: some View {
+    let archivedGroupIdsSet = Set(cdArchivedGroups.compactMap { $0.groupId })
+    let activeGroups = groups.filter { !archivedGroupIdsSet.contains($0.identifier) }
+    let archivedGroups = groups.filter { archivedGroupIdsSet.contains($0.identifier) }
     NavigationView {
       List {
         Section {
@@ -45,9 +55,15 @@ struct AddToGroupView: View {
         }
         Section {
           MultiSelectionListView(
-            options: groups, optionToString: { $0.name }, selections: $selectedGroups)
+            options: activeGroups, optionToString: { $0.name }, selections: $selectedGroups)
         } header: {
           Text("Existing groups")
+        }
+        Section {
+          MultiSelectionListView(
+            options: archivedGroups, optionToString: { $0.name }, selections: $selectedGroups)
+        } header: {
+          Text("Archived groups")
         }
       }.listStyle(.grouped)
         .navigationBarTitle(Text("Edit Groups"), displayMode: .inline)
@@ -80,7 +96,7 @@ struct AddToGroupView: View {
           }
         }
       } catch {
-        print(error)
+        print("Save groups error", error)
       }
     }
 
@@ -91,7 +107,7 @@ struct AddToGroupView: View {
           try addContacts(contacts, to: [group])
         }
       } catch {
-        print(error)
+        print("new groups error", error)
       }
     }
 

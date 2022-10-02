@@ -79,7 +79,7 @@ private struct ContainerGroupsSection: View {
         ContactsNavView(
           contacts: allContacts,
           containerId: container.id,
-          groups: groups,
+          allGroups: containerGroups,
           navigationTitle: navigationTitle,
           navigationTitleLabel: Text(navigationTitle).italic())
       }
@@ -92,22 +92,22 @@ private struct ContainerGroupsSection: View {
           ContactsNavView(
             contacts: ungroupedContacts,
             containerId: container.id,
-            groups: groups,
+            allGroups: containerGroups,
             navigationTitle: navigationTitle,
             navigationTitleLabel: Text(navigationTitle).italic())
         }
       }
 
       Recents(
-        containerId: container.identifier, contacts: allContacts, groups: groups,
+        containerId: container.identifier, contacts: allContacts, groups: containerGroups,
         isVisible: hasSearchResults(groupName: String(localized: "Recents")))
 
       ForEach(getSearchResults(groups: groups, searchText: searchText)) { group in
         let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
-          groupId: group.identifier)
+          containerId: container.identifier, groupId: group.identifier)
         let navigationTitle = String(localized: "\(group.name) (\(contacts.count))")
         ContactsNavView(
-          contacts: contacts, containerId: container.id, groups: groups,
+          contacts: contacts, containerId: container.id, allGroups: containerGroups,
           navigationTitle: navigationTitle,
           navigationTitleLabel: Text(navigationTitle),
           group: group
@@ -232,9 +232,9 @@ struct ArchiveSection: View {
       DisclosureGroup(isExpanded: $archiveExpanded) {
         ForEach(searchResults) { group in
           let contacts = contactsContext.contactsMetaData.getContactsByGroupId(
-            groupId: group.identifier)
+            containerId: containerId, groupId: group.identifier)
           ContactsNavView(
-            contacts: contacts, containerId: containerId, groups: groups,
+            contacts: contacts, containerId: containerId, allGroups: containerGroups,
             navigationTitle: "\(group.name) (\(contacts.count))", group: group,
             isArchived: true)
         }
@@ -295,7 +295,7 @@ private struct Recents: View {
     let navigationTitle = String(localized: "Recents (\(recentContacts.count))")
     if isVisible && !recentContacts.isEmpty && recentContacts.count != contacts.count {
       ContactsNavView(
-        contacts: recentContacts, containerId: containerId, groups: groups,
+        contacts: recentContacts, containerId: containerId, allGroups: groups,
         navigationTitle: navigationTitle,
         navigationTitleLabel: Text(navigationTitle).italic()
       )

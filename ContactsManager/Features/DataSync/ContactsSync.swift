@@ -8,28 +8,50 @@
 import Contacts
 import ContactsUI
 
-func getContactsMetaData() -> ContactsMetaData {
-  let keys = [
-    CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
-    CNContactViewController.descriptorForRequiredKeys(),
-  ]
+let keys = [
+  CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+  CNContactViewController.descriptorForRequiredKeys(),
+]
 
+func getContactsMetaData() -> ContactsMetaData {
+  let (result, time) = timeFunc(myFunc: getContactsMetaDataRaw)
+  print("getContactsMetaData: \(time) milliseconds")
+  return result
+}
+func timeFunc<T>(myFunc: () -> T) -> (T, Double) {
+  let start = DispatchTime.now()
+  let result = myFunc()
+  let end = DispatchTime.now()
+
+  let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
+  let timeInterval = Double(nanoTime) / 1_000_000
+
+  return (result, timeInterval)
+}
+private func getContactsMetaDataRaw() -> ContactsMetaData {
   let contactStore = CNContactStore()
   var contactsMetaData = ContactsMetaData()
   do {
+    // Don't use unified contacts for everything:
+    // https://stackoverflow.com/questions/52670973/cant-add-unified-cncontact-to-cngroup-in-ios
     let containers = try contactStore.containers(matching: nil)
     contactsMetaData.containerById = Dictionary(
       uniqueKeysWithValues: containers.map { ($0.identifier, $0) })
     try containers.forEach { container in
-      let contacts = try contactStore.unifiedContacts(
-        matching: CNContact.predicateForContactsInContainer(
-          withIdentifier: container.identifier),
-        keysToFetch: keys)
+      let predicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
+      let contacts = try fetchContacts(predicate: predicate)
       contactsMetaData.contactIdsByContainerId[container.identifier] = contacts.map {
         $0.identifier
       }
-      for contact in contacts where contactsMetaData.contactById[contact.identifier] == nil {
-        contactsMetaData.contactById[contact.identifier] = contact
+      // for contact in contacts where contactsMetaData.contactById[contact.identifier] == nil {
+      //   contactsMetaData.contactById[contact.identifier] = contact
+      // }
+      for contact in contacts {
+        if contactsMetaData.contactByContainerIdById[container.identifier] == nil {
+          contactsMetaData.contactByContainerIdById[container.identifier] = [contact.identifier: contact]
+        } else {
+          contactsMetaData.contactByContainerIdById[container.identifier]![contact.identifier] = contact
+        }
       }
 
       let groups = try contactStore.groups(
@@ -41,7 +63,7 @@ func getContactsMetaData() -> ContactsMetaData {
       }
       for group in groups {
         let predicate = CNContact.predicateForContactsInGroup(withIdentifier: group.identifier)
-        let contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: keys)
+        let contacts = try fetchContacts(predicate: predicate)
         contactsMetaData.contactIdsByGroupId[group.identifier] = contacts.map { $0.identifier }
         for contact in contacts {
           if var groupIds = contactsMetaData.groupIdsByContactId[contact.identifier] {
@@ -62,6 +84,21 @@ func getContactsMetaData() -> ContactsMetaData {
 }
 
 let ContactStore = CNContactStore()
+
+func fetchContacts(predicate: NSPredicate) throws -> [CNContact] {
+  // Formerly
+  // let contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: keys)
+  // But we don't use unified contacts cause they're shared across containers
+  var contacts = [CNContact]()
+  let request = CNContactFetchRequest(keysToFetch: keys)
+  request.unifyResults = false
+  request.predicate = predicate
+  try ContactStore.enumerateContacts(with: request) {(contact, _) in
+    // _ => stop
+    contacts.append(contact)
+  }
+  return contacts
+}
 
 func addGroup(_ name: String, toContainerWithIdentifier identifier: String) throws -> CNGroup? {
   let request = CNSaveRequest()
@@ -122,7 +159,8 @@ func removeContacts(_ contacts: [CNContact], from groups: [CNGroup]) throws {
 struct ContactsMetaData {
   var containerById: [String: CNContainer] = [:]
   var groupById: [String: CNGroup] = [:]
-  var contactById: [String: CNContact] = [:]
+  // var contactById: [String: CNContact] = [:]
+  var contactByContainerIdById: [String: [String: CNContact]] = [:]
   var groupIdsByContainerId: [String: [String]] = [:]
   var contactIdsByContainerId: [String: [String]] = [:]
   var contactIdsByGroupId: [String: [String]] = [:]
@@ -140,15 +178,19 @@ struct ContactsMetaData {
   }
   func getContactsByContainerId(containerId: String) -> [CNContact] {
     let contactIds: [String] = contactIdsByContainerId[containerId] ?? []
-    return contactIds.compactMap { contactById[$0] }.sorted()
+    // return contactIds.compactMap { contactById[$0] }.sorted()
+    return contactIds.compactMap { contactByContainerIdById[containerId]?[$0] }.sorted()
   }
-  func getContactsByGroupId(groupId: String) -> [CNContact] {
+  // func getContactsByGroupId(groupId: String) -> [CNContact] {
+  func getContactsByGroupId(containerId: String, groupId: String) -> [CNContact] {
     let contactIds: [String] = contactIdsByGroupId[groupId] ?? []
-    return contactIds.compactMap { contactById[$0] }.sorted()
+    // return contactIds.compactMap { contactById[$0] }.sorted()
+    return contactIds.compactMap { contactByContainerIdById[containerId]?[$0] }.sorted()
   }
   func getUngroupedContactsByContainerId(containerId: String) -> [CNContact] {
     let contactIds: [String] = ungroupedContactIdsByContainerId[containerId] ?? []
-    return contactIds.compactMap { contactById[$0] }.sorted()
+    // return contactIds.compactMap { contactById[$0] }.sorted()
+    return contactIds.compactMap { contactByContainerIdById[containerId]?[$0] }.sorted()
   }
 }
 

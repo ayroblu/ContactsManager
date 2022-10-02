@@ -55,7 +55,7 @@ struct ContactsListView: View {
     }
     .sheet(isPresented: $isShowingAddToGroupSheet) {
       let contacts = Array(
-        selectedContactIds.compactMap { contactsContext.contactsMetaData.contactById[$0] })
+        selectedContactIds.compactMap { contactsContext.contactsMetaData.contactByContainerIdById[containerId]?[$0] })
       let selectedGroups = allGroups.reduce([String: SelectSelection]()) {
         (result, nextGroup) -> [String: SelectSelection] in
         var result = result
@@ -68,7 +68,7 @@ struct ContactsListView: View {
       }
       AddToGroupView(
         contacts: Array(
-          selectedContactIds.compactMap { contactsContext.contactsMetaData.contactById[$0] }),
+          selectedContactIds.compactMap { contactsContext.contactsMetaData.contactByContainerIdById[containerId]?[$0] }),
         containerId: containerId,
         groups: allGroups, initialSelectedGroups: selectedGroups,
         isShowing: $isShowingAddToGroupSheet,

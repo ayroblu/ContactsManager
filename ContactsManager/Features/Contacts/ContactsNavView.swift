@@ -12,7 +12,7 @@ import SwiftUI
 struct ContactsNavView: View {
   let contacts: [CNContact]
   let containerId: String
-  let groups: [CNGroup]
+  let allGroups: [CNGroup]
   let navigationTitle: String
   var navigationTitleLabel: Text?
   var group: CNGroup?
@@ -84,7 +84,7 @@ struct ContactsNavView: View {
     return NavigationLink {
       ContactsListView(
         navigationTitle: navigationTitle, contacts: contacts, containerId: containerId,
-        allGroups: groups)
+        allGroups: allGroups)
     } label: {
       navigationTitleText
     }
