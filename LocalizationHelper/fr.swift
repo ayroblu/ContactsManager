@@ -73,5 +73,5 @@ let fr = [
 
 let frInfo = [
   "NSContactsUsageDescription":
-    "Ceci est nécessaire pour fournir des fonctionnalités relatives aux contacts sur votre appareil"
+    "Ceci est nécessaire pour récupérer et mettre à jour vos contacts et groupes de contacts"
 ]

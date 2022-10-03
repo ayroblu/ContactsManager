@@ -68,6 +68,6 @@ let enBaseInfo: Set<String> = ["NSContactsUsageDescription"]
 
 let enInfo = [
   "NSContactsUsageDescription":
-    "This is necessary for providing functionality relating to contacts on your device"
+    "This is necessary to fetch and update your contacts and contact groups"
 ]
 let enGBInfo = enInfo

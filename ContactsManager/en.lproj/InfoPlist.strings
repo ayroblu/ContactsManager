@@ -1,1 +1,1 @@
-"NSContactsUsageDescription" = "This is necessary for providing functionality relating to contacts on your device";
+"NSContactsUsageDescription" = "This is necessary to fetch and update your contacts and contact groups";

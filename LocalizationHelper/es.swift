@@ -73,5 +73,5 @@ let es = [
 
 let esInfo = [
   "NSContactsUsageDescription":
-    "Esto es necesario para proporcionar funcionalidad relacionada con los contactos en su dispositivo."
+    "Esto es necesario para obtener y actualizar sus contactos y grupos de contactos."
 ]

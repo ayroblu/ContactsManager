@@ -474,7 +474,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swift-format >/dev/null; then\n    swift-format -m format -i -r --configuration swift-format-configuration.json ${PROJECT_DIR}\nelse\n    echo \"error: swift-format not installed\"\n    exit 1\nfi\n";
+			shellScript = "if which swift-format >/dev/null; then\n    #swift-format format --in-place --recursive --configuration swift-format-configuration.json ${PROJECT_DIR}\n    echo 'skipping for now'\nelse\n    echo \"error: swift-format not installed\"\n    #exit 1\nfi\n";
 		};
 		303A2C6128E25C6500EC398A /* Run Script - swift-lint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -530,7 +530,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint > /dev/null; then\n  swiftlint lint --config .swiftlint.yml ${PROJECT_DIR}/${TARGET_NAME}\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  #exit 1\nfi\n";
+			shellScript = "if which swiftlint > /dev/null; then\n  swiftlint lint --config .swiftlint.yml ${PROJECT_DIR}/${TARGET_NAME}\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  #exit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -800,7 +800,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSContactsUsageDescription = "This is necessary for providing functionality relating to contacts on your device";
+				INFOPLIST_KEY_NSContactsUsageDescription = "This is necessary to fetch and update your contacts and contact groups";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -834,7 +834,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSContactsUsageDescription = "This is necessary for providing functionality relating to contacts on your device";
+				INFOPLIST_KEY_NSContactsUsageDescription = "This is necessary to fetch and update your contacts and contact groups";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
